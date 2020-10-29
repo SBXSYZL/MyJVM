@@ -1,7 +1,7 @@
-package classLoadSystem;
+package classLoadSystem.classLoaderImpl;
 
-import java.util.Arrays;
-import java.util.Objects;
+
+import classLoadSystem.MyClassLoader;
 
 /**
  * @author 22454

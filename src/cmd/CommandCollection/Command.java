@@ -29,10 +29,9 @@ public abstract class Command {
      * 执行
      *
      * @param commandSection 命令+参数段
-     * @param cmd            结果打印的面板
      * @throws
      */
-    public abstract void exec(String[] commandSection, MyCmd cmd) throws Exception;
+    public abstract void exec(String[] commandSection) throws Exception;
 
     /**
      * 获取命令的执行方法

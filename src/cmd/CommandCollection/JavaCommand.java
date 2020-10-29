@@ -1,12 +1,13 @@
 package cmd.CommandCollection;
 
 import cmd.CmdConstant;
-import cmd.MyCmd;
 import exception.EmBusinessErr;
 import log.MyLog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static cmd.MyCmd.*;
 
 /**
  * @author 22454
@@ -19,7 +20,7 @@ public class JavaCommand extends Command {
     }
 
     @Override
-    public void exec(String[] commandSection, MyCmd cmd) throws Exception {
+    public void exec(String[] commandSection) throws Exception {
         parse(commandSection);
         if (options.size() <= 0 && args.size() <= 0) {
             MyLog.error(EmBusinessErr.PARSE_COMMAND_ERROR.getErrMsg());
@@ -29,20 +30,20 @@ public class JavaCommand extends Command {
             switch (option) {
                 case CmdConstant.VERSION:
                     if (options.size() > 1) {
-                        cmd.print(EmBusinessErr.PARSE_COMMAND_ERROR.getErrMsg());
+                        print(EmBusinessErr.PARSE_COMMAND_ERROR.getErrMsg());
                     } else {
-                        version(cmd);
+                        version();
                     }
                     break;
                 case "-jar":
-                    execJar(cmd);
+                    execJar();
                     break;
                 case "-help":
-                    cmd.printAndAdjust(getUsage());
+                    printAndAdjust(getUsage());
                     break;
                 default:
-                    cmd.print(EmBusinessErr.UNKNOWN_ERROR.getErrMsg());
-                    cmd.printAndAdjust(getUsage());
+                    print(EmBusinessErr.UNKNOWN_ERROR.getErrMsg());
+                    printAndAdjust(getUsage());
                     break;
             }
         });
@@ -64,13 +65,13 @@ public class JavaCommand extends Command {
         System.out.println("args: " + Arrays.toString(args.toArray()));
     }
 
-    private void version(MyCmd cmd) {
-        cmd.printAndAdjust(CmdConstant.VERSION_INFO);
+    private void version() {
+        printAndAdjust(CmdConstant.VERSION_INFO);
     }
 
-    private void execJar(MyCmd cmd) {
-        cmd.print("jar start...");
-        cmd.printAndAdjust("jar exec successfully.");
+    private void execJar() {
+        print("jar start...");
+        printAndAdjust("jar exec successfully.");
     }
 
     @Override

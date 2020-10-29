@@ -23,7 +23,7 @@ public class CmdParser {
         }
     }
 
-    public void parseCommand(String commandStr, MyCmd cmd) throws Exception {
+    public void parseCommand(String commandStr) throws Exception {
         commandStr = commandStr.trim();
         if (commandStr.length() == 0) {
             return;
@@ -39,7 +39,7 @@ public class CmdParser {
 
         if (cls != null) {
             System.out.println(cls.getClass().getName());
-            cls.exec(commandSections, cmd);
+            cls.exec(commandSections);
 
         } else {
             MyLog.error(EmBusinessErr.UNKNOWN_ERROR.getErrMsg());

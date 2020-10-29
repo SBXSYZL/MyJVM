@@ -1,7 +1,7 @@
 package cmd;
 
 import classLoadSystem.Loader;
-import classLoadSystem.MyLoader;
+import classLoadSystem.loaderImpl.MyLoader;
 import log.MyLog;
 
 import java.util.StringJoiner;
@@ -11,7 +11,7 @@ import java.util.StringJoiner;
  */
 public class MyCmd {
     private final CmdParser cmdParser;
-    private final CmdPanel cmdPanel;
+    private static CmdPanel cmdPanel;
     private final Loader loader;
 
     public MyCmd() throws Exception {
@@ -37,7 +37,7 @@ public class MyCmd {
                 .toString();
     }
 
-    public void print(String str) {
+    public static void print(String str) {
         if (cmdPanel != null) {
             cmdPanel.print(str);
         } else {
@@ -45,7 +45,7 @@ public class MyCmd {
         }
     }
 
-    public void printAndAdjust(String str) {
+    public static void printAndAdjust(String str) {
         if (cmdPanel != null) {
             cmdPanel.printAndAdjust(str);
         } else {
@@ -54,14 +54,14 @@ public class MyCmd {
     }
 
     private void parse(String str) throws Exception {
-        cmdParser.parseCommand(str, this);
+        cmdParser.parseCommand(str);
     }
 
-    public void history() {
+    public static void history() {
         printAndAdjust(cmdPanel.historyString());
     }
 
-    public void clear() {
+    public static void clear() {
         cmdPanel.clear();
     }
 }

@@ -1,30 +1,38 @@
 package log;
 
+import cmd.MyCmd;
+
 /**
  * @author 22454
  */
 public final class MyLog {
     public static void info(final String msg) {
-        System.out.println("[INFO] " + msg);
+        String realMsg = "[INFO] " + msg;
+        System.out.println(realMsg);
     }
 
     public static void debug(final String msg) {
-        System.out.println("[DEBUG] " + msg);
+        String realMsg = "[DEBUG] " + msg;
+        System.out.println(realMsg);
     }
 
     public static void warn(final String msg) {
-        System.out.println("[WARN] " + msg);
+        String realMsg = "[WARN] " + msg;
+        System.out.println(realMsg);
     }
 
     public static void error(final String msg) {
-        System.out.println("[ERROR] " + msg);
+        String realMsg = "[ERROR] " + msg;
+        System.out.println(realMsg);
     }
 
     public static void success(final String msg) {
-        System.out.println("[SUCCESS] " + msg);
+        String realMsg = "[SUCCESS] " + msg;
+        System.out.println(realMsg);
     }
 
     public static void command(final String msg) {
-        System.out.println("[COMMAND] " + msg);
+        String realMsg = "[COMMAND] " + msg;
+        System.out.println(realMsg);
     }
 }

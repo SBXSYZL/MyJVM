@@ -13,7 +13,7 @@ public class JavacCommand extends Command {
     }
 
     @Override
-    public void exec(String[] commandSection, MyCmd cmd) throws Exception {
+    public void exec(String[] commandSection) throws Exception {
         throw new Exception(getUsage());
 
     }

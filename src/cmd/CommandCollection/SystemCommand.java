@@ -3,6 +3,8 @@ package cmd.CommandCollection;
 import cmd.MyCmd;
 import exception.EmBusinessErr;
 
+import static cmd.MyCmd.*;
+
 /**
  * @author 22454
  */
@@ -13,15 +15,15 @@ public class SystemCommand extends Command {
     }
 
     @Override
-    public void exec(String[] commandSection, MyCmd cmd) throws Exception {
+    public void exec(String[] commandSection) throws Exception {
         parse(commandSection);
         String command = commandSection[0];
         switch (command) {
             case "history":
-                cmd.history();
+                history();
                 break;
             case "clear":
-                cmd.clear();
+                clear();
                 break;
             default:
                 throw new Exception(EmBusinessErr.UNKNOWN_ERROR.getErrMsg());

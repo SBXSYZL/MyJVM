@@ -1,4 +1,11 @@
-package classLoadSystem;
+package classLoadSystem.loaderImpl;
+
+import classLoadSystem.Loader;
+import classLoadSystem.classLoaderImpl.MyApplicationClassLoader;
+import classLoadSystem.classLoaderImpl.MyBootstrapClassLoader;
+import classLoadSystem.classLoaderImpl.MyExtensionClassLoader;
+
+import java.util.Arrays;
 
 /**
  * @author 22454
@@ -12,7 +19,8 @@ public class MyLoader implements Loader {
         bootstrapClassLoader = new MyBootstrapClassLoader();
         extClassLoader = new MyExtensionClassLoader(bootstrapClassLoader);
         applicationClassLoader = new MyApplicationClassLoader(extClassLoader);
-        applicationClassLoader.findClass("classLoadSystem.ClassFileReader");
+        String[] byteCode = applicationClassLoader.findClass("java.lang.String");
+        System.out.println(Arrays.toString(byteCode));
     }
 
     @Override

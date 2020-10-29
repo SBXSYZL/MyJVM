@@ -1,4 +1,6 @@
-package classLoadSystem;
+package classLoadSystem.classLoaderImpl;
+
+import classLoadSystem.MyClassLoader;
 
 /**
  * @author 22454
@@ -13,8 +15,5 @@ public class MyExtensionClassLoader extends MyClassLoader {
         return this.loadClass(absClassName);
     }
 
-    @Override
-    public MyClassLoader getParent() {
-        return null;
-    }
+
 }

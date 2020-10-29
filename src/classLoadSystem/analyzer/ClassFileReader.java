@@ -1,4 +1,4 @@
-package classLoadSystem;
+package classLoadSystem.analyzer;
 
 import com.sun.istack.internal.NotNull;
 import log.MyLog;
@@ -156,6 +156,13 @@ public class ClassFileReader {
 
     }
 
+    /**
+     * 从Jar包读取字节码
+     *
+     * @param absClassName 完整类名
+     * @param jarFile      jar包文件
+     * @return 字节码字符串数组
+     */
     private static synchronized String[] readClassFromJar(String absClassName, JarFile jarFile) throws Exception {
         Enumeration<JarEntry> entries = jarFile.entries();
         while (entries.hasMoreElements()) {
@@ -194,11 +201,24 @@ public class ClassFileReader {
         }
     }
 
+    /**
+     * 从文件中读取字节码
+     *
+     * @param file 文件
+     * @return 字节码字符串数组
+     */
     public static synchronized String[] readClassFromFile(@NotNull File file) throws Exception {
         String fileTxt = readFileByLine(file);
         return getByteCode(fileTxt.getBytes(CHARSETS));
     }
 
+    /**
+     * 寻找类
+     *
+     * @param absClassName 完整类名
+     * @param absRootPath  完整根目录路径
+     * @return 字节码字符串数组
+     */
     public static synchronized String[] findClass(String absClassName, String absRootPath) throws Exception {
         try {
             File file = new File(absRootPath);
@@ -242,7 +262,13 @@ public class ClassFileReader {
         }
     }
 
-
+    /**
+     * 从Jar包获取字节码
+     *
+     * @param jarFile  jar包
+     * @param jarEntry jar包内的压缩文件
+     * @return 字节码字符串数组
+     */
     private static synchronized String[] getByteCodeFromJar(JarFile jarFile, JarEntry jarEntry) throws Exception {
         try (InputStream inputStream = jarFile.getInputStream(jarEntry); ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[2048];
