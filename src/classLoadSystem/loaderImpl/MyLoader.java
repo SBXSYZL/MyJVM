@@ -1,10 +1,13 @@
 package classLoadSystem.loaderImpl;
 
 import classLoadSystem.Loader;
+import classLoadSystem.analyzer.ClassFile;
+import classLoadSystem.analyzer.ClassFileReader;
 import classLoadSystem.classLoaderImpl.MyApplicationClassLoader;
 import classLoadSystem.classLoaderImpl.MyBootstrapClassLoader;
 import classLoadSystem.classLoaderImpl.MyExtensionClassLoader;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 /**
@@ -19,8 +22,21 @@ public class MyLoader implements Loader {
         bootstrapClassLoader = new MyBootstrapClassLoader();
         extClassLoader = new MyExtensionClassLoader(bootstrapClassLoader);
         applicationClassLoader = new MyApplicationClassLoader(extClassLoader);
-        String[] byteCode = applicationClassLoader.findClass("java.lang.String");
-        System.out.println(Arrays.toString(byteCode));
+        byte[] byteCode = applicationClassLoader.findClass("java.lang.String");
+//        String[] byteCodeStringArray = ClassFileReader.getByteCodeStringArray(byteCode);
+//        System.out.println(Arrays.toString(byteCodeStringArray));
+//        for (byte s : byteCode) {
+//            BigInteger bigInteger = new BigInteger(String.valueOf(s));
+//            System.out.print(bigInteger + ",");
+//        }
+//
+//        System.out.println();
+//        for (byte s : byteCode) {
+//            System.out.print(s + ",");
+//        }
+//        System.out.println();
+//        System.out.println(Arrays.toString(byteCode));
+        ClassFile classFile = new ClassFile(byteCode);
     }
 
     @Override

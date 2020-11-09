@@ -61,8 +61,7 @@ public class JavaCommand extends Command {
                 args.add(commandSection[i]);
             }
         }
-        System.out.println("options: " + Arrays.toString(options.toArray()));
-        System.out.println("args: " + Arrays.toString(args.toArray()));
+        System.out.println("options: " + Arrays.toString(options.toArray()) + "  " + "args: " + Arrays.toString(args.toArray()));
     }
 
     private void version() {

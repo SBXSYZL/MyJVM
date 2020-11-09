@@ -6,13 +6,15 @@ import classLoadSystem.analyzer.constant.ConstantInfo;
 /**
  * @author 22454
  */
-public class ConstantInfoLong implements ConstantInfo {
-    private static final Integer TAG = LONG_TAG;
-    private Long bytes;
+public class ConstantInfoInvokeDynamic implements ConstantInfo {
+    private static final Integer TAG = INVOKE_DYNAMIC_TAG;
+    private int bootstrapMethodAttrIndex;
+    private int nameAndTypeIndex;
 
     @Override
     public void setInfo(ByteCodeFile byteCodeFile) {
-        this.bytes = byteCodeFile.readLong();
+        this.bootstrapMethodAttrIndex = byteCodeFile.readTwoUint();
+        this.nameAndTypeIndex = byteCodeFile.readTwoUint();
     }
 
     @Override

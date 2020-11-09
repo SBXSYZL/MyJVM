@@ -6,16 +6,38 @@ import log.MyLog;
 
 import java.util.StringJoiner;
 
+import static java.lang.Thread.sleep;
+
 /**
  * @author 22454
  */
 public class MyCmd {
-    private final CmdParser cmdParser;
+    private Parser cmdParser;
     private static CmdPanel cmdPanel;
-    private final Loader loader;
+    private Loader loader;
+    private static final String MY_JVM =
+            "\n\n" +
+                    "   **************************************************************************************************\n" +
+                    "   *         __      __       __     __    ________    __        __      __      __                 *\n" +
+                    "   *        / /\\    /\\ \\      \\ \\   / /   |___   __|   \\ \\      / /     / /\\    /\\ \\                *\n" +
+                    "   *       / /\\ \\  / /\\ \\      \\ \\ / /        | |       \\ \\    / /     / /\\ \\  / /\\ \\               *\n" +
+                    "   *      / /  \\ \\/ /  \\ \\      |   |         | |        \\ \\  / /     / /  \\ \\/ /  \\ \\              *\n" +
+                    "   *     / /    \\__/    \\ \\     |   |     ____| |         \\ \\/ /     / /    \\__/    \\ \\             *\n" +
+                    "   *    /_/              \\_\\    |___|    |______|          \\__/     /_/              \\_\\            *\n" +
+                    "   *       :: \033[32m My Jvm \033[m ::                                                 \033[32m (v1.0.0.RELEASE) \033[m        *\n" +
+                    "   **************************************************************************************************\n";
 
-    public MyCmd() throws Exception {
+    public MyCmd() {
+    }
+
+    public void run() throws Exception {
         MyLog.info("My Java Virtual Machine Start...");
+        //+ MY_JVM
+        for (int i = 0; i < MY_JVM.length(); i++) {
+            System.out.print(MY_JVM.charAt(i));
+//            sleep(1);
+        }
+        System.out.println();
         MyLog.info("Loading Cmd Panel...");
         cmdPanel = new CmdPanel();
         MyLog.success("Cmd Panel Load Successfully.");
@@ -53,8 +75,8 @@ public class MyCmd {
         }
     }
 
-    private void parse(String str) throws Exception {
-        cmdParser.parseCommand(str);
+    private boolean parse(String str) throws Exception {
+        return cmdParser.parse(str);
     }
 
     public static void history() {

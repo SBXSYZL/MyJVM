@@ -12,8 +12,8 @@ public class MyApplicationClassLoader extends MyClassLoader {
     }
 
     @Override
-    public String[] findClass(String absClassName) throws Exception {
-        String[] byteCode = this.loadClass(absClassName);
+    public byte[] findClass(String absClassName) throws Exception {
+        byte[] byteCode = this.loadClass(absClassName);
         if (byteCode != null) {
             return byteCode;
         }

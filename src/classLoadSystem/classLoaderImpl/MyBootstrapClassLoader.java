@@ -9,8 +9,8 @@ import classLoadSystem.MyClassLoader;
 public class MyBootstrapClassLoader extends MyClassLoader {
 
     @Override
-    public String[] findClass(String absClassName) throws Exception {
-        String[] byteCode;
+    public byte[] findClass(String absClassName) throws Exception {
+        byte[] byteCode;
         try {
             String property = System.getProperty("java.home");
             byteCode = ClassFileReader.findClass(absClassName, property);

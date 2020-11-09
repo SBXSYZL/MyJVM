@@ -1,16 +1,18 @@
 package classLoadSystem.analyzer.constant.constantInfoImpl;
 
+import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.ConstantInfo;
 
 /**
  * @author 22454
  */
 public class ConstantInfoFloat implements ConstantInfo {
-    private static final Integer TAG = ConstantInfoTagEnum.Float_Tag.getTag();
+    private static final Integer TAG = FLOAT_TAG;
     private Float bytes;
 
-    public ConstantInfoFloat(Float bytes) {
-        this.bytes = bytes;
+    @Override
+    public void setInfo(ByteCodeFile byteCodeFile) {
+        this.bytes = byteCodeFile.readFloat();
     }
 
     public Float getBytes() {
@@ -19,7 +21,6 @@ public class ConstantInfoFloat implements ConstantInfo {
 
     @Override
     public int getTag() {
-        return TAG == null ?
-                DEFAULT_TAG : TAG;
+        return TAG;
     }
 }

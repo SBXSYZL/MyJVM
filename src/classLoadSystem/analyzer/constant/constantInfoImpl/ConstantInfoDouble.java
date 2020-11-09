@@ -1,16 +1,18 @@
 package classLoadSystem.analyzer.constant.constantInfoImpl;
 
+import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.ConstantInfo;
 
 /**
  * @author 22454
  */
 public class ConstantInfoDouble implements ConstantInfo {
-    private static final Integer TAG = ConstantInfoTagEnum.Double_Tag.getTag();
+    private static final Integer TAG = DOUBLE_TAG;
     private Double bytes;
 
-    public ConstantInfoDouble(Double bytes) {
-        this.bytes = bytes;
+    @Override
+    public void setInfo(ByteCodeFile byteCodeFile) {
+        this.bytes = byteCodeFile.readDouble();
     }
 
     public Double getBytes() {

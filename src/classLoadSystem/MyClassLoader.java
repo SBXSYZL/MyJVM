@@ -18,10 +18,10 @@ public abstract class MyClassLoader {
      * @return 字节码字符串数组
      * @throws Exception 查找失败
      */
-    public abstract String[] findClass(@NotNull String absClassName) throws Exception;
+    public abstract byte[] findClass(@NotNull String absClassName) throws Exception;
 
-    protected String[] loadClass(@NotNull String absClassName) throws Exception {
-        String[] byteCode = null;
+    protected byte[] loadClass(@NotNull String absClassName) throws Exception {
+        byte[] byteCode = null;
         if (parent != null) {
             byteCode = parent.findClass(absClassName);
         }

@@ -243,7 +243,10 @@ public class CmdPanel extends JFrame {
         MyLog.command(command);
         try {
             if (parser != null) {
-                parser.parse(command);
+                boolean parse = parser.parse(command);
+                if (!parse) {
+                    this.adjustCaret();
+                }
             } else {
                 printAndAdjust("No Parser Loading");
                 adjustCaret();
@@ -265,18 +268,6 @@ public class CmdPanel extends JFrame {
         this.parser = parser;
     }
 
-    /**
-     * 解析器
-     */
-    public interface Parser {
-        /**
-         * 解析
-         *
-         * @param str 字符串
-         * @exception:可能异常
-         */
-        void parse(String str) throws Exception;
-    }
 
     public String getTERMINAL() {
         return TERMINAL;
@@ -295,7 +286,7 @@ public class CmdPanel extends JFrame {
     /**
      * 终端表示串
      */
-    private final String TERMINAL = "Terminal $: ";
+    private static final String TERMINAL = "Terminal $: ";
     /**
      * 保存历史命令的容器
      */

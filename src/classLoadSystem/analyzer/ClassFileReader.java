@@ -30,12 +30,12 @@ public class ClassFileReader {
      * @return 文件夹下的所有文件的十六进制字节码
      */
     @Deprecated
-    public static synchronized ConcurrentHashMap<String, String[]> readClassFromFileAndDirectory(@NotNull String path) throws Exception {
+    public static synchronized ConcurrentHashMap<String, byte[]> readClassFromFileAndDirectory(@NotNull String path) throws Exception {
         File file = new File(path);
         LinkedList<File> fileQueue = new LinkedList<>();
         fileQueue.addLast(file);
         //根据文件名存储字节码
-        ConcurrentHashMap<String, String[]> byteCodeMap = new ConcurrentHashMap<>();
+        ConcurrentHashMap<String, byte[]> byteCodeMap = new ConcurrentHashMap<>();
         //递归查找出所有class文件
         while (fileQueue.size() > 0) {
             //取出队列第一个元素
@@ -61,10 +61,12 @@ public class ClassFileReader {
                         // 虽然手动补上了，但是换个系统可能就是未知数
                         String fileTxt = readFileByLine(first);
                         //将读取到的文本转换成16进制，以便转成字节码
-                        String[] byteCode = getByteCode(fileTxt.getBytes(CHARSETS));
+                        byte[] bytes = fileTxt.getBytes(CHARSETS);
+//                        String[] byteCode = getByteCodeStringArray(fileTxt.getBytes(CHARSETS));
                         String fileName = first.getName();
                         //存入hashMap
-                        byteCodeMap.put(fileName, byteCode);
+//                        byteCodeMap.put(fileName, byteCode);
+                        byteCodeMap.put(fileName, bytes);
                         MyLog.success("Load " + packageCombination + " Successfully.");
                     } else {
                         throw new Exception("Can Not Found Resources");
@@ -111,7 +113,7 @@ public class ClassFileReader {
      * @param source 源字节数组
      * @return 转换后的十六进制数组
      */
-    private static synchronized String[] getByteCode(@NotNull byte[] source) throws Exception {
+    public static synchronized String[] getByteCodeStringArray(@NotNull byte[] source) throws Exception {
         try {
             String[] result = new String[source.length];
             for (int i = 0; i < source.length; i++) {
@@ -139,10 +141,10 @@ public class ClassFileReader {
      * @param absJarPath   完整包名 如 D:\Java\JRE\lib\rt.jar
      * @return 字节码字符串数组
      */
-    public static synchronized String[] readClassFromJar(String absClassName, String absJarPath) throws Exception {
+    public static synchronized byte[] readClassFromJar(String absClassName, String absJarPath) throws Exception {
         try {
             JarFile jarFile = new JarFile(absJarPath);
-            String[] byteCode = readClassFromJar(absClassName, jarFile);
+            byte[] byteCode = readClassFromJar(absClassName, jarFile);
             if (byteCode != null) {
                 return byteCode;
             } else {
@@ -163,7 +165,7 @@ public class ClassFileReader {
      * @param jarFile      jar包文件
      * @return 字节码字符串数组
      */
-    private static synchronized String[] readClassFromJar(String absClassName, JarFile jarFile) throws Exception {
+    private static synchronized byte[] readClassFromJar(String absClassName, JarFile jarFile) throws Exception {
         Enumeration<JarEntry> entries = jarFile.entries();
         while (entries.hasMoreElements()) {
             JarEntry jarEntry = entries.nextElement();
@@ -183,7 +185,7 @@ public class ClassFileReader {
      * @param rootPath     根路径
      * @return 字节码字符串数组
      */
-    public static synchronized String[] readClassFromFile(String absClassName, String rootPath) throws Exception {
+    public static synchronized byte[] readClassFromFile(String absClassName, String rootPath) throws Exception {
         try {
             String classFileName = absClassName.replaceAll("\\.", "/").concat(".class");
             rootPath = rootPath.replaceAll("\\\\", "/");
@@ -207,9 +209,9 @@ public class ClassFileReader {
      * @param file 文件
      * @return 字节码字符串数组
      */
-    public static synchronized String[] readClassFromFile(@NotNull File file) throws Exception {
+    public static synchronized byte[] readClassFromFile(@NotNull File file) throws Exception {
         String fileTxt = readFileByLine(file);
-        return getByteCode(fileTxt.getBytes(CHARSETS));
+        return fileTxt.getBytes(CHARSETS);
     }
 
     /**
@@ -219,7 +221,7 @@ public class ClassFileReader {
      * @param absRootPath  完整根目录路径
      * @return 字节码字符串数组
      */
-    public static synchronized String[] findClass(String absClassName, String absRootPath) throws Exception {
+    public static synchronized byte[] findClass(String absClassName, String absRootPath) throws Exception {
         try {
             File file = new File(absRootPath);
             if (!file.exists()) {
@@ -227,7 +229,7 @@ public class ClassFileReader {
             }
             LinkedList<File> fileQueue = new LinkedList<>();
             fileQueue.addLast(file);
-            String[] byteCode;
+            byte[] byteCode;
             String realClassFileName = absClassName + ".class";
             while (fileQueue.size() > 0) {
                 File first = fileQueue.getFirst();
@@ -269,7 +271,7 @@ public class ClassFileReader {
      * @param jarEntry jar包内的压缩文件
      * @return 字节码字符串数组
      */
-    private static synchronized String[] getByteCodeFromJar(JarFile jarFile, JarEntry jarEntry) throws Exception {
+    private static synchronized byte[] getByteCodeFromJar(JarFile jarFile, JarEntry jarEntry) throws Exception {
         try (InputStream inputStream = jarFile.getInputStream(jarEntry); ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[2048];
             int len;
@@ -280,7 +282,7 @@ public class ClassFileReader {
             byte[] bytes = outputStream.toByteArray();
             outputStream.close();
             inputStream.close();
-            return getByteCode(bytes);
+            return bytes;
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
