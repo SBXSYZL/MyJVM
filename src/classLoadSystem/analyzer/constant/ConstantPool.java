@@ -1,7 +1,9 @@
 package classLoadSystem.analyzer.constant;
 
-import classLoadSystem.analyzer.constant.constantInfoImpl.ConstantInfoInteger;
-import classLoadSystem.analyzer.constant.constantInfoImpl.ConstantInfoUtf8;
+import classLoadSystem.analyzer.constant.constantInfo.ConstantInfo;
+import classLoadSystem.analyzer.constant.constantInfo.constantInfoImpl.ConstantInfoInteger;
+import classLoadSystem.analyzer.constant.constantInfo.constantInfoImpl.ConstantInfoUtf8;
+import log.MyLog;
 
 import java.lang.reflect.Field;
 
@@ -38,13 +40,20 @@ public class ConstantPool {
         pool[index] = constantInfo;
     }
 
+    /**
+     * 根据 index 获取常量池中的一个 utf8 字符串
+     */
     public String getUtf8(int index) throws Exception {
         try {
             ConstantInfoUtf8 constantInfo = (ConstantInfoUtf8) pool[index];
             return constantInfo == null ? "" : constantInfo.getString();
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Constant pool does not exists index of " + index + " element");
+            if (e instanceof ClassCastException) {
+                MyLog.error("ConstantInfo Type Cast Error");
+                throw new Exception("ConstantInfo Type Cast Error");
+            }
+            throw new Exception("The element with index [ " + index + " ] does not exist in the constant pool");
         }
     }
 
@@ -57,7 +66,6 @@ public class ConstantPool {
             } else {
                 System.out.println(ConstantInfo.getString(constantInfo));
             }
-
         }
         System.out.println("----------------------------------------------------------");
     }

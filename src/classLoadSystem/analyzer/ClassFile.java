@@ -1,11 +1,11 @@
 package classLoadSystem.analyzer;
 
-import classLoadSystem.analyzer.constant.AttributeInfo;
-import classLoadSystem.analyzer.constant.ConstantInfo;
+import classLoadSystem.analyzer.constant.attribute.AttributeInfo;
+import classLoadSystem.analyzer.constant.constantInfo.ConstantInfo;
 import classLoadSystem.analyzer.constant.ConstantPool;
-import classLoadSystem.analyzer.constant.MemberInfo;
-import classLoadSystem.analyzer.constant.memberInfoImpl.FieldInfo;
-import classLoadSystem.analyzer.constant.memberInfoImpl.MethodInfo;
+import classLoadSystem.analyzer.constant.memberInfo.FieldInfo;
+import classLoadSystem.analyzer.constant.memberInfo.MethodInfo;
+
 
 /**
  * @author 22454
@@ -22,23 +22,22 @@ public final class ClassFile {
     private int interfaceCount;
     private int[] interfaces;
     private int fieldsCount;
-    private MemberInfo[] fields;
+    private FieldInfo[] fields;
     private int methodsCount;
-    private MemberInfo[] methods;
+    private MethodInfo[] methods;
     private int attributesCount;
     private AttributeInfo[] attributes;
 
     public ClassFile(byte[] byteCode) throws Exception {
         init(byteCode);
-        show();
     }
 
-    private void show() {
-        System.out.println(minorVersion);
-        System.out.println(majorVersion);
-        System.out.println(constantPool);
-    }
 
+    /**
+     * 初始化数据
+     *
+     * @param byteCode 字节码数组
+     */
     private void init(byte[] byteCode) throws Exception {
         try {
 
@@ -68,6 +67,7 @@ public final class ClassFile {
                 this.fields = readFields(byteCodeFile, constantPool, fieldsCount);
                 //读取方法个数
                 this.methodsCount = byteCodeFile.readTwoUint();
+                System.out.println("this class file has [ " + methodsCount + " ] functions");
                 //读取方法
                 this.methods = readMethods(byteCodeFile, constantPool, methodsCount);
                 //读取属性数
@@ -83,26 +83,47 @@ public final class ClassFile {
         }
     }
 
+    /**
+     * 从字节码中读取 attributesCount 个属性
+     *
+     * @param byteCodeFile    字节码文件
+     * @param constantPool    常量池
+     * @param attributesCount 属性个数
+     * @return 属性实体
+     */
     private AttributeInfo[] readAttributes(ByteCodeFile byteCodeFile, ConstantPool constantPool, int attributesCount) throws Exception {
         return AttributeInfo.readAttributes(byteCodeFile, attributesCount, constantPool);
     }
 
     /**
-     * 读取方法
+     * 读取 methodsCount 个方法
+     *
+     * @param byteCodeFile 字节码文件
+     * @param constantPool 常量池
+     * @param methodsCount 方法个数
+     * @return 方法实体数组
      */
     private MethodInfo[] readMethods(ByteCodeFile byteCodeFile, ConstantPool constantPool, int methodsCount) throws Exception {
-        return (MethodInfo[]) MethodInfo.readMembers(byteCodeFile, constantPool, methodsCount);
+        return MethodInfo.readMembers(byteCodeFile, constantPool, methodsCount);
     }
 
     /**
-     * 读取字段
+     * 读取 fieldsCount 个字段
+     *
+     * @param byteCodeFile 字节码文件
+     * @param constantPool 常量池
+     * @param fieldsCount  字段数量
+     * @return 字段实体数组
      */
-    private MemberInfo[] readFields(ByteCodeFile byteCodeFile, ConstantPool constantPool, int fieldsCount) throws Exception {
+    private FieldInfo[] readFields(ByteCodeFile byteCodeFile, ConstantPool constantPool, int fieldsCount) throws Exception {
         return FieldInfo.readMembers(byteCodeFile, constantPool, fieldsCount);
     }
 
     /**
-     * 判断字节码开头是否是 CAFEBABE
+     * 判断字节码开头是否是 CAFEBABE      this function check result is OK!!!
+     *
+     * @param byteCodeFile 字节码文件
+     * @return 是否符合预期
      */
     private boolean startWithMagic(ByteCodeFile byteCodeFile) {
         long magic = byteCodeFile.readFourUint();
@@ -110,11 +131,15 @@ public final class ClassFile {
     }
 
     /**
-     * 判断当前字节码文件版本是否可编译
+     * 判断当前字节码文件版本是否可编译         this function check result is OK!!!
+     *
+     * @param byteCodeFile 字节码文件
+     * @return 是否可编译
      */
     private boolean isCompilableVersion(ByteCodeFile byteCodeFile) {
         this.minorVersion = byteCodeFile.readTwoUint();
         this.majorVersion = byteCodeFile.readTwoUint();
+        final String JAVA_VERSION = "Java Version ";
         switch (majorVersion) {
             case 45:
             case 47:
@@ -126,6 +151,7 @@ public final class ClassFile {
                 return true;
             case 52:
                 if (minorVersion == 0) {
+                    System.out.println("Java Version no less than 8");
                     return true;
                 }
             default:
@@ -134,7 +160,9 @@ public final class ClassFile {
     }
 
     /**
-     * 读取 constantInfo ，存储到 constantPool
+     * 读取 constantInfo ，存储到 constantPool        this function check result is OK!!!
+     *
+     * @param byteCodeFile 字节码文件
      */
     private void readConstantInfo(ByteCodeFile byteCodeFile) throws Exception {
         for (int i = 1; i < constantPoolCount; i++) {
@@ -147,11 +175,14 @@ public final class ClassFile {
                 i++;
             }
         }
-        constantPool.show();
+//        constantPool.show();
     }
 
     /**
-     * 读取 interfaceCount 个 interface 索引
+     * 读取 interfaceCount 个 interface 索引     this function check result is OK!!!
+     *
+     * @param byteCodeFile 字节码文件
+     * @return 接口索引数组
      */
     private int[] readInterfaces(ByteCodeFile byteCodeFile) {
         int[] interfaces = new int[this.interfaceCount];
