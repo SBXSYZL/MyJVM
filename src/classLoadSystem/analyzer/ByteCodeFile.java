@@ -41,8 +41,8 @@ public class ByteCodeFile {
     /**
      * U1
      */
-    public byte readOneUint() {
-        return getBytes(1)[0];
+    public int readOneUint() {
+       return byteArrayToInteger(getBytes(1));
     }
 
     /**

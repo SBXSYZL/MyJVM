@@ -9,7 +9,7 @@ import classLoadSystem.analyzer.constant.ConstantPool;
  */
 
 public class AttributeInfoSourceDebugExtension extends AttributeInfo {
-    private byte debugExtensionLength;
+    private int debugExtensionLength;
     private String[] debugExtension;
 
     @Override

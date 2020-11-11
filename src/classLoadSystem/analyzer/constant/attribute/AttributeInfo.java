@@ -3,6 +3,7 @@ package classLoadSystem.analyzer.constant.attribute;
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.ConstantPool;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.*;
+import log.MyLog;
 
 /**
  * @author 22454
@@ -18,7 +19,7 @@ public abstract class AttributeInfo {
      */
     static AttributeInfo createAttribute(int attributeNameIndex, ConstantPool constantPool) throws Exception {
         String attributeName = constantPool.getUtf8(attributeNameIndex);
-        System.out.println(attributeName);
+        MyLog.debug("Attribute Name : "+attributeName);
         switch (attributeName) {
             case AttributeTypeEnum.CODE:
                 return new AttributeInfoCode();

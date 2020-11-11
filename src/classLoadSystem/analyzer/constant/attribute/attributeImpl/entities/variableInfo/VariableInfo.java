@@ -2,6 +2,7 @@ package classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.varia
 
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.VerificationTypeInfo;
+import log.MyLog;
 
 /**
  * @author 22454
@@ -24,6 +25,7 @@ public interface VariableInfo {
      * @throws Exception ex
      */
     public static VariableInfo createVariableInfo(int tag, ByteCodeFile byteCodeFile) throws Exception {
+        MyLog.debug("Variable Info Tag : "+tag);
         switch (tag) {
             case VariableItemType.ITEM_TOP:
                 return new VariableInfoTop();

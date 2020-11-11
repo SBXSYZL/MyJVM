@@ -1,25 +1,22 @@
-package classLoadSystem.analyzer.constant.attribute.attributeImpl.entities;
+package classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.frame.frameImpl;
 
 import classLoadSystem.analyzer.ByteCodeFile;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.VerificationTypeInfo;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.frame.Frame;
 
 /**
  * @author 22454
  */
-public class FullFrame {
-    public final static int FULL_FRAME = 255;
-    private int frameType = FULL_FRAME;
+public class FullFrame implements Frame {
     private int offsetDelta;
     private int numberOfLocals;
     private VerificationTypeInfo[] locals;
     private int numberOfStackItems;
     private VerificationTypeInfo[] stack;
 
-    public FullFrame(ByteCodeFile byteCodeFile) {
-        init(byteCodeFile);
 
-    }
-
-    private void init(ByteCodeFile byteCodeFile) {
+    @Override
+    public void read(ByteCodeFile byteCodeFile, int frameType) {
         try {
             this.offsetDelta = byteCodeFile.readTwoUint();
             this.numberOfLocals = byteCodeFile.readTwoUint();
@@ -30,4 +27,5 @@ public class FullFrame {
             e.printStackTrace();
         }
     }
+
 }
