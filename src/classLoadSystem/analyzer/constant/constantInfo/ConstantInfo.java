@@ -1,7 +1,9 @@
 package classLoadSystem.analyzer.constant.constantInfo;
 
 import classLoadSystem.analyzer.ByteCodeFile;
+import classLoadSystem.analyzer.constant.ConstantPool;
 import classLoadSystem.analyzer.constant.constantInfo.constantInfoImpl.*;
+import log.MyLog;
 
 import java.lang.reflect.Field;
 
@@ -9,7 +11,6 @@ import java.lang.reflect.Field;
  * @author 22454
  */
 public interface ConstantInfo {
-    int DEFAULT_TAG = 0;
     int UTF8_TAG = 1;
     int INTEGER_TAG = 3;
     int FLOAT_TAG = 4;
@@ -38,11 +39,20 @@ public interface ConstantInfo {
     int getTag();
 
     /**
+     * 有几个 索引 变量
+     *
+     * @return 索引个数
+     */
+    @Deprecated
+    int numOfIndex();
+
+    /**
      * 设置属性
      *
      * @param byteCodeFile 字节码对象
+     * @param constantPool 常量池
      */
-    void setInfo(ByteCodeFile byteCodeFile);
+    void setInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool);
 
     /**
      * 根据tag值创建一个ConstantInfo
@@ -82,6 +92,7 @@ public interface ConstantInfo {
             case DYNAMIC_TAG:
                 return new ConstantInfoDynamic();
             default:
+                MyLog.error("Constant Pool TAG " + tag + " does not exists.");
                 throw new Exception("Constant Pool TAG " + tag + " does not exists.");
         }
     }

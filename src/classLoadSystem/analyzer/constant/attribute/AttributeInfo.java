@@ -17,9 +17,9 @@ public abstract class AttributeInfo {
      * @return 属性对象
      * @throws Exception ex
      */
-    static AttributeInfo createAttribute(int attributeNameIndex, ConstantPool constantPool) throws Exception {
+    static AttributeInfo createAttribute(int attributeNameIndex, int attributeLength, ConstantPool constantPool) throws Exception {
         String attributeName = constantPool.getUtf8(attributeNameIndex);
-        MyLog.debug("Attribute Name : "+attributeName);
+        MyLog.warn("Attribute Name : " + attributeName);
         switch (attributeName) {
             case AttributeTypeEnum.CODE:
                 return new AttributeInfoCode();
@@ -52,7 +52,9 @@ public abstract class AttributeInfo {
             case AttributeTypeEnum.METHOD_PARAMETERS:
                 return new AttributeInfoMethodParameters();
             default:
-                throw new Exception("maybe is this throw exception");
+                return new AttributeInfoUnparsed(attributeName, attributeLength);
+//                MyLog.error("maybe is this throw exception");
+//                throw new Exception("maybe is this throw exception");
         }
     }
 
@@ -82,10 +84,9 @@ public abstract class AttributeInfo {
     public static AttributeInfo readAttribute(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
         try {
             int attributeNameIndex = byteCodeFile.readTwoUint();
-            System.out.println(attributeNameIndex);
+            MyLog.debug("AttributeNameIndex : " + attributeNameIndex);
             int attributeLength = byteCodeFile.readInteger();
-            AttributeInfo attributeInfo = createAttribute(attributeNameIndex, constantPool);
-
+            AttributeInfo attributeInfo = createAttribute(attributeNameIndex, attributeLength, constantPool);
             attributeInfo.readInfo(byteCodeFile, constantPool);
             return attributeInfo;
         } catch (Exception e) {

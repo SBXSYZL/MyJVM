@@ -4,6 +4,7 @@ import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.variableInfo.VariableInfo;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.variableInfo.VariableInfoTop;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.variableInfo.VariableItemType;
+import log.MyLog;
 
 /**
  * @author 22454
@@ -16,10 +17,12 @@ public class VerificationTypeInfo {
     }
 
     public static VerificationTypeInfo[] readVerificationTypeInfos(ByteCodeFile byteCodeFile, int infoCount) throws Exception {
+        MyLog.debug("VerificationTypeInfo count: " + infoCount);
         VerificationTypeInfo[] verificationTypeInfos = new VerificationTypeInfo[infoCount];
         for (int i = 0; i < infoCount; i++) {
             verificationTypeInfos[i] = readVerificationTypeInfo(byteCodeFile);
         }
+        MyLog.debug("VerificationTypeInfo load finish");
         return verificationTypeInfos;
     }
 
@@ -29,5 +32,8 @@ public class VerificationTypeInfo {
         return new VerificationTypeInfo(variableInfo);
     }
 
-
+    @Override
+    public String toString() {
+        return variableInfo.toString();
+    }
 }

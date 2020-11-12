@@ -9,9 +9,11 @@ import classLoadSystem.analyzer.constant.ConstantPool;
  */
 public class AttributeInfoSignature extends AttributeInfo {
     private int signatureIndex;
+    private ConstantPool constantPool;
 
     @Override
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+        this.constantPool = constantPool;
         this.signatureIndex = byteCodeFile.readTwoUint();
     }
 }

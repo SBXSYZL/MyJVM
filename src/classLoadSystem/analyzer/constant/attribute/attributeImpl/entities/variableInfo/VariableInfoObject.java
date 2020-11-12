@@ -1,5 +1,7 @@
 package classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.variableInfo;
 
+import log.MyLog;
+
 /**
  * @author 22454
  */
@@ -14,5 +16,11 @@ public class VariableInfoObject implements VariableInfo {
 
     public VariableInfoObject(int cPoolIndex) {
         this.cPoolIndex = cPoolIndex;
+        MyLog.print(this.toString());
+    }
+
+    @Override
+    public String toString() {
+        return "OBJECT: #" + cPoolIndex + "\n";
     }
 }

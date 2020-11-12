@@ -24,8 +24,8 @@ public interface VariableInfo {
      * @return 变量信息实体
      * @throws Exception ex
      */
-    public static VariableInfo createVariableInfo(int tag, ByteCodeFile byteCodeFile) throws Exception {
-        MyLog.debug("Variable Info Tag : "+tag);
+    static VariableInfo createVariableInfo(int tag, ByteCodeFile byteCodeFile) throws Exception {
+        MyLog.debug("Variable Info Tag : " + tag);
         switch (tag) {
             case VariableItemType.ITEM_TOP:
                 return new VariableInfoTop();
@@ -42,12 +42,13 @@ public interface VariableInfo {
             case VariableItemType.ITEM_UNINITIALIZED_THIS:
                 return new VariableInfoUnInitializedThis();
             case VariableItemType.ITEM_OBJECT:
-                int cPoolIndex = byteCodeFile.readOneUint();
+                int cPoolIndex = byteCodeFile.readTwoUint();
                 return new VariableInfoObject(cPoolIndex);
             case VariableItemType.ITEM_UNINITIALIZED:
                 int offset = byteCodeFile.readTwoUint();
                 return new VariableInfoUninitialized(offset);
             default:
+//                return new VariableInfoUnparsed();
                 throw new Exception("Create Variable Info Fail");
 
         }

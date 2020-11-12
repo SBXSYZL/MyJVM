@@ -34,7 +34,7 @@ public class MyCmd {
         MyLog.info("My Java Virtual Machine Start...");
         //+ MY_JVM
         for (int i = 0; i < MY_JVM.length(); i++) {
-            System.out.print(MY_JVM.charAt(i));
+            MyLog.print("" + MY_JVM.charAt(i));
 //            sleep(1);
         }
         System.out.println();
@@ -49,6 +49,7 @@ public class MyCmd {
         MyLog.info("Class Loader Start...");
         loader = new MyLoader();
         MyLog.success("Class Loader Start Successfully.");
+
     }
 
     @Override

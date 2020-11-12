@@ -9,9 +9,11 @@ import classLoadSystem.analyzer.constant.ConstantPool;
  */
 public class AttributeInfoSourceFile extends AttributeInfo {
     private int sourceFileIndex;
+    private ConstantPool constantPool;
 
     @Override
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+        this.constantPool = constantPool;
         this.sourceFileIndex = byteCodeFile.readTwoUint();
     }
 }

@@ -9,9 +9,16 @@ import classLoadSystem.analyzer.constant.ConstantPool;
  */
 public class AttributeInfoConstantValue extends AttributeInfo {
     private int constantValueIndex;
+    private ConstantPool constantPool;
 
     @Override
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+        this.constantPool = constantPool;
         this.constantValueIndex = byteCodeFile.readTwoUint();
+    }
+
+    @Override
+    public String toString() {
+        return "" + constantValueIndex;
     }
 }

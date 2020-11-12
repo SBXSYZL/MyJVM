@@ -23,19 +23,6 @@ public class MyLoader implements Loader {
         extClassLoader = new MyExtensionClassLoader(bootstrapClassLoader);
         applicationClassLoader = new MyApplicationClassLoader(extClassLoader);
         byte[] byteCode = applicationClassLoader.findClass("java.lang.String");
-//        String[] byteCodeStringArray = ClassFileReader.getByteCodeStringArray(byteCode);
-//        System.out.println(Arrays.toString(byteCodeStringArray));
-//        for (byte s : byteCode) {
-//            BigInteger bigInteger = new BigInteger(String.valueOf(s));
-//            System.out.print(bigInteger + ",");
-//        }
-//
-//        System.out.println();
-//        for (byte s : byteCode) {
-//            System.out.print(s + ",");
-//        }
-//        System.out.println();
-//        System.out.println(Arrays.toString(byteCode));
         ClassFile classFile = new ClassFile(byteCode);
     }
 

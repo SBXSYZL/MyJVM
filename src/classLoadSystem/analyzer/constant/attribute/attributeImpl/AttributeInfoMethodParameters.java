@@ -11,9 +11,11 @@ import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.Parame
 public class AttributeInfoMethodParameters extends AttributeInfo {
     private int parametersCount;
     private Parameter[] parameters;
+    private ConstantPool constantPool;
 
     @Override
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+        this.constantPool = constantPool;
         this.parametersCount = byteCodeFile.readOneUint();
         this.parameters = new Parameter[this.parametersCount];
         for (int i = 0; i < this.parametersCount; i++) {

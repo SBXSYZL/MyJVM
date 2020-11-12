@@ -1,6 +1,7 @@
 package classLoadSystem.analyzer.constant.constantInfo.constantInfoImpl;
 
 import classLoadSystem.analyzer.ByteCodeFile;
+import classLoadSystem.analyzer.constant.ConstantPool;
 import classLoadSystem.analyzer.constant.constantInfo.ConstantInfo;
 
 /**
@@ -17,15 +18,31 @@ public class ConstantInfoMethodHandle implements ConstantInfo {
      * 常量池索引
      */
     private int referenceIndex;
+    private ConstantPool constantPool;
 
     @Override
-    public void setInfo(ByteCodeFile byteCodeFile) {
+    public void setInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) {
         this.referenceKind = byteCodeFile.readOneUint();
         this.referenceIndex = byteCodeFile.readTwoUint();
+        this.constantPool = constantPool;
+    }
+
+    @Override
+    public int numOfIndex() {
+        return 1;
     }
 
     @Override
     public int getTag() {
         return TAG;
+    }
+
+    @Override
+    public String toString() {
+        return "ConstantInfoMethodHandle{" +
+                "referenceKind=" + referenceKind +
+                ", referenceIndex=" + referenceIndex +
+                ", constantPool=" + constantPool +
+                '}';
     }
 }

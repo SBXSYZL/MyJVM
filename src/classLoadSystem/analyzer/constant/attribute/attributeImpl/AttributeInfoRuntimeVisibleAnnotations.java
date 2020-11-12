@@ -10,11 +10,12 @@ import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.Elemen
  */
 public class AttributeInfoRuntimeVisibleAnnotations extends AttributeInfo {
     private int numAnnotations;
+    private ConstantPool constantPool;
 
 
     @Override
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
-
+        this.constantPool = constantPool;
     }
 
 

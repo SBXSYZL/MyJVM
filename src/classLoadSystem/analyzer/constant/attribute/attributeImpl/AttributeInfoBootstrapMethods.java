@@ -11,9 +11,11 @@ import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.*;
 public class AttributeInfoBootstrapMethods extends AttributeInfo {
     private int numBootstrapMethods;
     private BootstrapMethod[] bootstrapMethods;
+    private ConstantPool constantPool;
 
     @Override
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+        this.constantPool = constantPool;
         this.numBootstrapMethods = byteCodeFile.readTwoUint();
         this.bootstrapMethods = new BootstrapMethod[this.numBootstrapMethods];
         for (int i = 0; i < this.numBootstrapMethods; i++) {

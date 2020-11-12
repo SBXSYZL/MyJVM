@@ -169,7 +169,11 @@ public class CmdPanel extends JFrame {
         setSize(1015, 690);
         setLocationRelativeTo(null);
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
-        this.setVisible(true);
+
+        /*
+         * 开启 or 关闭 cmd 面板
+         * */
+        this.setVisible(false);
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

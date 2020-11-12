@@ -8,8 +8,11 @@ import classLoadSystem.analyzer.constant.ConstantPool;
  * @author 22454
  */
 public class AttributeInfoDeprecated extends AttributeInfo {
+    private ConstantPool constantPool;
+
     @Override
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+        this.constantPool = constantPool;
 
     }
 }

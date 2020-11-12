@@ -42,7 +42,7 @@ public class ByteCodeFile {
      * U1
      */
     public int readOneUint() {
-       return byteArrayToInteger(getBytes(1));
+        return byteArrayToInteger(getBytes(1));
     }
 
     /**

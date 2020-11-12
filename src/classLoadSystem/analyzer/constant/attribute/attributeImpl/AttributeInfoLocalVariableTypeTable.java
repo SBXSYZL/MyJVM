@@ -11,9 +11,11 @@ import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.LocalV
 public class AttributeInfoLocalVariableTypeTable extends AttributeInfo {
     private int localVariableTypeTableLength;
     private LocalVariableTypeInfo[] localVariableTypeTable;
+    private ConstantPool constantPool;
 
     @Override
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+        this.constantPool = constantPool;
         this.localVariableTypeTableLength = byteCodeFile.readTwoUint();
         for (int i = 0; i < this.localVariableTypeTableLength; i++) {
             this.localVariableTypeTable[i] = new LocalVariableTypeInfo(

@@ -1,16 +1,20 @@
 package log;
 
-import cmd.MyCmd;
-import com.sun.javafx.binding.StringFormatter;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 /**
  * @author 22454
  */
 public final class MyLog {
+    private static boolean useLog = false;
+    private static boolean useInfo = false;
+    private static boolean useDebug = false;
+    private static boolean useWarn = false;
+    private static boolean useError = false;
+    private static boolean useSuccess = false;
+    private static boolean useCommand = false;
+    private static boolean usePrint = false;
     private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss  ");
     private static final String INFO_LABEL = "\033[32m INFO \033[m";
     private static final String DEBUG_LABEL = "\033[36m DEBUG \033[m";
@@ -22,35 +26,52 @@ public final class MyLog {
     private static final int MAX_THREAD_NAME_LENGTH = 10;
 
     public synchronized static void info(final String msg) {
-        String realMsg = formatMsg(msg, INFO_LABEL);
-        System.out.println(realMsg);
+        if (useLog && useInfo) {
+            String realMsg = formatMsg(msg, INFO_LABEL);
+            System.out.println(realMsg);
+        }
+
     }
 
     public synchronized static void debug(final String msg) {
-        String realMsg = formatMsg(msg, DEBUG_LABEL);
-        System.out.println(realMsg);
+        if (useLog && useDebug) {
+            String realMsg = formatMsg(msg, DEBUG_LABEL);
+            System.out.println(realMsg);
+        }
     }
 
     public synchronized static void warn(final String msg) {
-        String realMsg = formatMsg(msg, WARN_LABEL);
-        System.out.println(realMsg);
+        if (useLog && useWarn) {
+            String realMsg = formatMsg(msg, WARN_LABEL);
+            System.out.println(realMsg);
+        }
     }
 
     public synchronized static void error(final String msg) {
-        String realMsg = formatMsg(msg, ERROR_LABEL);
-        System.out.println(realMsg);
+        if (useLog && useError) {
+            String realMsg = formatMsg(msg, ERROR_LABEL);
+            System.out.println(realMsg);
+        }
     }
 
     public synchronized static void success(final String msg) {
-
-        String realMsg = formatMsg(msg, SUCCESS_LABEL);
-        System.out.println(realMsg);
+        if (useLog && useSuccess) {
+            String realMsg = formatMsg(msg, SUCCESS_LABEL);
+            System.out.println(realMsg);
+        }
     }
 
     public synchronized static void command(final String msg) {
+        if (useLog && useCommand) {
+            String realMsg = formatMsg(msg, COMMAND_LABEL);
+            System.out.println(realMsg);
+        }
+    }
 
-        String realMsg = formatMsg(msg, COMMAND_LABEL);
-        System.out.println(realMsg);
+    public synchronized static void print(final String msg) {
+        if (useLog && usePrint) {
+            System.out.print(msg);
+        }
     }
 
     private synchronized static String formatMsg(final String msg, final String label) {
@@ -91,4 +112,98 @@ public final class MyLog {
     private synchronized static String currentTime() {
         return dateTimeFormatter.format(LocalDateTime.now());
     }
+
+    public static void openLog() {
+        useLog = true;
+    }
+
+    public static void closeLog() {
+        useLog = false;
+    }
+
+    public static void openInfoLog() {
+        openLog();
+        useInfo = true;
+    }
+
+    public static void closeInfoLog() {
+        useInfo = false;
+    }
+
+    public static void openDebugLog() {
+        openLog();
+        useDebug = true;
+    }
+
+    public static void closeDebugLog() {
+        useDebug = false;
+    }
+
+    public static void openWarnLog() {
+        openLog();
+        useWarn = true;
+    }
+
+    public static void closeWarnLog() {
+        useWarn = false;
+    }
+
+    public static void openErrorLog() {
+        openLog();
+        useError = true;
+    }
+
+    public static void closeErrorLog() {
+        useError = false;
+    }
+
+    public static void openSuccess() {
+        openLog();
+        useSuccess = true;
+    }
+
+    public static void closeSuccess() {
+        useSuccess = false;
+    }
+
+    public static void openCommand() {
+        openLog();
+        useCommand = true;
+    }
+
+    public static void closeCommand() {
+        useCommand = false;
+    }
+
+    public static void openPrintLog() {
+        openLog();
+        usePrint = true;
+    }
+
+    public static void closePrintLog() {
+        usePrint = false;
+    }
+
+    public static void openAllLog() {
+        openLog();
+        openInfoLog();
+        openDebugLog();
+        openWarnLog();
+        openErrorLog();
+        openSuccess();
+        openCommand();
+        openPrintLog();
+    }
+
+    public static void closeAllLog() {
+        closeInfoLog();
+        closeDebugLog();
+        closeWarnLog();
+        closeErrorLog();
+        closeSuccess();
+        closeCommand();
+        closePrintLog();
+        closeLog();
+    }
+
 }

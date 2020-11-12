@@ -5,6 +5,7 @@ import classLoadSystem.analyzer.constant.constantInfo.ConstantInfo;
 import classLoadSystem.analyzer.constant.ConstantPool;
 import classLoadSystem.analyzer.constant.memberInfo.FieldInfo;
 import classLoadSystem.analyzer.constant.memberInfo.MethodInfo;
+import log.MyLog;
 
 
 /**
@@ -30,8 +31,8 @@ public final class ClassFile {
 
     public ClassFile(byte[] byteCode) throws Exception {
         init(byteCode);
+        showClass();
     }
-
 
     /**
      * 初始化数据
@@ -104,7 +105,13 @@ public final class ClassFile {
      * @return 方法实体数组
      */
     private MethodInfo[] readMethods(ByteCodeFile byteCodeFile, ConstantPool constantPool, int methodsCount) throws Exception {
-        return MethodInfo.readMembers(byteCodeFile, constantPool, methodsCount);
+        MyLog.debug("Read Methods Start");
+        MethodInfo[] methodInfos = MethodInfo.readMembers(byteCodeFile, constantPool, methodsCount);
+        for (MethodInfo methodInfo : methodInfos) {
+            MyLog.print(methodInfo + "\n");
+        }
+        MyLog.success("Read Methods Finish.");
+        return methodInfos;
     }
 
     /**
@@ -116,7 +123,13 @@ public final class ClassFile {
      * @return 字段实体数组
      */
     private FieldInfo[] readFields(ByteCodeFile byteCodeFile, ConstantPool constantPool, int fieldsCount) throws Exception {
-        return FieldInfo.readMembers(byteCodeFile, constantPool, fieldsCount);
+        MyLog.debug("Read Field Start");
+        FieldInfo[] fieldInfos = FieldInfo.readMembers(byteCodeFile, constantPool, fieldsCount);
+        for (FieldInfo fieldInfo : fieldInfos) {
+            MyLog.print(fieldInfo + "\n");
+        }
+        MyLog.success("Read Field Finish.");
+        return fieldInfos;
     }
 
     /**
@@ -151,7 +164,7 @@ public final class ClassFile {
                 return true;
             case 52:
                 if (minorVersion == 0) {
-                    System.out.println("Java Version no less than 8");
+                    MyLog.info("Java Version no less than 8");
                     return true;
                 }
             default:
@@ -165,17 +178,20 @@ public final class ClassFile {
      * @param byteCodeFile 字节码文件
      */
     private void readConstantInfo(ByteCodeFile byteCodeFile) throws Exception {
+        MyLog.debug("Read Constant Pool Start");
         for (int i = 1; i < constantPoolCount; i++) {
             int tag = byteCodeFile.readOneUint();
             ConstantInfo constantInfo = ConstantInfo.createConstantInfo(tag);
-            constantInfo.setInfo(byteCodeFile);
+            constantInfo.setInfo(byteCodeFile, constantPool);
             constantPool.put(i, constantInfo);
             //如果是Long，或者Double，长度为 8 ，理论上需要占 2 个空间，这边的实现需要跳过一个空间
             if (tag == ConstantInfo.DOUBLE_TAG || tag == ConstantInfo.LONG_TAG) {
                 i++;
             }
         }
-//        constantPool.show();
+        String constantPoolStr = this.constantPool.constantPoolToStringForShow();
+        MyLog.print(constantPoolStr);
+        MyLog.success("Read Constant Pool Finish.");
     }
 
     /**
@@ -190,5 +206,52 @@ public final class ClassFile {
             interfaces[i] = byteCodeFile.readTwoUint();
         }
         return interfaces;
+    }
+
+    private void showClass() throws Exception {
+        StringBuilder builder = new StringBuilder("**************************Class ByteCode Show*****************************\n\n");
+        //一般信息
+        builder.append("minorVersion: ").append(minorVersion).append("\n")
+                .append("majorVersion: ").append(majorVersion).append("\n")
+                .append("Constant Pool Count: ").append(constantPoolCount).append("\n")
+                .append("Access Flag: ").append(accessFlag).append("\n")
+                .append("This Class Index: #").append(thisClass).append("   --->   This Class Name: ").append(" <").append(constantPool.getClassName(thisClass)).append(">").append("\n")
+                .append("Super Class Index: #").append(superClass).append("   --->   Super Class Name: ").append(" <").append(constantPool.getClassName(superClass)).append(">").append("\n")
+                .append("Interface Count: ").append(interfaceCount).append("\n")
+                .append("Field Count: ").append(fieldsCount).append("\n")
+                .append("Method Count: ").append(methodsCount).append("\n")
+                .append("Attribute Count: ").append(attributesCount).append("\n");
+        //常量池
+        builder.append(constantPool.constantPoolToStringForShow());
+        //接口
+        builder.append("\nInterfaces: \n");
+        for (int in : interfaces) {
+            builder.append("\t")
+                    .append(in)
+                    .append("   --->   ")
+                    .append(constantPool.getClassName(in))
+                    .append("\n");
+        }
+        builder.append("\n");
+        //字段
+        builder.append("Fields: \n");
+        for (FieldInfo fieldInfo : fields) {
+            builder.append(fieldInfo);
+        }
+
+        //方法
+        builder.append("Methods: \n");
+        for (MethodInfo methodInfo : methods) {
+            builder.append(methodInfo);
+        }
+        //属性
+        builder.append("Attributes: \n");
+        for (AttributeInfo attributeInfo : attributes) {
+            builder.append(attributeInfo);
+        }
+
+        builder.append("\n").append("*************************************************************************\n");
+        MyLog.print(builder.toString());
+
     }
 }

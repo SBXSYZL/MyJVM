@@ -4,28 +4,29 @@ package classLoadSystem.analyzer.constant.attribute.attributeImpl.entities;
  * @author 22454
  */
 public class ExceptionInfo {
-    private int startPC;
-    private int endPC;
-    private int handlerPC;
+    private int startPc;
+    private int endPc;
+    private int handlerPc;
     private int catchType;
 
-    public ExceptionInfo(int startPC, int endPC, int handlerPC, int catchType) {
-        this.startPC = startPC;
-        this.endPC = endPC;
-        this.handlerPC = handlerPC;
+    public ExceptionInfo(int startPc, int endPc, int handlerPc, int catchType) {
+
+        this.startPc = startPc;
+        this.endPc = endPc;
+        this.handlerPc = handlerPc;
         this.catchType = catchType;
     }
 
-    public int getStartPC() {
-        return startPC;
+    public int getStartPc() {
+        return startPc;
     }
 
-    public int getEndPC() {
-        return endPC;
+    public int getEndPc() {
+        return endPc;
     }
 
-    public int getHandlerPC() {
-        return handlerPC;
+    public int getHandlerPc() {
+        return handlerPc;
     }
 
     public int getCatchType() {

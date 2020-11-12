@@ -15,4 +15,9 @@ public class VariableInfoUninitialized implements VariableInfo {
     public VariableInfoUninitialized(int offset) {
         this.offset = offset;
     }
+
+    @Override
+    public String toString() {
+        return "UNINITIALIZED Offset: " + offset + "\n";
+    }
 }

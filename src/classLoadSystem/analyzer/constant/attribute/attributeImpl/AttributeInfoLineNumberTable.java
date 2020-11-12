@@ -11,9 +11,11 @@ import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.LineNu
 public class AttributeInfoLineNumberTable extends AttributeInfo {
     private int lineNumberTableLength;
     private LineNumberInfo[] lineNumberTable;
+    private ConstantPool constantPool;
 
     @Override
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+        this.constantPool = constantPool;
         this.lineNumberTableLength = byteCodeFile.readTwoUint();
         this.lineNumberTable = new LineNumberInfo[this.lineNumberTableLength];
         for (int i = 0; i < this.lineNumberTableLength; i++) {
