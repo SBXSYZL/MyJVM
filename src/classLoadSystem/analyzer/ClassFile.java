@@ -3,9 +3,10 @@ package classLoadSystem.analyzer;
 import classLoadSystem.analyzer.constant.attribute.AttributeInfo;
 import classLoadSystem.analyzer.constant.constantInfo.ConstantInfo;
 import classLoadSystem.analyzer.constant.ConstantPool;
-import classLoadSystem.analyzer.constant.memberInfo.FieldInfo;
-import classLoadSystem.analyzer.constant.memberInfo.MethodInfo;
+import classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.FieldInfo;
+import classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.MethodInfo;
 import log.MyLog;
+import utils.FileUtil;
 
 
 /**
@@ -247,11 +248,14 @@ public final class ClassFile {
         //属性
         builder.append("Attributes: \n");
         for (AttributeInfo attributeInfo : attributes) {
-            builder.append(attributeInfo);
+            builder.append(attributeInfo.toString());
         }
 
         builder.append("\n").append("*************************************************************************\n");
         MyLog.print(builder.toString());
-
+        //输出到文件，如 [ D:\MyDataArea\JAVA_CODE\MyJVM\out\production\MyJvm\classByteCodeShow\String_ByteCode_Show.txt
+        String className = constantPool.getClassName(thisClass);
+        String[] split = className.split("/");
+        FileUtil.writeToFile(split[split.length - 1] + "_ByteCode_Show.txt", builder.toString());
     }
 }

@@ -24,6 +24,10 @@ public class ConstantPool {
         pool[index] = constantInfo;
     }
 
+    public ConstantInfo get(int index) {
+        return pool[index];
+    }
+
     /**
      * 根据 index 获取常量池中的一个 utf8 字符串
      */

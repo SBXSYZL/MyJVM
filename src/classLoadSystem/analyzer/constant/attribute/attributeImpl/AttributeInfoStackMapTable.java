@@ -3,13 +3,13 @@ package classLoadSystem.analyzer.constant.attribute.attributeImpl;
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.attribute.AttributeInfo;
 import classLoadSystem.analyzer.constant.ConstantPool;
-import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.frame.StackMapFrame;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.stackMapTableDependentFrame.StackMapFrame;
 import log.MyLog;
 
 /**
  * @author 22454
  */
-public class AttributeInfoStackMapTable extends AttributeInfo {
+public class AttributeInfoStackMapTable implements AttributeInfo {
     private int numberOfEntries;
     private StackMapFrame[] stackMapFrameEntries;
     private ConstantPool constantPool;
@@ -22,5 +22,14 @@ public class AttributeInfoStackMapTable extends AttributeInfo {
         this.stackMapFrameEntries = StackMapFrame.readStackMapFrames(byteCodeFile, numberOfEntries);
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("NumberOfEntries: ").append(numberOfEntries).append("\n")
+                .append("StackMapFrameEntries: ").append("\n");
+        for (StackMapFrame stackMapFrameEntry : stackMapFrameEntries) {
+            builder.append("\t").append(stackMapFrameEntry).append("\n");
+        }
+        return builder.toString();
+    }
 }

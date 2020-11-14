@@ -3,17 +3,24 @@ package classLoadSystem.analyzer.constant.attribute;
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.ConstantPool;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.*;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeAnnotations.AttributeInfoRuntimeInvisibleAnnotations;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeAnnotations.AttributeInfoRuntimeVisibleAnnotations;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeParameterAnnotations.AttributeInfoRunVisibleParameterAnnotations;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeParameterAnnotations.AttributeInfoRuntimeInvisibleParameterAnnotations;
 import log.MyLog;
+
 
 /**
  * @author 22454
  */
-public abstract class AttributeInfo {
+public interface AttributeInfo {
 
     /**
      * 根据信息创建出属性对象
      *
      * @param attributeNameIndex 属性名下标
+     * @param attributeLength    属性长度
+     * @param constantPool       常量池
      * @return 属性对象
      * @throws Exception ex
      */
@@ -23,34 +30,50 @@ public abstract class AttributeInfo {
         switch (attributeName) {
             case AttributeTypeEnum.CODE:
                 return new AttributeInfoCode();
+            case AttributeTypeEnum.CONSTANT_VALUE:
+                return new AttributeInfoConstantValue();
+            case AttributeTypeEnum.DEPRECATED:
+                return new AttributeInfoDeprecated();
             case AttributeTypeEnum.EXCEPTIONS:
                 return new AttributeInfoExceptions();
+            case AttributeTypeEnum.ENCLOSING_METHOD:
+                return new AttributeInfoEnclosingMethod();
+            case AttributeTypeEnum.INNER_CLASSES:
+                return new AttributeInfoInnerClasses();
             case AttributeTypeEnum.LINE_NUMBER_TABLE:
                 return new AttributeInfoLineNumberTable();
             case AttributeTypeEnum.LOCAL_VARIABLE_TABLE:
                 return new AttributeInfoLocalVariableTable();
-            case AttributeTypeEnum.LOCAL_VARIABLE_TYPE_TABLE:
-                return new AttributeInfoLocalVariableTypeTable();
-            case AttributeTypeEnum.SOURCE_FILE:
-                return new AttributeInfoSourceFile();
-            case AttributeTypeEnum.SOURCE_DEBUG_EXTENSION:
-                return new AttributeInfoSourceDebugExtension();
-            case AttributeTypeEnum.CONSTANT_VALUE:
-                return new AttributeInfoConstantValue();
-            case AttributeTypeEnum.INNER_CLASSES:
-                return new AttributeInfoInnerClasses();
-            case AttributeTypeEnum.DEPRECATED:
-                return new AttributeInfoDeprecated();
-            case AttributeTypeEnum.SYNTHETIC:
-                return new AttributeInfoSynthetic();
             case AttributeTypeEnum.STACK_MAP_TABLE:
                 return new AttributeInfoStackMapTable();
             case AttributeTypeEnum.SIGNATURE:
                 return new AttributeInfoSignature();
+            case AttributeTypeEnum.SOURCE_FILE:
+                return new AttributeInfoSourceFile();
+            case AttributeTypeEnum.SOURCE_DEBUG_EXTENSION:
+                return new AttributeInfoSourceDebugExtension();
+            case AttributeTypeEnum.SYNTHETIC:
+                return new AttributeInfoSynthetic();
+            case AttributeTypeEnum.LOCAL_VARIABLE_TYPE_TABLE:
+                return new AttributeInfoLocalVariableTypeTable();
+            case AttributeTypeEnum.RUNTIME_VISIBLE_ANNOTATIONS:
+                return new AttributeInfoRuntimeVisibleAnnotations();
+            case AttributeTypeEnum.RUNTIME_INVISIBLE_ANNOTATIONS:
+                return new AttributeInfoRuntimeInvisibleAnnotations();
+            case AttributeTypeEnum.RUNTIME_VISIBLE_PARAMETER_ANNOTATIONS:
+                return new AttributeInfoRunVisibleParameterAnnotations();
+            case AttributeTypeEnum.RUNTIME_INVISIBLE_PARAMETER_ANNOTATIONS:
+                return new AttributeInfoRuntimeInvisibleParameterAnnotations();
+            case AttributeTypeEnum.ANNOTATION_DEFAULT:
+                return new AttributeInfoAnnotationDefault();
             case AttributeTypeEnum.BOOTSTRAP_METHODS:
                 return new AttributeInfoBootstrapMethods();
+
+//            case AttributeTypeEnum.RUNTIME_VISIBLE_TYPE_ANNOTATIONS:
+//            case AttributeTypeEnum.RUNTIME_INVISIBLE_TYPE_ANNOTATIONS:
             case AttributeTypeEnum.METHOD_PARAMETERS:
                 return new AttributeInfoMethodParameters();
+            //TODO 未写完所有 case
             default:
                 return new AttributeInfoUnparsed(attributeName, attributeLength);
 //                MyLog.error("maybe is this throw exception");

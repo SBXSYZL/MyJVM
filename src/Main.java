@@ -13,9 +13,9 @@ public class Main {
          *  默认不开启日志，需要手动开启
          * */
         MyLog.openLog();
-        MyLog.openWarnLog();
+//        MyLog.openWarnLog();
         MyLog.openErrorLog();
-        MyLog.openDebugLog();
+//        MyLog.openDebugLog();
         MyLog.openPrintLog();
         MyLog.openSuccess();
         /*

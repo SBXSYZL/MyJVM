@@ -7,7 +7,7 @@ import classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoDeprecated extends AttributeInfo {
+public class AttributeInfoDeprecated implements AttributeInfo {
     private ConstantPool constantPool;
 
     @Override

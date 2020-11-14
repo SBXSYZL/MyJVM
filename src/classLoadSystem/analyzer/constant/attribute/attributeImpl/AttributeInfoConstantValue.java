@@ -7,7 +7,7 @@ import classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoConstantValue extends AttributeInfo {
+public class AttributeInfoConstantValue implements AttributeInfo {
     private int constantValueIndex;
     private ConstantPool constantPool;
 
@@ -19,6 +19,6 @@ public class AttributeInfoConstantValue extends AttributeInfo {
 
     @Override
     public String toString() {
-        return "" + constantValueIndex;
+        return "" + constantValueIndex+"\n";
     }
 }

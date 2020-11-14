@@ -105,6 +105,9 @@ public final class AttributeTypeEnum {
      * 此前要获取方法名称（典型的如 IDE 的代码提示）只能通过 JavaDoc 获取
      */
     public final static String METHOD_PARAMETERS = "MethodParameters";
+
+    //以下属性不再实现
+
     /**
      * JDK 9 新增属性，用于记录一个 Module 的所有名称以及相关信息（requires、exports、opens、users、provides）
      */

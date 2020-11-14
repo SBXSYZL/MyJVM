@@ -3,12 +3,12 @@ package classLoadSystem.analyzer.constant.attribute.attributeImpl;
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.attribute.AttributeInfo;
 import classLoadSystem.analyzer.constant.ConstantPool;
-import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.LocalVariableTypeInfo;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.LocalVariableTypeInfo;
 
 /**
  * @author 22454
  */
-public class AttributeInfoLocalVariableTypeTable extends AttributeInfo {
+public class AttributeInfoLocalVariableTypeTable implements AttributeInfo {
     private int localVariableTypeTableLength;
     private LocalVariableTypeInfo[] localVariableTypeTable;
     private ConstantPool constantPool;
@@ -26,5 +26,16 @@ public class AttributeInfoLocalVariableTypeTable extends AttributeInfo {
                     byteCodeFile.readTwoUint()
             );
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("LocalVariableTypeTableLength: ").append(localVariableTypeTableLength).append("\n")
+                .append("LocalVariableTypeTable: ").append("\n");
+        for (LocalVariableTypeInfo localVariableTypeInfo : localVariableTypeTable) {
+            builder.append("\t").append(localVariableTypeInfo).append("\n");
+        }
+        return builder.toString();
     }
 }

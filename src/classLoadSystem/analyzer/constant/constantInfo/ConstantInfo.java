@@ -91,6 +91,12 @@ public interface ConstantInfo {
                 return new ConstantInfoMethodType();
             case DYNAMIC_TAG:
                 return new ConstantInfoDynamic();
+            case INVOKE_DYNAMIC_TAG:
+                return new ConstantInfoInvokeDynamic();
+            case MODULE_TAG:
+                return new ConstantInfoModule();
+            case PACKAGE_TAG:
+                return new ConstantInfoPackage();
             default:
                 MyLog.error("Constant Pool TAG " + tag + " does not exists.");
                 throw new Exception("Constant Pool TAG " + tag + " does not exists.");

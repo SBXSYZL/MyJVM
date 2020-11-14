@@ -3,15 +3,13 @@ package classLoadSystem.analyzer.constant.attribute.attributeImpl;
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.attribute.AttributeInfo;
 import classLoadSystem.analyzer.constant.ConstantPool;
-import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.*;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.*;
 import log.MyLog;
-
-import java.util.Arrays;
 
 /**
  * @author 22454
  */
-public class AttributeInfoCode extends AttributeInfo {
+public class AttributeInfoCode implements AttributeInfo {
     private int maxStack;
     private int maxLocals;
     private int codeLength;
@@ -47,11 +45,8 @@ public class AttributeInfoCode extends AttributeInfo {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Code: \n");
-        builder.append("stack=")
-                .append(maxStack)
-                .append(", locals=")
-                .append(maxLocals)
-                .append("\n");
+        builder.append("stack=").append(maxStack)
+                .append(", locals=").append(maxLocals).append("\n");
         return builder.toString();
 
     }

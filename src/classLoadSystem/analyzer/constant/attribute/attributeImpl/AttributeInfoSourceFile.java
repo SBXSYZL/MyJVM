@@ -7,7 +7,7 @@ import classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoSourceFile extends AttributeInfo {
+public class AttributeInfoSourceFile implements AttributeInfo {
     private int sourceFileIndex;
     private ConstantPool constantPool;
 
@@ -15,5 +15,15 @@ public class AttributeInfoSourceFile extends AttributeInfo {
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.sourceFileIndex = byteCodeFile.readTwoUint();
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return "SourceFileIndex: " + sourceFileIndex + "\t" + "   --->   " + constantPool.getUtf8(sourceFileIndex) + "\n";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "\n";
+        }
     }
 }

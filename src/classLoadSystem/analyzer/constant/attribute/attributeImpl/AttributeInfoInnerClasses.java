@@ -7,7 +7,7 @@ import classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoInnerClasses extends AttributeInfo {
+public class AttributeInfoInnerClasses implements AttributeInfo {
     private int numberOfClasses;
     private InnerClassesInfo[] innerClasses;
     private ConstantPool constantPool;
@@ -22,7 +22,8 @@ public class AttributeInfoInnerClasses extends AttributeInfo {
                     byteCodeFile.readTwoUint(),
                     byteCodeFile.readTwoUint(),
                     byteCodeFile.readTwoUint(),
-                    byteCodeFile.readTwoUint()
+                    byteCodeFile.readTwoUint(),
+                    this.constantPool
             );
         }
 
@@ -33,12 +34,14 @@ public class AttributeInfoInnerClasses extends AttributeInfo {
         private int outerClassInfoIndex;
         private int innerNameIndex;
         private int innerClassAccessFlags;
+        private ConstantPool constantPool;
 
-        public InnerClassesInfo(int innerClassInfoIndex, int outerClassInfoIndex, int innerNameIndex, int innerClassAccessFlags) {
+        public InnerClassesInfo(int innerClassInfoIndex, int outerClassInfoIndex, int innerNameIndex, int innerClassAccessFlags, ConstantPool constantPool) {
             this.innerClassInfoIndex = innerClassInfoIndex;
             this.outerClassInfoIndex = outerClassInfoIndex;
             this.innerNameIndex = innerNameIndex;
             this.innerClassAccessFlags = innerClassAccessFlags;
+            this.constantPool = constantPool;
         }
 
         public int getInnerClassInfoIndex() {
@@ -59,12 +62,26 @@ public class AttributeInfoInnerClasses extends AttributeInfo {
 
         @Override
         public String toString() {
-            StringBuilder builder = new StringBuilder();
-            builder.append("\tInnerClassInfoIndex: ").append(innerClassInfoIndex).append("\n")
-                    .append("\tOuterClassInfoIndex: ").append(outerClassInfoIndex).append("\n")
-                    .append("\tInnerNameIndex: ").append(innerNameIndex).append("\n")
-                    .append("\tInnerClassAccessFlags: ").append(innerClassAccessFlags).append("\n");
-            return builder.toString();
+            try {
+                return "InnerClassInfoIndex: " + innerClassInfoIndex + "\n" +
+                        "\tOuterClassInfoIndex: " + outerClassInfoIndex + "\n" +
+                        "\tInnerNameIndex: " + innerNameIndex + "\n" +
+                        "\tInnerClassAccessFlags: " + innerClassAccessFlags + "\n";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "";
+            }
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("NumberOfClasses: ").append(numberOfClasses).append("\n")
+                .append("InnerClasses: \n");
+        for (InnerClassesInfo innerClass : innerClasses) {
+            builder.append("\t").append(innerClass).append("\n");
+        }
+        return builder.toString();
     }
 }

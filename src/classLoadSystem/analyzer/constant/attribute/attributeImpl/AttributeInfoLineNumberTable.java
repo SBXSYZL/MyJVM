@@ -3,12 +3,12 @@ package classLoadSystem.analyzer.constant.attribute.attributeImpl;
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.attribute.AttributeInfo;
 import classLoadSystem.analyzer.constant.ConstantPool;
-import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.LineNumberInfo;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.LineNumberInfo;
 
 /**
  * @author 22454
  */
-public class AttributeInfoLineNumberTable extends AttributeInfo {
+public class AttributeInfoLineNumberTable implements AttributeInfo {
     private int lineNumberTableLength;
     private LineNumberInfo[] lineNumberTable;
     private ConstantPool constantPool;
@@ -31,5 +31,16 @@ public class AttributeInfoLineNumberTable extends AttributeInfo {
             }
         }
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("LineNumberTableLength: ").append(lineNumberTableLength).append("\n")
+                .append("LineNumberTable: \n");
+        for (LineNumberInfo lineNumberInfo : lineNumberTable) {
+            builder.append("\t").append(lineNumberInfo).append("\n");
+        }
+        return builder.toString();
     }
 }

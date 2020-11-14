@@ -7,7 +7,7 @@ import classLoadSystem.analyzer.constant.attribute.AttributeInfo;
 /**
  * @author 22454
  */
-public class AttributeInfoUnparsed extends AttributeInfo {
+public class AttributeInfoUnparsed implements AttributeInfo {
     private String name;
     private int length;
     private byte[] info;

@@ -22,8 +22,20 @@ public class MyLoader implements Loader {
         bootstrapClassLoader = new MyBootstrapClassLoader();
         extClassLoader = new MyExtensionClassLoader(bootstrapClassLoader);
         applicationClassLoader = new MyApplicationClassLoader(extClassLoader);
-        byte[] byteCode = applicationClassLoader.findClass("java.lang.String");
-        ClassFile classFile = new ClassFile(byteCode);
+        String[] testClass = {"java.lang.String"
+                , "java.lang.Integer",
+                "java.awt.datatransfer.Clipboard",
+                "java.awt.datatransfer.DataFlavor",
+                "java.awt.datatransfer.Transferable",
+                "java.util.ArrayList",
+                "java.util.Arrays",
+                "javax.swing.JFrame"
+        };
+        for (String cls : testClass) {
+            byte[] byteCode = applicationClassLoader.findClass(cls);
+            ClassFile classFile = new ClassFile(byteCode);
+        }
+
     }
 
     @Override

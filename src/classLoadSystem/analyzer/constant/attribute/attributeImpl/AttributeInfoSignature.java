@@ -7,7 +7,7 @@ import classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoSignature extends AttributeInfo {
+public class AttributeInfoSignature implements AttributeInfo {
     private int signatureIndex;
     private ConstantPool constantPool;
 
@@ -15,5 +15,15 @@ public class AttributeInfoSignature extends AttributeInfo {
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.signatureIndex = byteCodeFile.readTwoUint();
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return "SignatureIndex: " + signatureIndex + "\t" + "   --->   " + constantPool.getUtf8(signatureIndex) + "\n";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 }

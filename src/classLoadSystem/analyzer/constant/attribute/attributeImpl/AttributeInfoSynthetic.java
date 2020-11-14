@@ -7,7 +7,7 @@ import classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoSynthetic extends AttributeInfo {
+public class AttributeInfoSynthetic implements AttributeInfo {
     private ConstantPool constantPool;
 
     @Override

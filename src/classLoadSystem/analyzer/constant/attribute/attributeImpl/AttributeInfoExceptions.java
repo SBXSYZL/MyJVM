@@ -7,7 +7,7 @@ import classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoExceptions extends AttributeInfo {
+public class AttributeInfoExceptions implements AttributeInfo {
     private int numberOfExceptions;
     private int[] exceptionIndexTable;
     private ConstantPool constantPool;

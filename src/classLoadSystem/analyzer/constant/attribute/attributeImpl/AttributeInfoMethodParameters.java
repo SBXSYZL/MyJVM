@@ -3,12 +3,12 @@ package classLoadSystem.analyzer.constant.attribute.attributeImpl;
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.attribute.AttributeInfo;
 import classLoadSystem.analyzer.constant.ConstantPool;
-import classLoadSystem.analyzer.constant.attribute.attributeImpl.entities.Parameter;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.Parameter;
 
 /**
  * @author 22454
  */
-public class AttributeInfoMethodParameters extends AttributeInfo {
+public class AttributeInfoMethodParameters implements AttributeInfo {
     private int parametersCount;
     private Parameter[] parameters;
     private ConstantPool constantPool;
@@ -21,5 +21,16 @@ public class AttributeInfoMethodParameters extends AttributeInfo {
         for (int i = 0; i < this.parametersCount; i++) {
             this.parameters[i] = new Parameter(byteCodeFile.readTwoUint(), byteCodeFile.readTwoUint());
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ParametersCount: ").append(parametersCount).append("\n")
+                .append("Parameters: ").append("\n");
+        for (Parameter parameter : parameters) {
+            builder.append("\t").append(parameter).append("\n");
+        }
+        return builder.toString();
     }
 }
