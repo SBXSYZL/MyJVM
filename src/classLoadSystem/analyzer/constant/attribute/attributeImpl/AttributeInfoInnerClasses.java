@@ -74,6 +74,18 @@ public class AttributeInfoInnerClasses implements AttributeInfo {
         }
     }
 
+    public int getNumberOfClasses() {
+        return numberOfClasses;
+    }
+
+    public InnerClassesInfo[] getInnerClasses() {
+        return innerClasses;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

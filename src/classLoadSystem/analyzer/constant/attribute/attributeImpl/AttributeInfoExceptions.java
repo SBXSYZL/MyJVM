@@ -3,6 +3,7 @@ package classLoadSystem.analyzer.constant.attribute.attributeImpl;
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.attribute.AttributeInfo;
 import classLoadSystem.analyzer.constant.ConstantPool;
+import log.MyLog;
 
 /**
  * @author 22454
@@ -26,6 +27,14 @@ public class AttributeInfoExceptions implements AttributeInfo {
         return exceptionIndexTable;
     }
 
+    public int getNumberOfExceptions() {
+        return numberOfExceptions;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -33,7 +42,8 @@ public class AttributeInfoExceptions implements AttributeInfo {
                 .append("\tExceptions:\n");
         for (int index : exceptionIndexTable) {
             try {
-                builder.append("\t").append(index).append("   --->   < ").append(constantPool.getUtf8(index)).append(" >");
+                MyLog.debug("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" + index);
+                builder.append("\t").append(index).append("   --->   < ").append(constantPool.getClassName(index)).append(" >");
             } catch (Exception e) {
                 e.printStackTrace();
             }

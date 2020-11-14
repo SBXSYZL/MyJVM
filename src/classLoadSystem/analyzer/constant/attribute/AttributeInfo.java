@@ -3,10 +3,12 @@ package classLoadSystem.analyzer.constant.attribute;
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.ConstantPool;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.*;
-import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeAnnotations.AttributeInfoRuntimeInvisibleAnnotations;
-import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeAnnotations.AttributeInfoRuntimeVisibleAnnotations;
-import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeParameterAnnotations.AttributeInfoRunVisibleParameterAnnotations;
-import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeParameterAnnotations.AttributeInfoRuntimeInvisibleParameterAnnotations;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeAnnotations.runtimeAnnotionsImpl.AttributeInfoRuntimeInvisibleAnnotations;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeAnnotations.runtimeAnnotionsImpl.AttributeInfoRuntimeVisibleAnnotations;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeParameterAnnotations.runtimeParameterAnnotationsImpl.AttributeInfoRunVisibleParameterAnnotations;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeParameterAnnotations.runtimeParameterAnnotationsImpl.AttributeInfoRuntimeInvisibleParameterAnnotations;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeTypeAnnotations.runtimeTypeAnnotationsImpl.AttributeInfoRuntimeInvisibleTypeAnnotations;
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeTypeAnnotations.runtimeTypeAnnotationsImpl.AttributeInfoRuntimeVisibleTypeAnnotations;
 import log.MyLog;
 
 
@@ -68,16 +70,15 @@ public interface AttributeInfo {
                 return new AttributeInfoAnnotationDefault();
             case AttributeTypeEnum.BOOTSTRAP_METHODS:
                 return new AttributeInfoBootstrapMethods();
-
-//            case AttributeTypeEnum.RUNTIME_VISIBLE_TYPE_ANNOTATIONS:
-//            case AttributeTypeEnum.RUNTIME_INVISIBLE_TYPE_ANNOTATIONS:
+            case AttributeTypeEnum.RUNTIME_VISIBLE_TYPE_ANNOTATIONS:
+                return new AttributeInfoRuntimeVisibleTypeAnnotations();
+            case AttributeTypeEnum.RUNTIME_INVISIBLE_TYPE_ANNOTATIONS:
+                return new AttributeInfoRuntimeInvisibleTypeAnnotations();
             case AttributeTypeEnum.METHOD_PARAMETERS:
                 return new AttributeInfoMethodParameters();
-            //TODO 未写完所有 case
+            //TODO 未写完所有 case,jdk9 & jdk11 不做实现
             default:
-                return new AttributeInfoUnparsed(attributeName, attributeLength);
-//                MyLog.error("maybe is this throw exception");
-//                throw new Exception("maybe is this throw exception");
+                throw new Exception("JVM Version Error ,UnKnown Attribute Info");
         }
     }
 

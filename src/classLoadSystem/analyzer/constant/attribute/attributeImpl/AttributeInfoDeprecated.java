@@ -13,6 +13,9 @@ public class AttributeInfoDeprecated implements AttributeInfo {
     @Override
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
+    }
 
+    public ConstantPool getConstantPool() {
+        return constantPool;
     }
 }

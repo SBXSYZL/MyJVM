@@ -23,6 +23,18 @@ public class AttributeInfoMethodParameters implements AttributeInfo {
         }
     }
 
+    public int getParametersCount() {
+        return parametersCount;
+    }
+
+    public Parameter[] getParameters() {
+        return parameters;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

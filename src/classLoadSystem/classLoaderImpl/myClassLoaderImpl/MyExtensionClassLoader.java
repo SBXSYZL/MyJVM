@@ -1,6 +1,6 @@
-package classLoadSystem.classLoaderImpl;
+package classLoadSystem.classLoaderImpl.myClassLoaderImpl;
 
-import classLoadSystem.MyClassLoader;
+import classLoadSystem.classLoaderImpl.MyClassLoader;
 
 /**
  * @author 22454

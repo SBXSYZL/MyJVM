@@ -22,6 +22,18 @@ public class AttributeInfoStackMapTable implements AttributeInfo {
         this.stackMapFrameEntries = StackMapFrame.readStackMapFrames(byteCodeFile, numberOfEntries);
     }
 
+    public int getNumberOfEntries() {
+        return numberOfEntries;
+    }
+
+    public StackMapFrame[] getStackMapFrameEntries() {
+        return stackMapFrameEntries;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

@@ -17,6 +17,14 @@ public class AttributeInfoSourceFile implements AttributeInfo {
         this.sourceFileIndex = byteCodeFile.readTwoUint();
     }
 
+    public int getSourceFileIndex() {
+        return sourceFileIndex;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         try {

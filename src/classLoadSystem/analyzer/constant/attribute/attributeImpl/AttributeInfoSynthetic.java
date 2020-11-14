@@ -14,4 +14,8 @@ public class AttributeInfoSynthetic implements AttributeInfo {
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
     }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
 }

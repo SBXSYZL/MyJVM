@@ -16,16 +16,6 @@ public class FieldInfo implements MemberInfo {
     private AttributeInfo[] attributes;
     private ConstantPool constantPool;
 
-    public static final int ACC_PUBLIC = 0x0001;
-    public static final int ACC_PRIVATE = 0x0002;
-    public static final int ACC_PROTECTED = 0x0004;
-    public static final int ACC_STATIC = 0x0008;
-    public static final int ACC_FINAL = 0x0010;
-    public static final int ACC_VOLATILE = 0x0040;
-    public static final int ACC_TRANSIENT = 0x0080;
-    public static final int ACC_SYNTHETIC = 0x1000;
-    public static final int ACC_ENUM = 0x4000;
-
 
     public FieldInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
         accessFlag = byteCodeFile.readTwoUint();
@@ -53,6 +43,9 @@ public class FieldInfo implements MemberInfo {
         try {
             builder.append("\tNameIndex = ").append(nameIndex).append("   --->   < ").append(constantPool.getUtf8(nameIndex)).append(" >").append(";\t");
             builder.append("DescriptorIndex = ").append(descriptorIndex).append("   --->   < ").append(constantPool.getUtf8(descriptorIndex)).append(" >").append("\n");
+            for (AttributeInfo attribute : attributes) {
+                builder.append("\t").append(attribute).append("\n");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

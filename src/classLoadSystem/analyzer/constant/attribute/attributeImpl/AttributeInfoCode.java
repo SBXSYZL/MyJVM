@@ -42,11 +42,56 @@ public class AttributeInfoCode implements AttributeInfo {
         MyLog.print(this.toString());
     }
 
+    public int getMaxStack() {
+        return maxStack;
+    }
+
+    public int getMaxLocals() {
+        return maxLocals;
+    }
+
+    public int getCodeLength() {
+        return codeLength;
+    }
+
+    public byte[] getCode() {
+        return code;
+    }
+
+    public int getExceptionTableLength() {
+        return exceptionTableLength;
+    }
+
+    public ExceptionInfo[] getExceptionTable() {
+        return exceptionTable;
+    }
+
+    public int getAttributeCount() {
+        return attributeCount;
+    }
+
+    public AttributeInfo[] getAttributes() {
+        return attributes;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Code: \n");
         builder.append("stack=").append(maxStack)
-                .append(", locals=").append(maxLocals).append("\n");
+                .append(", locals=").append(maxLocals).append("\n")
+                .append("Assembly Codes: \n");
+        for (byte b : code) {
+            builder.append("\t").append(b).append("\n");
+        }
+
+        builder.append("Attributes: \n");
+        for (AttributeInfo attribute : attributes) {
+            builder.append("\t").append(attribute).append("\n");
+        }
         return builder.toString();
 
     }

@@ -1,7 +1,7 @@
 package cmd;
 
-import classLoadSystem.Loader;
-import classLoadSystem.loaderImpl.MyLoader;
+import classLoadSystem.loaderCenter.LoaderCenter;
+import classLoadSystem.loaderCenter.loaderCenterImpl.MyLoaderCenter;
 import log.MyLog;
 
 import java.util.StringJoiner;
@@ -14,7 +14,7 @@ import static java.lang.Thread.sleep;
 public class MyCmd {
     private Parser cmdParser;
     private static CmdPanel cmdPanel;
-    private Loader loader;
+    private LoaderCenter loader;
     private static final String MY_JVM =
             "\n\n" +
                     "   **************************************************************************************************\n" +
@@ -47,7 +47,7 @@ public class MyCmd {
         MyLog.success("Cmd Parser Load Successfully.");
         MyLog.success("My Java Virtual Machine Start Successfully.");
         MyLog.info("Class Loader Start...");
-        loader = new MyLoader();
+        loader = new MyLoaderCenter();
         MyLog.success("Class Loader Start Successfully.");
 
     }

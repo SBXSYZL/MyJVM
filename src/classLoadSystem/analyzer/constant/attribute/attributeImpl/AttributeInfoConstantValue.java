@@ -17,6 +17,14 @@ public class AttributeInfoConstantValue implements AttributeInfo {
         this.constantValueIndex = byteCodeFile.readTwoUint();
     }
 
+    public int getConstantValueIndex() {
+        return constantValueIndex;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         return "" + constantValueIndex+"\n";

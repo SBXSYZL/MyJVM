@@ -6,27 +6,30 @@ import classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.FieldInfo;
 
 public interface MemberInfo {
 
-    public static final int ACC_PUBLIC_COMMON = 0x0001;
-    public static final int ACC_PRIVATE_COMMON = 0x0002;
-    public static final int ACC_PROTECTED_COMMON = 0x0004;
-    public static final int ACC_STATIC_COMMON = 0x0008;
-    public static final int ACC_FINAL_COMMON = 0x0010;
-    public static final int ACC_SYNTHETIC_COMMON = 0x1000;
+    int ACC_PUBLIC_COMMON = 0x0001;
+    int ACC_PRIVATE_COMMON = 0x0002;
+    int ACC_PROTECTED_COMMON = 0x0004;
+    int ACC_STATIC_COMMON = 0x0008;
+    int ACC_FINAL_COMMON = 0x0010;
+    int ACC_SYNTHETIC_COMMON = 0x1000;
 
-    public static final int ACC_VOLATILE_FIELD = 0x0040;
-    public static final int ACC_TRANSIENT_FIELD = 0x0080;
-    public static final int ACC_ENUM_FIELD = 0x4000;
+    int ACC_VOLATILE_FIELD = 0x0040;
+    int ACC_TRANSIENT_FIELD = 0x0080;
+    int ACC_ENUM_FIELD = 0x4000;
 
 
-    public static final int ACC_SYNCHRONIZED_METHOD = 0x0020;
-    public static final int ACC_BRIDGE_METHOD = 0x00040;
-    public static final int ACC_VARARGS_METHOD = 0x0080;
-    public static final int ACC_NATIVE_METHOD = 0x0100;
-    public static final int ACC_ABSTRACT_METHOD = 0x0400;
-    public static final int ACC_STRICT_METHOD = 0x0800;
+    int ACC_SYNCHRONIZED_METHOD = 0x0020;
+    int ACC_BRIDGE_METHOD = 0x00040;
+    int ACC_VARARGS_METHOD = 0x0080;
+    int ACC_NATIVE_METHOD = 0x0100;
+    int ACC_ABSTRACT_METHOD = 0x0400;
+    int ACC_STRICT_METHOD = 0x0800;
 
     /**
      * 根据 flag值获取响应访问权限字符串
+     *
+     * @param accessFlag 访问 flag
+     * @return 访问权限字符串
      */
     static String getAccessFlagString(int accessFlag) {
         StringBuilder builder = new StringBuilder();

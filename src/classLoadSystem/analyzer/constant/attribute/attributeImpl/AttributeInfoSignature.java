@@ -17,6 +17,14 @@ public class AttributeInfoSignature implements AttributeInfo {
         this.signatureIndex = byteCodeFile.readTwoUint();
     }
 
+    public int getSignatureIndex() {
+        return signatureIndex;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         try {

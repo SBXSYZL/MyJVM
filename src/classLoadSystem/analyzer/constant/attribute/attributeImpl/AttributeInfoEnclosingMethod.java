@@ -19,6 +19,18 @@ public class AttributeInfoEnclosingMethod implements AttributeInfo {
         this.constantPool = constantPool;
     }
 
+    public int getClassIndex() {
+        return classIndex;
+    }
+
+    public int getMethodIndex() {
+        return methodIndex;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         try {

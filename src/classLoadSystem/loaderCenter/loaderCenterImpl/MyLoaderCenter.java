@@ -1,24 +1,20 @@
-package classLoadSystem.loaderImpl;
+package classLoadSystem.loaderCenter.loaderCenterImpl;
 
-import classLoadSystem.Loader;
+import classLoadSystem.loaderCenter.LoaderCenter;
 import classLoadSystem.analyzer.ClassFile;
-import classLoadSystem.analyzer.ClassFileReader;
-import classLoadSystem.classLoaderImpl.MyApplicationClassLoader;
-import classLoadSystem.classLoaderImpl.MyBootstrapClassLoader;
-import classLoadSystem.classLoaderImpl.MyExtensionClassLoader;
-
-import java.math.BigInteger;
-import java.util.Arrays;
+import classLoadSystem.classLoaderImpl.myClassLoaderImpl.MyApplicationClassLoader;
+import classLoadSystem.classLoaderImpl.myClassLoaderImpl.MyBootstrapClassLoader;
+import classLoadSystem.classLoaderImpl.myClassLoaderImpl.MyExtensionClassLoader;
 
 /**
  * @author 22454
  */
-public class MyLoader implements Loader {
+public class MyLoaderCenter implements LoaderCenter {
     private final MyBootstrapClassLoader bootstrapClassLoader;
     private final MyExtensionClassLoader extClassLoader;
     private final MyApplicationClassLoader applicationClassLoader;
 
-    public MyLoader() throws Exception {
+    public MyLoaderCenter() throws Exception {
         bootstrapClassLoader = new MyBootstrapClassLoader();
         extClassLoader = new MyExtensionClassLoader(bootstrapClassLoader);
         applicationClassLoader = new MyApplicationClassLoader(extClassLoader);
@@ -29,7 +25,9 @@ public class MyLoader implements Loader {
                 "java.awt.datatransfer.Transferable",
                 "java.util.ArrayList",
                 "java.util.Arrays",
-                "javax.swing.JFrame"
+                "javax.swing.JFrame",
+                "java.math.BigInteger",
+                "classLoadSystem.loaderCenter.LoaderCenter"
         };
         for (String cls : testClass) {
             byte[] byteCode = applicationClassLoader.findClass(cls);

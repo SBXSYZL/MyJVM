@@ -1,9 +1,9 @@
-package classLoadSystem;
+package classLoadSystem.loaderCenter;
 
 /**
  * @author 22454
  */
-public interface Loader {
+public interface LoaderCenter {
     /**
      * 查找类
      *

@@ -24,6 +24,18 @@ public class AttributeInfoBootstrapMethods implements AttributeInfo {
         }
     }
 
+    public int getNumBootstrapMethods() {
+        return numBootstrapMethods;
+    }
+
+    public BootstrapMethod[] getBootstrapMethods() {
+        return bootstrapMethods;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

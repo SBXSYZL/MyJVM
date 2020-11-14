@@ -16,6 +16,10 @@ public class AttributeInfoAnnotationDefault implements AttributeInfo {
         defaultValue = new ElementValue(byteCodeFile);
     }
 
+    public ElementValue getDefaultValue() {
+        return defaultValue;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

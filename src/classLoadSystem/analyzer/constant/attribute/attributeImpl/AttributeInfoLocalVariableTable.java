@@ -29,6 +29,18 @@ public class AttributeInfoLocalVariableTable implements AttributeInfo {
         }
     }
 
+    public int getLocalVariableTableLength() {
+        return localVariableTableLength;
+    }
+
+    public LocalVariableInfo[] getLocalVariableTable() {
+        return localVariableTable;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

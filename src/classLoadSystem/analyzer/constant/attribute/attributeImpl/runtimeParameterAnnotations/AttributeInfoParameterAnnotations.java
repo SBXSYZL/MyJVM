@@ -8,7 +8,7 @@ import classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDepend
 /**
  * @author 22454
  */
-public class AttributeInfoParameterAnnotations implements AttributeInfo {
+public abstract class AttributeInfoParameterAnnotations implements AttributeInfo {
     private int numParameters;
     private ParameterAnnotations[] parameterAnnotations;
 

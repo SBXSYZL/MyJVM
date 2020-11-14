@@ -1,4 +1,6 @@
-package classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeAnnotations;
+package classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeAnnotations.runtimeAnnotionsImpl;
+
+import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeAnnotations.AttributeInfoRuntimeAnnotations;
 
 /**
  * @author 22454

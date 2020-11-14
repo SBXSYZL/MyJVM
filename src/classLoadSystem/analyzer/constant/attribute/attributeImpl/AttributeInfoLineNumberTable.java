@@ -33,6 +33,18 @@ public class AttributeInfoLineNumberTable implements AttributeInfo {
         return -1;
     }
 
+    public int getLineNumberTableLength() {
+        return lineNumberTableLength;
+    }
+
+    public LineNumberInfo[] getLineNumberTable() {
+        return lineNumberTable;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();

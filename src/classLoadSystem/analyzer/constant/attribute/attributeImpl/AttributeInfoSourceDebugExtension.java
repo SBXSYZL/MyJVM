@@ -10,7 +10,7 @@ import classLoadSystem.analyzer.constant.ConstantPool;
 
 public class AttributeInfoSourceDebugExtension implements AttributeInfo {
     private int debugExtensionLength;
-    private int[] debugExtension;//TODO 可能有错，类型
+    private int[] debugExtension;
     private ConstantPool constantPool;
 
     @Override
@@ -21,6 +21,17 @@ public class AttributeInfoSourceDebugExtension implements AttributeInfo {
         for (int i = 0; i < this.debugExtensionLength; i++) {
             debugExtension[i] = byteCodeFile.readOneUint();
         }
+    }
 
+    public int getDebugExtensionLength() {
+        return debugExtensionLength;
+    }
+
+    public int[] getDebugExtension() {
+        return debugExtension;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
     }
 }

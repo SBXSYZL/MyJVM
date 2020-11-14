@@ -28,6 +28,18 @@ public class AttributeInfoLocalVariableTypeTable implements AttributeInfo {
         }
     }
 
+    public int getLocalVariableTypeTableLength() {
+        return localVariableTypeTableLength;
+    }
+
+    public LocalVariableTypeInfo[] getLocalVariableTypeTable() {
+        return localVariableTypeTable;
+    }
+
+    public ConstantPool getConstantPool() {
+        return constantPool;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
