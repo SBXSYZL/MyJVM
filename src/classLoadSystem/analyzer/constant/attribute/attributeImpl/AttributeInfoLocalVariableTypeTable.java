@@ -17,6 +17,7 @@ public class AttributeInfoLocalVariableTypeTable implements AttributeInfo {
     public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.localVariableTypeTableLength = byteCodeFile.readTwoUint();
+        this.localVariableTypeTable = new LocalVariableTypeInfo[this.localVariableTypeTableLength];
         for (int i = 0; i < this.localVariableTypeTableLength; i++) {
             this.localVariableTypeTable[i] = new LocalVariableTypeInfo(
                     byteCodeFile.readTwoUint(),

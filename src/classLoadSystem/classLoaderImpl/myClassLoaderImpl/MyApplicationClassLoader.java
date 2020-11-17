@@ -17,6 +17,6 @@ public class MyApplicationClassLoader extends MyClassLoader {
         if (byteCode != null) {
             return byteCode;
         }
-        throw new Exception("Class ".concat(absClassName).concat(" Fail."));
+        throw new Exception("Class ".concat(absClassName).concat(" Load Fail."));
     }
 }

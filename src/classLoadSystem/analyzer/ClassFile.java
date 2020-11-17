@@ -51,12 +51,15 @@ public final class ClassFile {
                 this.constantPoolCount = byteCodeFile.readTwoUint();
                 //创建常量池
                 this.constantPool = new ConstantPool(constantPoolCount);
+
                 //读物所有 constant info
                 readConstantInfo(byteCodeFile);
                 //读取访问标志
                 this.accessFlag = byteCodeFile.readTwoUint();
                 //读取当前类索引
                 this.thisClass = byteCodeFile.readTwoUint();
+                String className = constantPool.getClassName(thisClass);
+                this.constantPool.setClassName(className);
                 //读取父类索引
                 this.superClass = byteCodeFile.readTwoUint();
                 //读取接口数量
@@ -69,7 +72,7 @@ public final class ClassFile {
                 this.fields = readFields(byteCodeFile, constantPool, fieldsCount);
                 //读取方法个数
                 this.methodsCount = byteCodeFile.readTwoUint();
-                System.out.println("this class file has [ " + methodsCount + " ] functions");
+//                System.out.println("this class file has [ " + methodsCount + " ] functions");
                 //读取方法
                 this.methods = readMethods(byteCodeFile, constantPool, methodsCount);
                 //读取属性数
@@ -217,7 +220,7 @@ public final class ClassFile {
                 .append("Constant Pool Count: ").append(constantPoolCount).append("\n")
                 .append("Access Flag: ").append(accessFlag).append("\n")
                 .append("This Class Index: #").append(thisClass).append("   --->   This Class Name: ").append(" <").append(constantPool.getClassName(thisClass)).append(">").append("\n")
-                .append("Super Class Index: #").append(superClass).append("   --->   Super Class Name: ").append(" <").append(constantPool.getClassName(superClass)).append(">").append("\n")
+                .append("Super Class Index: #").append(superClass).append("   --->   Super Class Name: ").append(" <").append(0 == superClass ? "" : constantPool.getClassName(superClass)).append(">").append("\n")
                 .append("Interface Count: ").append(interfaceCount).append("\n")
                 .append("Field Count: ").append(fieldsCount).append("\n")
                 .append("Method Count: ").append(methodsCount).append("\n")
@@ -257,5 +260,6 @@ public final class ClassFile {
         String className = constantPool.getClassName(thisClass);
         String[] split = className.split("/");
         FileUtil.writeToFile(split[split.length - 1] + "_ByteCode_Show.txt", builder.toString());
+        FileUtil.appendContentToFile("/Record/record.txt", className);
     }
 }

@@ -1,0 +1,80 @@
+package runtimeDataArea.threadDependent;
+
+import runtimeDataArea.threadDependent.variableSlotImpl.VariableSlotNumber;
+import runtimeDataArea.threadDependent.variableSlotImpl.VariableSlotObject;
+import utils.LongUtil;
+
+import java.util.Map;
+
+/**
+ * @author 22454
+ */
+public interface VariableSlot {
+    /**
+     * 获取值
+     *
+     * @return 值
+     */
+    Object getValue();
+
+    /**
+     * 设置值
+     *
+     * @param value 值
+     * @throws Exception ex
+     */
+    void setValue(Object value) throws Exception;
+
+    /**
+     * 创建一个变量槽
+     *
+     * @param value 值
+     * @return 变量槽
+     * @throws Exception ex
+     */
+    static VariableSlot createVariableSlot(Object value) throws Exception {
+        VariableSlot variableSlot = null;
+        //如果是数值型
+        if (value instanceof Number) {
+            variableSlot = new VariableSlotNumber();
+        }
+        //如果是对象型
+        else {
+            variableSlot = new VariableSlotObject();
+        }
+        variableSlot.setValue(value);
+        return variableSlot;
+    }
+
+    class LongVariableSplitEntity {
+        private VariableSlot highVariableSlot;
+        private VariableSlot lowVariableSlot;
+
+        public LongVariableSplitEntity(long value) throws Exception {
+            Map<String, Integer> map = LongUtil.splitLongIntoTwoIntegers(value);
+            int low = map.get(LongUtil.LOW_32_BIT_INTEGER);
+            int high = map.get(LongUtil.HIGH_32_BIT_INTEGER);
+            this.highVariableSlot = VariableSlot.createVariableSlot(high);
+            this.lowVariableSlot = VariableSlot.createVariableSlot(low);
+        }
+
+        public LongVariableSplitEntity(VariableSlot highVariableSlot, VariableSlot lowVariableSlot) {
+            this.highVariableSlot = highVariableSlot;
+            this.lowVariableSlot = lowVariableSlot;
+        }
+
+        public long resumeToLong() {
+            int high = (int) highVariableSlot.getValue();
+            int low = (int) lowVariableSlot.getValue();
+            return LongUtil.twoIntegersAreRestoredToLong(high, low);
+        }
+
+        public VariableSlot getHighVariableSlot() {
+            return highVariableSlot;
+        }
+
+        public VariableSlot getLowVariableSlot() {
+            return lowVariableSlot;
+        }
+    }
+}

@@ -13,6 +13,7 @@ import java.util.Map;
 public class ConstantPool {
     private ConstantInfo[] pool;
     private final int constantPoolCount;
+    private String className;
 
     public ConstantPool(int constantPoolCount) {
         this.constantPoolCount = constantPoolCount;
@@ -28,6 +29,10 @@ public class ConstantPool {
         return pool[index];
     }
 
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
     /**
      * 根据 index 获取常量池中的一个 utf8 字符串
      */
@@ -41,7 +46,7 @@ public class ConstantPool {
                 MyLog.error("ConstantInfo Type Cast Error");
                 throw new Exception("ConstantInfo Type Cast Error");
             }
-            throw new Exception("The element with index [ " + index + " ] does not exist in the constant pool");
+            throw new Exception("Class:" + className + " --> The element with index [ " + index + " ] does not exist in the constant pool");
         }
     }
 
@@ -127,7 +132,7 @@ public class ConstantPool {
                 MyLog.error("ConstantInfo Type Cast Error," + constantInfoClass.getClass() + " Can not Cast to ConstantInfoClass");
                 throw new Exception("ConstantInfo Type Cast Error");
             }
-            throw new Exception("The element with index [ " + index + " ] does not exist in the constant pool");
+            throw new Exception("Class:" + className + " --> The element with index [ " + index + " ] does not exist in the constant pool");
         }
     }
 

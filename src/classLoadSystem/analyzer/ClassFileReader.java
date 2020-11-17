@@ -7,9 +7,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -156,6 +154,69 @@ public class ClassFileReader {
             throw new Exception("Read Class " + absClassName + " From " + absJarPath + " Error");
         }
 
+    }
+
+    public static synchronized String[] readAllClassNameFromJar(String absJarPath) {
+        try {
+            List<String> classes = new ArrayList<>();
+            JarFile jarFile = new JarFile(absJarPath);
+            Enumeration<JarEntry> entries = jarFile.entries();
+            while (entries.hasMoreElements()) {
+                JarEntry jarEntry = entries.nextElement();
+                String entryName = jarEntry.getName();
+                entryName = entryName.replaceAll("/", ".");
+                if (entryName.endsWith(".class")) {
+                    classes.add(entryName);
+                }
+            }
+            String[] classesArray = new String[classes.size()];
+            for (int i = 0; i < classes.size(); i++) {
+                classesArray[i] = classes.get(i);
+            }
+            return classesArray;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static synchronized String[] readAllClassNameInJarFromDirectory(String dirPath) throws Exception {
+        try {
+
+            File dir = new File(dirPath);
+            if (dir.isDirectory()) {
+                List<String> classNameList = new ArrayList<>();
+                LinkedList<File> fileList = new LinkedList<>();
+                fileList.addLast(dir);
+                while (fileList.size() > 0) {
+                    File first = fileList.removeFirst();
+                    if (first.isDirectory()) {
+                        File[] files = first.listFiles();
+                        if (files != null && files.length > 0) {
+                            fileList.addAll(Arrays.asList(files));
+                        }
+                    } else {
+                        if (first.getName().endsWith(".jar")) {
+                            String[] classNameFromJar = readAllClassNameFromJar(first.getAbsolutePath());
+                            if (classNameFromJar != null && classNameFromJar.length > 0) {
+                                classNameList.addAll(Arrays.asList(classNameFromJar));
+                            }
+                        }
+                    }
+                }
+
+                String[] classNames = new String[classNameList.size()];
+                for (int i = 0; i < classNameList.size(); i++) {
+                    classNames[i] = classNameList.get(i);
+                }
+                return classNames;
+            } else {
+                throw new Exception(dirPath + " Not A Directory");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     /**
