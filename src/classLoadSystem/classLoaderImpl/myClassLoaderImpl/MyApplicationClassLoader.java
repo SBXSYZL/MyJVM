@@ -2,6 +2,8 @@ package classLoadSystem.classLoaderImpl.myClassLoaderImpl;
 
 
 import classLoadSystem.classLoaderImpl.MyClassLoader;
+import exception.EmClassLoadErr;
+import exception.JvmException;
 
 /**
  * @author 22454
@@ -17,6 +19,6 @@ public class MyApplicationClassLoader extends MyClassLoader {
         if (byteCode != null) {
             return byteCode;
         }
-        throw new Exception("Class ".concat(absClassName).concat(" Load Fail."));
+        throw new JvmException(EmClassLoadErr.FAIL_TO_LOAD_CLASS, "Class: [ ".concat(absClassName).concat(" ] Load Fail."));
     }
 }

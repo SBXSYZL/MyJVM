@@ -2,8 +2,8 @@ package cmd;
 
 import cmd.CommandCollection.Command;
 import cmd.CommandCollection.CommandLoader;
-import exception.CmdException;
-import exception.EmBusinessErr;
+import exception.JvmException;
+import exception.EmCommandErr;
 import log.MyLog;
 
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,8 +43,8 @@ public class CmdParser implements Parser {
             cls.exec(commandSections);
 
         } else {
-            MyLog.error(EmBusinessErr.UNKNOWN_ERROR.getErrMsg());
-            throw new CmdException(EmBusinessErr.UNKNOWN_ERROR);
+            MyLog.error(EmCommandErr.UNKNOWN_ERROR.getErrMsg());
+            throw new JvmException(EmCommandErr.UNKNOWN_ERROR);
         }
         return true;
     }

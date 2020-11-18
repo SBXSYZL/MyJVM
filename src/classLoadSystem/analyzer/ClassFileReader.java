@@ -1,6 +1,8 @@
 package classLoadSystem.analyzer;
 
 import com.sun.istack.internal.NotNull;
+import exception.EmClassLoadErr;
+import exception.JvmException;
 import log.MyLog;
 
 import java.io.*;
@@ -15,11 +17,16 @@ import java.util.jar.JarFile;
 /**
  * @author 22454
  */
-public class ClassFileReader {
+public final class ClassFileReader {
     /**
      * 读取文件的字符集
      */
     private static final Charset CHARSETS = StandardCharsets.ISO_8859_1;
+
+    /**
+     * 类文件字节码缓存，key: 全限定类名 , value: 字节码
+     */
+    private static final ConcurrentHashMap<String, byte[]> BYTE_CODE_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 从一份文件/文件夹读取所有class
@@ -101,7 +108,7 @@ public class ClassFileReader {
         } catch (IOException e) {
             e.printStackTrace();
             MyLog.error("Read File " + file.getAbsolutePath() + "/" + file.getName() + " Error");
-            throw new Exception("Read File Error");
+            throw new JvmException(EmClassLoadErr.READ_FILE_ERROR);
         }
     }
 
@@ -127,10 +134,9 @@ public class ClassFileReader {
             return result;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("转十六进制失败...");
+            throw new JvmException(EmClassLoadErr.FAILED_TO_CONVERT_TO_HEXADECIMAL);
         }
     }
-
 
     /**
      * 从Jar包读取类字节码
@@ -146,17 +152,17 @@ public class ClassFileReader {
             if (byteCode != null) {
                 return byteCode;
             } else {
-                throw new Exception("Read Class " + absClassName + " From " + absJarPath + " Error");
+                throw new JvmException(EmClassLoadErr.FAILED_TO_READ_BYTECODE_FROM_JAR, "Read Class: [ " + absClassName + " ] From [ " + absJarPath + " ] Error");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Read Class " + absClassName + " From " + absJarPath + " Error");
+            throw new JvmException(EmClassLoadErr.FAILED_TO_READ_BYTECODE_FROM_JAR, "Read Class: [ " + absClassName + " ] From [ " + absJarPath + " ] Error");
         }
 
     }
 
-    public static synchronized String[] readAllClassNameFromJar(String absJarPath) {
+    public static synchronized String[] readAllClassNameFromJar(String absJarPath) throws JvmException {
         try {
             List<String> classes = new ArrayList<>();
             JarFile jarFile = new JarFile(absJarPath);
@@ -176,8 +182,8 @@ public class ClassFileReader {
             return classesArray;
         } catch (Exception e) {
             e.printStackTrace();
+            throw new JvmException(EmClassLoadErr.FAILED_TO_READ_CLASS_NAME_FROM_JAR);
         }
-        return null;
     }
 
     public static synchronized String[] readAllClassNameInJarFromDirectory(String dirPath) throws Exception {
@@ -198,7 +204,7 @@ public class ClassFileReader {
                     } else {
                         if (first.getName().endsWith(".jar")) {
                             String[] classNameFromJar = readAllClassNameFromJar(first.getAbsolutePath());
-                            if (classNameFromJar != null && classNameFromJar.length > 0) {
+                            if (classNameFromJar.length > 0) {
                                 classNameList.addAll(Arrays.asList(classNameFromJar));
                             }
                         }
@@ -211,7 +217,7 @@ public class ClassFileReader {
                 }
                 return classNames;
             } else {
-                throw new Exception(dirPath + " Not A Directory");
+                throw new JvmException(EmClassLoadErr.PATH_ERROR, dirPath + " Not A Directory");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -232,6 +238,7 @@ public class ClassFileReader {
             JarEntry jarEntry = entries.nextElement();
             String entryName = jarEntry.getName();
             entryName = entryName.replaceAll("/", ".");
+
             if (entryName.equals(absClassName + ".class")) {
                 return getByteCodeFromJar(jarFile, jarEntry);
             }
@@ -253,14 +260,16 @@ public class ClassFileReader {
             String absClassPath = rootPath.concat("/").concat(classFileName);
             File file = new File(absClassPath);
             if (file.exists() && file.isFile()) {
-                return readClassFromFile(file);
+                byte[] byteCode = readClassFromFile(file);
+                BYTE_CODE_CACHE.put(absClassName, byteCode);
+                return byteCode;
             } else {
                 return null;
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Class " + absClassName + " Not Found.");
+            throw new JvmException(EmClassLoadErr.CLASS_NOT_FOUND, "Class: [ " + absClassName + " ] Not Found.");
         }
     }
 
@@ -284,44 +293,53 @@ public class ClassFileReader {
      */
     public static synchronized byte[] findClass(String absClassName, String absRootPath) throws Exception {
         try {
-            File file = new File(absRootPath);
-            if (!file.exists()) {
-                throw new Exception("Class Not Found");
-            }
-            LinkedList<File> fileQueue = new LinkedList<>();
-            fileQueue.addLast(file);
-            byte[] byteCode;
-            String realClassFileName = absClassName + ".class";
-            while (fileQueue.size() > 0) {
-                File first = fileQueue.getFirst();
-                if (first.isDirectory()) {
-                    File[] files = first.listFiles();
-                    if (files != null && files.length > 0) {
-                        fileQueue.addAll(Arrays.asList(files));
-                    }
-                } else {
-                    if (first.getName().endsWith(".jar")) {
-                        String absolutePath = first.getAbsolutePath();
-                        JarFile jarFile = new JarFile(absolutePath);
-                        byteCode = readClassFromJar(absClassName, jarFile);
-                        if (byteCode != null) {
-                            return byteCode;
-                        }
-                    } else if (first.getName().endsWith(".class")) {
-                        String absolutePath = first.getAbsolutePath();
-                        absolutePath = absolutePath.replaceAll("\\\\", ".");
-                        if (absolutePath.endsWith(realClassFileName)) {
-                            MyLog.debug("Load ".concat(absClassName).concat(" Successfully."));
-                            return readClassFromFile(first);
-                        }
-                    }
+            byte[] byteCode = BYTE_CODE_CACHE.get(absClassName);
+            if (byteCode == null) {
+                File file = new File(absRootPath);
+                if (!file.exists()) {
+                    throw new JvmException(EmClassLoadErr.CLASS_NOT_FOUND);
                 }
-                fileQueue.removeFirst();
+                LinkedList<File> fileQueue = new LinkedList<>();
+                fileQueue.addLast(file);
+                String realClassFileName = absClassName + ".class";
+                while (fileQueue.size() > 0) {
+                    File first = fileQueue.getFirst();
+                    //如果是文件夹，把他目录下的所有文件加入到遍历队列
+                    if (first.isDirectory()) {
+                        File[] files = first.listFiles();
+                        if (files != null && files.length > 0) {
+                            fileQueue.addAll(Arrays.asList(files));
+                        }
+                    } else {
+                        if (first.getName().endsWith(".jar")) {
+                            String absolutePath = first.getAbsolutePath();
+                            JarFile jarFile = new JarFile(absolutePath);
+                            byteCode = readClassFromJar(absClassName, jarFile);
+                            if (byteCode != null) {
+                                //放进缓存，以便下次使用
+                                BYTE_CODE_CACHE.put(absClassName, byteCode);
+                                return byteCode;
+                            }
+                        } else if (first.getName().endsWith(".class")) {
+                            String absolutePath = first.getAbsolutePath();
+                            absolutePath = absolutePath.replaceAll("\\\\", ".");
+                            if (absolutePath.endsWith(realClassFileName)) {
+                                MyLog.debug("Load ".concat(absClassName).concat(" Successfully."));
+                                byteCode = readClassFromFile(first);
+                                BYTE_CODE_CACHE.put(absClassName, byteCode);
+                                return byteCode;
+                            }
+                        }
+                    }
+                    fileQueue.removeFirst();
+                }
+                return null;
             }
-            return null;
+            return byteCode;
+
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Class Not Found");
+            throw new JvmException(EmClassLoadErr.CLASS_NOT_FOUND);
         }
     }
 

@@ -3,6 +3,8 @@ package runtimeDataArea.threadDependent.variableSlotImpl;
 import runtimeDataArea.threadDependent.VariableSlot;
 
 /**
+ * 对象型变量槽
+ *
  * @author 22454
  */
 public class VariableSlotObject implements VariableSlot {

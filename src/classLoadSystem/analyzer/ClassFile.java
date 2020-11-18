@@ -5,6 +5,8 @@ import classLoadSystem.analyzer.constant.constantInfo.ConstantInfo;
 import classLoadSystem.analyzer.constant.ConstantPool;
 import classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.FieldInfo;
 import classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.MethodInfo;
+import exception.EmClassLoadErr;
+import exception.JvmException;
 import log.MyLog;
 import utils.FileUtil;
 
@@ -72,7 +74,6 @@ public final class ClassFile {
                 this.fields = readFields(byteCodeFile, constantPool, fieldsCount);
                 //读取方法个数
                 this.methodsCount = byteCodeFile.readTwoUint();
-//                System.out.println("this class file has [ " + methodsCount + " ] functions");
                 //读取方法
                 this.methods = readMethods(byteCodeFile, constantPool, methodsCount);
                 //读取属性数
@@ -80,11 +81,11 @@ public final class ClassFile {
                 //读取所有属性
                 this.attributes = readAttributes(byteCodeFile, constantPool, attributesCount);
             } else {
-                throw new Exception("ByteCode File Format Error");
+                throw new JvmException(EmClassLoadErr.BYTECODE_FILE_FORMAT_ERROR);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("ByteCode File Format Error");
+            throw new JvmException(EmClassLoadErr.BYTECODE_FILE_FORMAT_ERROR);
         }
     }
 
@@ -111,9 +112,6 @@ public final class ClassFile {
     private MethodInfo[] readMethods(ByteCodeFile byteCodeFile, ConstantPool constantPool, int methodsCount) throws Exception {
         MyLog.debug("Read Methods Start");
         MethodInfo[] methodInfos = MethodInfo.readMembers(byteCodeFile, constantPool, methodsCount);
-        for (MethodInfo methodInfo : methodInfos) {
-            MyLog.print(methodInfo + "\n");
-        }
         MyLog.success("Read Methods Finish.");
         return methodInfos;
     }
@@ -129,9 +127,6 @@ public final class ClassFile {
     private FieldInfo[] readFields(ByteCodeFile byteCodeFile, ConstantPool constantPool, int fieldsCount) throws Exception {
         MyLog.debug("Read Field Start");
         FieldInfo[] fieldInfos = FieldInfo.readMembers(byteCodeFile, constantPool, fieldsCount);
-        for (FieldInfo fieldInfo : fieldInfos) {
-            MyLog.print(fieldInfo + "\n");
-        }
         MyLog.success("Read Field Finish.");
         return fieldInfos;
     }
@@ -156,7 +151,6 @@ public final class ClassFile {
     private boolean isCompilableVersion(ByteCodeFile byteCodeFile) {
         this.minorVersion = byteCodeFile.readTwoUint();
         this.majorVersion = byteCodeFile.readTwoUint();
-        final String JAVA_VERSION = "Java Version ";
         switch (majorVersion) {
             case 45:
             case 47:
@@ -193,8 +187,6 @@ public final class ClassFile {
                 i++;
             }
         }
-        String constantPoolStr = this.constantPool.constantPoolToStringForShow();
-        MyLog.print(constantPoolStr);
         MyLog.success("Read Constant Pool Finish.");
     }
 

@@ -3,6 +3,8 @@ package classLoadSystem.analyzer.constant.constantInfo;
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.ConstantPool;
 import classLoadSystem.analyzer.constant.constantInfo.constantInfoImpl.*;
+import exception.EmClassLoadErr;
+import exception.JvmException;
 import log.MyLog;
 
 import java.lang.reflect.Field;
@@ -99,7 +101,7 @@ public interface ConstantInfo {
                 return new ConstantInfoPackage();
             default:
                 MyLog.error("Constant Pool TAG " + tag + " does not exists.");
-                throw new Exception("Constant Pool TAG " + tag + " does not exists.");
+                throw new JvmException(EmClassLoadErr.FAILED_TO_READ_CONSTANT_INFO_FRO_CONSTANT_POOL);
         }
     }
 
@@ -108,8 +110,9 @@ public interface ConstantInfo {
      *
      * @param constantInfo x
      * @return x
+     * @throws JvmException ex
      */
-    static String getString(ConstantInfo constantInfo) {
+    static String getString(ConstantInfo constantInfo) throws JvmException {
         Class<? extends ConstantInfo> constantInfoClass = constantInfo.getClass();
         Field[] fields = constantInfoClass.getDeclaredFields();
         StringBuilder builder = new StringBuilder();
@@ -137,20 +140,27 @@ public interface ConstantInfo {
 
     /**
      * 根据TAG 获取 TAG的名字（调试使用）
+     *
+     * @param constantInfo 常量信息对象
+     * @return TAG名
+     * @throws JvmException ex
      */
-    static String findTag(ConstantInfo constantInfo) {
-        Field[] fields1 = ConstantInfo.class.getFields();
-        int tag = constantInfo.getTag();
-        for (Field field : fields1) {
-            try {
+    static String findTag(ConstantInfo constantInfo) throws JvmException {
+        try {
+            Field[] fields1 = ConstantInfo.class.getFields();
+            int tag = constantInfo.getTag();
+
+            for (Field field : fields1) {
+
                 int anInt = field.getInt(constantInfo);
                 if (tag == anInt) {
                     return field.getName();
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
             }
+            throw new JvmException(EmClassLoadErr.FAILED_TO_FIND_CONSTANT_INFO_TAG_NAME);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            throw new JvmException(EmClassLoadErr.FAILED_TO_FIND_CONSTANT_INFO_TAG_NAME);
         }
-        return "";
     }
 }

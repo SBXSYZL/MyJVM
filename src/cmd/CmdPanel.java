@@ -4,7 +4,7 @@
 
 package cmd;
 
-import exception.CmdException;
+import exception.JvmException;
 import log.MyLog;
 
 import java.awt.*;
@@ -258,8 +258,8 @@ public class CmdPanel extends JFrame {
             }
         } catch (Exception e) {
             //如果是已知的cmd错误，打印错误信息
-            if (e instanceof CmdException) {
-                printAndAdjust(((CmdException) e).getErrMsg());
+            if (e instanceof JvmException) {
+                printAndAdjust(((JvmException) e).getErrMsg());
             } else {
                 printAndAdjust(e.getMessage());
             }

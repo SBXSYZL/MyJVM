@@ -2,6 +2,8 @@ package classLoadSystem.classLoaderImpl.myClassLoaderImpl;
 
 import classLoadSystem.analyzer.ClassFileReader;
 import classLoadSystem.classLoaderImpl.MyClassLoader;
+import exception.EmClassLoadErr;
+import exception.JvmException;
 
 /**
  * @author 22454
@@ -16,7 +18,7 @@ public class MyBootstrapClassLoader extends MyClassLoader {
             byteCode = ClassFileReader.findClass(absClassName, property);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Class " + absClassName + " Not Found.");
+            throw new JvmException(EmClassLoadErr.FAIL_TO_LOAD_CLASS, "Class: [ " + absClassName + " ] Load Fail.");
         }
         return byteCode;
     }

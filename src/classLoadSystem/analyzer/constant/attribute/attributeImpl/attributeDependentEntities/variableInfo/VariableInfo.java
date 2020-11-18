@@ -1,6 +1,8 @@
 package classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.variableInfo;
 
 import classLoadSystem.analyzer.ByteCodeFile;
+import exception.EmClassLoadErr;
+import exception.JvmException;
 import log.MyLog;
 
 /**
@@ -24,7 +26,6 @@ public interface VariableInfo {
      * @throws Exception ex
      */
     static VariableInfo createVariableInfo(int tag, ByteCodeFile byteCodeFile) throws Exception {
-        MyLog.debug("Variable Info Tag : " + tag);
         switch (tag) {
             case VariableItemType.ITEM_TOP:
                 return new VariableInfoTop();
@@ -48,7 +49,7 @@ public interface VariableInfo {
                 return new VariableInfoUninitialized(offset);
             default:
 //                return new VariableInfoUnparsed();
-                throw new Exception("Create Variable Info Fail");
+                throw new JvmException(EmClassLoadErr.FAILED_TO_CREATE_VARIABLE_INFO, "Create Variable Info Fail,TAG:" + tag);
 
         }
     }

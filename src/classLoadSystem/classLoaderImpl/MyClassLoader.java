@@ -2,6 +2,9 @@ package classLoadSystem.classLoaderImpl;
 
 import classLoadSystem.analyzer.ClassFileReader;
 import com.sun.istack.internal.NotNull;
+import exception.EmClassLoadErr;
+import exception.EmCommandErr;
+import exception.JvmException;
 
 import java.util.Objects;
 
@@ -31,7 +34,7 @@ public abstract class MyClassLoader {
                 byteCode = ClassFileReader.findClass(absClassName, path);
             } catch (Exception e) {
                 e.printStackTrace();
-                throw new Exception("Class " + absClassName + " Not Found.");
+                throw new JvmException(EmClassLoadErr.CLASS_NOT_FOUND, "Class: [ " + absClassName + " ] Not Found.");
             }
         }
         return byteCode;

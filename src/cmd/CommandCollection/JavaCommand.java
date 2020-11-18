@@ -1,7 +1,7 @@
 package cmd.CommandCollection;
 
 import cmd.CmdConstant;
-import exception.EmBusinessErr;
+import exception.EmCommandErr;
 import log.MyLog;
 
 import java.util.ArrayList;
@@ -23,14 +23,14 @@ public class JavaCommand extends Command {
     public void exec(String[] commandSection) throws Exception {
         parse(commandSection);
         if (options.size() <= 0 && args.size() <= 0) {
-            MyLog.error(EmBusinessErr.PARSE_COMMAND_ERROR.getErrMsg());
+            MyLog.error(EmCommandErr.PARSE_COMMAND_ERROR.getErrMsg());
             throw new Exception(getUsage());
         }
         options.forEach(option -> {
             switch (option) {
                 case CmdConstant.VERSION:
                     if (options.size() > 1) {
-                        print(EmBusinessErr.PARSE_COMMAND_ERROR.getErrMsg());
+                        print(EmCommandErr.PARSE_COMMAND_ERROR.getErrMsg());
                     } else {
                         version();
                     }
@@ -42,7 +42,7 @@ public class JavaCommand extends Command {
                     printAndAdjust(getUsage());
                     break;
                 default:
-                    print(EmBusinessErr.UNKNOWN_ERROR.getErrMsg());
+                    print(EmCommandErr.UNKNOWN_ERROR.getErrMsg());
                     printAndAdjust(getUsage());
                     break;
             }

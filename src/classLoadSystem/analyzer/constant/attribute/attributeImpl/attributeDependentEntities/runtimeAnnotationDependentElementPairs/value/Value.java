@@ -3,6 +3,8 @@ package classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDepen
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.Annotation;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.runtimeAnnotationDependentElementPairs.value.valueImpl.*;
+import exception.EmClassLoadErr;
+import exception.JvmException;
 
 /**
  * @author 22454
@@ -38,7 +40,7 @@ public interface Value {
             case '[':
                 return new ArrayValue(byteCodeFile);
             default:
-                throw new Exception("Create Value Fail");
+                throw new JvmException(EmClassLoadErr.FAILED_TO_CREATE_VALUE);
         }
     }
 }

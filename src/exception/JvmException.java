@@ -6,23 +6,23 @@ import java.io.StringWriter;
 /**
  * @author 22454
  */
-public class CmdException extends Exception implements CommonError {
+public class JvmException extends Exception implements CommonError {
     private final Exception exception;
     private final CommonError commonError;
 
-    public CmdException(CommonError commonError) {
+    public JvmException(CommonError commonError) {
         this(null, commonError);
     }
 
-    public CmdException(CommonError commonError, String msg) {
+    public JvmException(CommonError commonError, String msg) {
         this(null, commonError, msg);
     }
 
-    public CmdException(Exception e, CommonError commonError) {
+    public JvmException(Exception e, CommonError commonError) {
         this(e, commonError, commonError.getErrMsg());
     }
 
-    public CmdException(Exception e, CommonError commonError, String msg) {
+    public JvmException(Exception e, CommonError commonError, String msg) {
         super();
 
         this.exception = e;

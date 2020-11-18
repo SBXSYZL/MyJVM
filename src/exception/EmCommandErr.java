@@ -4,7 +4,7 @@ package exception;
  * @author 22454
  */
 
-public enum EmBusinessErr implements CommonError {
+public enum EmCommandErr implements CommonError {
     /**
      *
      */
@@ -18,7 +18,7 @@ public enum EmBusinessErr implements CommonError {
     private final int errCode;
     private String msg;
 
-    EmBusinessErr(int errCode, String msg) {
+    EmCommandErr(int errCode, String msg) {
         this.errCode = errCode;
         this.msg = msg;
     }

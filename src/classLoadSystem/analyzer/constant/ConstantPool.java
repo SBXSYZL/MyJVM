@@ -2,6 +2,8 @@ package classLoadSystem.analyzer.constant;
 
 import classLoadSystem.analyzer.constant.constantInfo.ConstantInfo;
 import classLoadSystem.analyzer.constant.constantInfo.constantInfoImpl.*;
+import exception.EmClassLoadErr;
+import exception.JvmException;
 import log.MyLog;
 
 import java.util.HashMap;
@@ -44,9 +46,9 @@ public class ConstantPool {
             e.printStackTrace();
             if (e instanceof ClassCastException) {
                 MyLog.error("ConstantInfo Type Cast Error");
-                throw new Exception("ConstantInfo Type Cast Error");
+                throw new JvmException(EmClassLoadErr.CONSTANT_INFO_TYPE_CAST_ERROR);
             }
-            throw new Exception("Class:" + className + " --> The element with index [ " + index + " ] does not exist in the constant pool");
+            throw new JvmException(EmClassLoadErr.CONSTANT_POOL_DO_NOT_EXISTS_THIS_ELEMENT, "Class: [ " + className + " ] --> The element with index [ " + index + " ] does not exist in the constant pool");
         }
     }
 
@@ -129,10 +131,10 @@ public class ConstantPool {
         } catch (Exception e) {
             e.printStackTrace();
             if (e instanceof ClassCastException) {
-                MyLog.error("ConstantInfo Type Cast Error," + constantInfoClass.getClass() + " Can not Cast to ConstantInfoClass");
-                throw new Exception("ConstantInfo Type Cast Error");
+                MyLog.error(constantInfoClass.getClass() + " Can not Cast to ConstantInfoClass");
+                throw new JvmException(EmClassLoadErr.CONSTANT_INFO_TYPE_CAST_ERROR);
             }
-            throw new Exception("Class:" + className + " --> The element with index [ " + index + " ] does not exist in the constant pool");
+            throw new JvmException(EmClassLoadErr.CONSTANT_POOL_DO_NOT_EXISTS_THIS_ELEMENT, "Class: [ " + className + " ] --> The element with index [ " + index + " ] does not exist in the constant pool");
         }
     }
 
@@ -147,9 +149,9 @@ public class ConstantPool {
             e.printStackTrace();
             if (e instanceof ClassCastException) {
                 MyLog.error("ConstantInfo Type Cast Error");
-                throw new Exception("ConstantInfo Type Cast Error");
+                throw new JvmException(EmClassLoadErr.CONSTANT_INFO_TYPE_CAST_ERROR);
             }
-            throw new Exception("The element with index [ " + nameAndTypeIndex + " ] does not exist in the constant pool");
+            throw new JvmException(EmClassLoadErr.CONSTANT_POOL_DO_NOT_EXISTS_THIS_ELEMENT, "Class: [ " + className + " ] --> The element with index [ " + nameAndTypeIndex + " ] does not exist in the constant pool");
         }
 
 

@@ -2,6 +2,8 @@ package classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDepen
 
 import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.stackMapTableDependentFrame.frameImpl.*;
+import exception.EmClassLoadErr;
+import exception.JvmException;
 import log.MyLog;
 import utils.CompareUtil;
 
@@ -70,50 +72,41 @@ public interface Frame {
         Frame frame;
         //same_frame
         if (CompareUtil.between(SAME_MIN, SAME_MAX, frameType)) {
-            MyLog.debug("frameType=" + frameType + ", is same_frame");
             frame = new SameFrame();
         }
         //same_locals_1_stack_item
         else if (CompareUtil.between(SAME_LOCALS_ONE_STACK_ITEM_MIN, SAME_LOCALS_ONE_STACK_ITEM_MAX, frameType)) {
-            MyLog.debug("frameType=" + frameType + ", is same_locals_1_stack_item");
             frame = new SameLocalsOneStackItemFrame();
         }
         // [128,246]该区间留给未来的需要
         else if (CompareUtil.between(RESERVED_MIN, RESERVED_MAX, frameType)) {
-            throw new Exception("Interval Never Used");
-            //MyLog.error("frameType=" + frameType + ", is never used interval,exception");
-
+            throw new JvmException(EmClassLoadErr.FAILED_TO_CREATE_FRAME, "Interval Never Used");
         }
         //same_locals_1_stack_item_extended
         else if (frameType == SAME_LOCALS_ONE_STACK_ITEM_EXTENDED) {
-            MyLog.debug("frameType=" + frameType + ", is same_locals_1_stack_item_extended");
             frame = new SameLocalsOneStackItemFrameExtended();
         }
         //chop_frame
         else if (CompareUtil.between(CHOP_MIN, CHOP_MAX, frameType)) {
-            MyLog.debug("frameType=" + frameType + ", is chop_frame");
             frame = new ChopFrame();
         }
         //same_frame_extended
         else if (frameType == SAME_FRAME_EXTENDED) {
-            MyLog.debug("frameType=" + frameType + ", is same_frame_extended");
             frame = new SameFrameExtended();
         }
         //append_frame
         else if (CompareUtil.between(APPEND_MIN, APPEND_MAX, frameType)) {
-            MyLog.debug("frameType=" + frameType + ", is append_frame");
             frame = new AppendFrame();
         }
         //full_frame
         else if (frameType == FULL_FRAME) {
-            MyLog.debug("frameType=" + frameType + ", is full_frame");
             frame = new FullFrame();
         }
         //there may be some exception,
         // for example frameType > 255 or frameType < 0,it will raise some exception
         else {
             MyLog.warn("frameType=" + frameType + ", is error number");
-            throw new Exception("Read Stack Map Frame Fail");
+            throw new JvmException(EmClassLoadErr.FAILED_TO_CREATE_FRAME, "Read Stack Map Frame Fail");
         }
         frame.read(byteCodeFile, frameType);
         return frame;

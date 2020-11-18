@@ -7,6 +7,7 @@ import classLoadSystem.classLoaderImpl.myClassLoaderImpl.MyApplicationClassLoade
 import classLoadSystem.classLoaderImpl.myClassLoaderImpl.MyBootstrapClassLoader;
 import classLoadSystem.classLoaderImpl.myClassLoaderImpl.MyExtensionClassLoader;
 import com.sun.xml.internal.ws.api.databinding.DatabindingFactory;
+import log.MyLog;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,36 +27,13 @@ public class MyLoaderCenter implements LoaderCenter {
         applicationClassLoader = new MyApplicationClassLoader(extClassLoader);
         String javaHome = System.getProperty("java.home");
         System.out.println(javaHome);
-        String[] testClass = {
-//                "java.lang.Object"
-//                ,
-//                "java.lang.String"
-//                , "java.lang.Integer",
-//                "java.awt.datatransfer.Clipboard",
-//                "java.awt.datatransfer.DataFlavor",
-//                "java.awt.datatransfer.Transferable",
-//                "java.util.ArrayList",
-//                "java.util.Arrays",
-//                "javax.swing.JFrame",
-//                "java.math.BigInteger",
-//                "classLoadSystem.loaderCenter.LoaderCenter"
-        };
         String[] strings = ClassFileReader.readAllClassNameFromJar(javaHome + "/lib/rt.jar");
-        assert strings != null;
-        String[] ss = new String[testClass.length + strings.length];
-        for (int i = 0; i < ss.length; i++) {
-            if (i < testClass.length) {
-                ss[i] = testClass[i];
-            } else {
-                String string = strings[i - testClass.length];
-                ss[i] = string.substring(0, string.length() - 6);
-            }
-        }
 
-        testClass = ss;
+        for (String cls : strings) {
+            String clsName = cls.substring(0, cls.length() - 6);
+            MyLog.debug("Find: [ " + clsName + " ]");
+            byte[] byteCode = applicationClassLoader.findClass(clsName);
 
-        for (String cls : testClass) {
-            byte[] byteCode = applicationClassLoader.findClass(cls);
             ClassFile classFile = new ClassFile(byteCode);
         }
 

@@ -1,7 +1,6 @@
 package cmd.CommandCollection;
 
-import cmd.MyCmd;
-import exception.EmBusinessErr;
+import exception.EmCommandErr;
 
 import static cmd.MyCmd.*;
 
@@ -26,7 +25,7 @@ public class SystemCommand extends Command {
                 clear();
                 break;
             default:
-                throw new Exception(EmBusinessErr.UNKNOWN_ERROR.getErrMsg());
+                throw new Exception(EmCommandErr.UNKNOWN_ERROR.getErrMsg());
         }
     }
 
@@ -38,7 +37,7 @@ public class SystemCommand extends Command {
     @Override
     protected void parse(String[] commandSection) throws Exception {
         if (commandSection.length > 1) {
-            throw new Exception(EmBusinessErr.SYSTEM_COMMAND_ERROR.getErrMsg());
+            throw new Exception(EmCommandErr.SYSTEM_COMMAND_ERROR.getErrMsg());
         }
     }
 }

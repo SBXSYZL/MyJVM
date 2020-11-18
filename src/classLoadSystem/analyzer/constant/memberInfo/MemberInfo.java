@@ -4,6 +4,9 @@ import classLoadSystem.analyzer.ByteCodeFile;
 import classLoadSystem.analyzer.constant.ConstantPool;
 import classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.FieldInfo;
 
+/**
+ * @author 22454
+ */
 public interface MemberInfo {
 
     int ACC_PUBLIC_COMMON = 0x0001;

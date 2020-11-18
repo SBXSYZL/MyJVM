@@ -9,6 +9,8 @@ import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeParamete
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeParameterAnnotations.runtimeParameterAnnotationsImpl.AttributeInfoRuntimeInvisibleParameterAnnotations;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeTypeAnnotations.runtimeTypeAnnotationsImpl.AttributeInfoRuntimeInvisibleTypeAnnotations;
 import classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeTypeAnnotations.runtimeTypeAnnotationsImpl.AttributeInfoRuntimeVisibleTypeAnnotations;
+import exception.EmClassLoadErr;
+import exception.JvmException;
 import log.MyLog;
 
 
@@ -28,7 +30,6 @@ public interface AttributeInfo {
      */
     static AttributeInfo createAttribute(int attributeNameIndex, int attributeLength, ConstantPool constantPool) throws Exception {
         String attributeName = constantPool.getUtf8(attributeNameIndex);
-        MyLog.warn("Attribute Name : " + attributeName);
         switch (attributeName) {
             case AttributeTypeEnum.CODE:
                 return new AttributeInfoCode();
@@ -78,7 +79,7 @@ public interface AttributeInfo {
                 return new AttributeInfoMethodParameters();
             //TODO 未写完所有 case,jdk9 & jdk11 不做实现
             default:
-                throw new Exception("JVM Version Error ,UnKnown Attribute Info");
+                throw new JvmException(EmClassLoadErr.JVM_VERSION_ERROR, "UnKnown Attribute Info");
         }
     }
 
@@ -105,17 +106,16 @@ public interface AttributeInfo {
      * @param byteCodeFile 字节码文件
      * @return 属性
      */
-    public static AttributeInfo readAttribute(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    static AttributeInfo readAttribute(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
         try {
             int attributeNameIndex = byteCodeFile.readTwoUint();
-            MyLog.debug("AttributeNameIndex : " + attributeNameIndex);
             int attributeLength = byteCodeFile.readInteger();
             AttributeInfo attributeInfo = createAttribute(attributeNameIndex, attributeLength, constantPool);
             attributeInfo.readInfo(byteCodeFile, constantPool);
             return attributeInfo;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Read Attribute Fail");
+            throw new JvmException(EmClassLoadErr.FAILED_TO_READ_ATTRIBUTE);
         }
     }
 
@@ -126,5 +126,5 @@ public interface AttributeInfo {
      * @param constantPool 常量池
      * @throws Exception ex
      */
-    public abstract void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception;
+    void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception;
 }

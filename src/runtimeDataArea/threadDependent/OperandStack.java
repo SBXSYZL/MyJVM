@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.Map;
 
 /**
+ * 操作数栈
+ *
  * @author 22454
  */
 public class OperandStack {
@@ -18,22 +20,47 @@ public class OperandStack {
         stack = new LinkedList<>();
     }
 
+    /**
+     * Integer 入栈
+     *
+     * @param value 值
+     */
     public void pushInteger(Integer value) throws Exception {
         stack.addFirst(VariableSlot.createVariableSlot(value));
     }
 
+    /**
+     * Integer 出栈
+     *
+     * @return 值
+     */
     public Integer popInteger() {
         return (int) stack.removeFirst().getValue();
     }
 
+    /**
+     * Float 入栈
+     *
+     * @param value 值
+     */
     public void pushFloat(Float value) throws Exception {
         stack.addFirst(VariableSlot.createVariableSlot(value));
     }
 
+    /**
+     * Float 出栈
+     *
+     * @return 值
+     */
     public Float popFloat() {
         return (Float) stack.removeFirst().getValue();
     }
 
+    /**
+     * Long 入栈
+     *
+     * @param value 值
+     */
     public void pushLong(Long value) throws Exception {
 //        Map<String, Integer> map = LongUtil.splitLongIntoTwoIntegers(value);
 //        int low = map.get(LongUtil.LOW_32_BIT_INTEGER);
@@ -45,6 +72,11 @@ public class OperandStack {
         stack.addFirst(longVariableSplitEntity.getLowVariableSlot());
     }
 
+    /**
+     * Long 出栈
+     *
+     * @return 值
+     */
     public Long popLong() {
         VariableSlot lowSlot = stack.removeFirst();
         VariableSlot highSlot = stack.removeFirst();
@@ -55,23 +87,41 @@ public class OperandStack {
         return longVariableSplitEntity.resumeToLong();
     }
 
+    /**
+     * Double 入栈
+     *
+     * @param value 值
+     */
     public void pushDouble(Double value) throws Exception {
         long longBits = Double.doubleToLongBits(value);
-        System.out.println("long bits: " + longBits);
         pushLong(longBits);
     }
 
+    /**
+     * Double 出栈
+     *
+     * @return 值
+     */
     public Double popDouble() {
 
         long l = popLong();
-        System.out.println("resume long bits: " + l);
         return Double.longBitsToDouble(l);
     }
 
+    /**
+     * Object 入栈
+     *
+     * @param ref 对象引用
+     */
     public void pushRef(Object ref) throws Exception {
         stack.addFirst(VariableSlot.createVariableSlot(ref));
     }
 
+    /**
+     * Object 出栈
+     *
+     * @return 对象引用
+     */
     public Object popRef() {
         return stack.removeFirst().getValue();
     }
@@ -81,7 +131,7 @@ public class OperandStack {
     }
 
     public VariableSlot popVariableSlot() {
-        return (VariableSlot) stack.removeFirst().getValue();
+        return stack.removeFirst();
     }
 
     public void clear() {
@@ -100,10 +150,20 @@ public class OperandStack {
         return null;
     }
 
+    /**
+     * Boolean 入栈
+     *
+     * @param value bool值
+     */
     public void pushBoolean(boolean value) throws Exception {
         pushInteger(value ? 1 : 0);
     }
 
+    /**
+     * Boolean 出栈
+     *
+     * @return bool值
+     */
     public Boolean popBoolean() {
         return ((Integer) stack.removeFirst().getValue()) == 1;
     }
