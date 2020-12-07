@@ -25,7 +25,7 @@ public final class MyLog {
     private static final int MAX_LABEL_LENGTH = 20;
     private static final int MAX_THREAD_NAME_LENGTH = 10;
 
-    public synchronized static void info(final String msg) {
+    public static void info(final String msg) {
         if (useLog && useInfo) {
             String realMsg = formatMsg(msg, INFO_LABEL);
             System.out.println(realMsg);
@@ -33,48 +33,48 @@ public final class MyLog {
 
     }
 
-    public synchronized static void debug(final String msg) {
+    public static void debug(final String msg) {
         if (useLog && useDebug) {
             String realMsg = formatMsg(msg, DEBUG_LABEL);
             System.out.println(realMsg);
         }
     }
 
-    public synchronized static void warn(final String msg) {
+    public static void warn(final String msg) {
         if (useLog && useWarn) {
             String realMsg = formatMsg(msg, WARN_LABEL);
             System.out.println(realMsg);
         }
     }
 
-    public synchronized static void error(final String msg) {
+    public static void error(final String msg) {
         if (useLog && useError) {
             String realMsg = formatMsg(msg, ERROR_LABEL);
             System.out.println(realMsg);
         }
     }
 
-    public synchronized static void success(final String msg) {
+    public static void success(final String msg) {
         if (useLog && useSuccess) {
             String realMsg = formatMsg(msg, SUCCESS_LABEL);
             System.out.println(realMsg);
         }
     }
 
-    public synchronized static void command(final String msg) {
+    public static void command(final String msg) {
         if (useLog && useCommand) {
             String realMsg = formatMsg(msg, COMMAND_LABEL);
             System.out.println(realMsg);
         }
     }
 
-    public synchronized static void print(final String msg) {
+    public static void print(final String msg) {
         if (useLog && usePrint) {
             System.out.print(msg);
         }
     }
 
-    private synchronized static String formatMsg(final String msg, final String label) {
+    private static String formatMsg(final String msg, final String label) {
 
         StringBuilder builder = new StringBuilder();
         Thread currentThread = Thread.currentThread();
@@ -109,7 +109,7 @@ public final class MyLog {
         return builder.toString();
     }
 
-    private synchronized static String currentTime() {
+    private static String currentTime() {
         return dateTimeFormatter.format(LocalDateTime.now());
     }
 

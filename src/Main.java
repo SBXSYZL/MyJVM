@@ -1,4 +1,5 @@
 import cmd.MyCmd;
+import jvm.BeanCenter.MyBeanCenter;
 import log.MyLog;
 
 /**
@@ -12,16 +13,12 @@ public class Main {
          * 开启日志 start
          *  默认不开启日志，需要手动开启
 //         * */
-        MyLog.openLog();
-        MyLog.openWarnLog();
-        MyLog.openErrorLog();
-        MyLog.openDebugLog();
-        MyLog.openPrintLog();
-        MyLog.openSuccess();
+        MyLog.openAllLog();
         /*
          * 开启日志 end
          * */
         MyCmd myCmd = new MyCmd();
         myCmd.run();
+        MyBeanCenter.run();
     }
 }

@@ -57,4 +57,12 @@ public class JvmException extends Exception implements CommonError {
     public void setErrMsg(String msg) {
         this.commonError.setErrMsg(msg);
     }
+
+    @Override
+    public String toString() {
+        return "JvmException{" +
+                "exception=" + exception +
+                ", commonError=" + commonError +
+                '}';
+    }
 }

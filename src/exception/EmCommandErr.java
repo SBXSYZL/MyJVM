@@ -37,4 +37,12 @@ public enum EmCommandErr implements CommonError {
     public void setErrMsg(String msg) {
         this.msg = msg;
     }
+
+    @Override
+    public String toString() {
+        return "EmCommandErr{" +
+                "errCode=" + errCode +
+                ", msg='" + msg + '\'' +
+                '}';
+    }
 }

@@ -19,45 +19,17 @@ public class FileUtil {
         assert resource != null;
         path = resource.getPath();
         path = path + "/classByteCodeShow/";
-        System.out.println(path);
     }
 
+    /**
+     * 将文本写入文件
+     */
     public static synchronized void writeToFile(String fileName, String content) {
         BufferedWriter bufferedWriter = null;
         try {
             String realPath = path + fileName;
             File target = checkPath(realPath);
-//            String[] split = realPath.split("/");
-//            Object[] objects = Arrays.stream(split).filter(string -> !string.isEmpty()).toArray();
-//            split = new String[objects.length];
-//            int index = 0;
-//            for (Object object : objects) {
-//                split[index++] = (String) object;
-//            }
-//            StringBuilder createPath = new StringBuilder();
-//            File target = null;
-//            for (int i = 0; i < split.length; i++) {
-//                if (split[i].length() > 0) {
-//                    if (i != 0) {
-//                        createPath.append('/').append(split[i]);
-//                    } else {
-//                        createPath.append(split[i]);
-//                    }
-//                    File file = new File(createPath.toString());
-//                    if (i != split.length - 1) {
-//                        if (!file.exists()) {
-//                            boolean mkdirs = file.mkdirs();
-//                        }
-//                    } else {
-//                        if (!file.exists()) {
-//                            boolean newFile = file.createNewFile();
-//                        }
-//                        target = file;
-//                        break;
-//                    }
-//                }
-//
-//            }
+
             assert target != null;
             bufferedWriter = new BufferedWriter(new FileWriter(target));
             bufferedWriter.write(content);
@@ -78,6 +50,9 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 检查路径是否存在，不存在则创建
+     */
     private static synchronized File checkPath(String path) throws IOException {
         String[] split = path.split("/");
         Object[] objects = Arrays.stream(split).filter(string -> !string.isEmpty()).toArray();
@@ -113,6 +88,9 @@ public class FileUtil {
         return target;
     }
 
+    /**
+     * 向文件尾部添加文本
+     */
     public static synchronized void appendContentToFile(String fileName, String msg) {
         BufferedWriter bufferedWriter = null;
         try {
@@ -134,12 +112,4 @@ public class FileUtil {
             }
         }
     }
-
-//    public static void main(String[] args) {
-//        URL resource = Thread.currentThread().getContextClassLoader().getResource("");
-//        assert resource != null;
-//        String path = resource.getPath();
-//        System.out.println(path);
-//        writeToFile(path + "/classByteCodeShow/test.txt", "txt");
-//    }
 }

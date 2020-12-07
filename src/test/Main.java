@@ -1,8 +1,6 @@
 package test;
 
-import runtimeDataArea.threadDependent.OperandStack;
-import runtimeDataArea.threadDependent.RuntimeStack;
-import runtimeDataArea.threadDependent.StackFrame;
+import jvm.runtimeDataArea.threadDependent.OperandStack;
 
 /**
  * @author 22454

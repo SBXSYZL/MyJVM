@@ -68,7 +68,12 @@ public enum EmClassLoadErr implements CommonError {
      * 常量信息转换错误
      */
     CONSTANT_INFO_TYPE_CAST_ERROR(3008, "Constant Info Type Cast Error"),
-    CONSTANT_POOL_DO_NOT_EXISTS_THIS_ELEMENT(3009, "Constant Pool Do Not Exists This Element");
+    CONSTANT_POOL_DO_NOT_EXISTS_THIS_ELEMENT(3009, "Constant Pool Do Not Exists This Element"),
+    /**
+     * 获取 source file attribute 失败
+     */
+    FAILed_TO_GET_SOURCE_FILE_ATTRIBUTE(3010, "Failed To Get Source File Attribute"),
+    FAILED_TO_LOAD_CLASS(3011, "Failed To Load Class");
     private final int errCode;
     private String msg;
 
@@ -90,5 +95,13 @@ public enum EmClassLoadErr implements CommonError {
     @Override
     public void setErrMsg(String msg) {
         this.msg = msg;
+    }
+
+    @Override
+    public String toString() {
+        return "EmClassLoadErr{" +
+                "errCode=" + errCode +
+                ", msg='" + msg + '\'' +
+                '}';
     }
 }
