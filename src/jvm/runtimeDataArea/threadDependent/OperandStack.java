@@ -1,5 +1,8 @@
 package jvm.runtimeDataArea.threadDependent;
 
+import jvm.runtimeDataArea.shared.heap.info.MyObject;
+import log.MyLog;
+
 import java.util.LinkedList;
 
 /**
@@ -21,8 +24,14 @@ public class OperandStack {
      *
      * @param value 值
      */
-    public void pushInteger(Integer value) throws Exception {
-        stack.addFirst(VariableSlot.createVariableSlot(value));
+    public void pushInteger(Integer value) {
+        try {
+            stack.addFirst(VariableSlot.createVariableSlot(value));
+        } catch (Exception e) {
+            MyLog.error("Failed To Push Integer To Operand Stack");
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -39,8 +48,14 @@ public class OperandStack {
      *
      * @param value 值
      */
-    public void pushFloat(Float value) throws Exception {
-        stack.addFirst(VariableSlot.createVariableSlot(value));
+    public void pushFloat(Float value) {
+        try {
+            stack.addFirst(VariableSlot.createVariableSlot(value));
+        } catch (Exception e) {
+            MyLog.error("Failed To Push Float To Operand Stack");
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -57,15 +72,16 @@ public class OperandStack {
      *
      * @param value 值
      */
-    public void pushLong(Long value) throws Exception {
-//        Map<String, Integer> map = LongUtil.splitLongIntoTwoIntegers(value);
-//        int low = map.get(LongUtil.LOW_32_BIT_INTEGER);
-//        int high = map.get(LongUtil.HIGH_32_BIT_INTEGER);
-//        VariableSlot highSlot = VariableSlot.createVariableSlot(high);
-//        VariableSlot lowSlot = VariableSlot.createVariableSlot(low);
-        VariableSlot.LongVariableSplitEntity longVariableSplitEntity = new VariableSlot.LongVariableSplitEntity(value);
-        stack.addFirst(longVariableSplitEntity.getHighVariableSlot());
-        stack.addFirst(longVariableSplitEntity.getLowVariableSlot());
+    public void pushLong(Long value) {
+        try {
+            VariableSlot.LongVariableSplitEntity longVariableSplitEntity = new VariableSlot.LongVariableSplitEntity(value);
+            stack.addFirst(longVariableSplitEntity.getHighVariableSlot());
+            stack.addFirst(longVariableSplitEntity.getLowVariableSlot());
+        } catch (Exception e) {
+            MyLog.error("Failed To Push Long To Operand Stack");
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -76,9 +92,6 @@ public class OperandStack {
     public Long popLong() {
         VariableSlot lowSlot = stack.removeFirst();
         VariableSlot highSlot = stack.removeFirst();
-//        int high = (int) highSlot.getValue();
-//        int low = (int) lowSlot.getValue();
-//        return LongUtil.twoIntegersAreRestoredToLong(high, low);
         VariableSlot.LongVariableSplitEntity longVariableSplitEntity = new VariableSlot.LongVariableSplitEntity(highSlot, lowSlot);
         return longVariableSplitEntity.resumeToLong();
     }
@@ -88,7 +101,7 @@ public class OperandStack {
      *
      * @param value 值
      */
-    public void pushDouble(Double value) throws Exception {
+    public void pushDouble(Double value) {
         long longBits = Double.doubleToLongBits(value);
         pushLong(longBits);
     }
@@ -109,8 +122,14 @@ public class OperandStack {
      *
      * @param ref 对象引用
      */
-    public void pushRef(Object ref) throws Exception {
-        stack.addFirst(VariableSlot.createVariableSlot(ref));
+    public void pushRef(Object ref) {
+        try {
+            stack.addFirst(VariableSlot.createVariableSlot(ref));
+        } catch (Exception e) {
+            MyLog.error("Failed To Push Ref To Operand Stack");
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -118,12 +137,18 @@ public class OperandStack {
      *
      * @return 对象引用
      */
-    public Object popRef() {
-        return stack.removeFirst().getValue();
+    public MyObject popRef() {
+        return (MyObject) stack.removeFirst().getValue();
     }
 
-    public void pushVariableSlot(VariableSlot slot) throws Exception {
-        stack.addFirst(VariableSlot.createVariableSlot(slot));
+    public void pushVariableSlot(VariableSlot slot) {
+        try {
+            stack.addFirst(VariableSlot.createVariableSlot(slot));
+        } catch (Exception e) {
+            MyLog.error("Failed To Push VariableSlot To Operand Stack");
+            e.printStackTrace();
+        }
+
     }
 
     public VariableSlot popVariableSlot() {
@@ -151,8 +176,14 @@ public class OperandStack {
      *
      * @param value bool值
      */
-    public void pushBoolean(boolean value) throws Exception {
-        pushInteger(value ? 1 : 0);
+    public void pushBoolean(boolean value) {
+        try {
+            pushInteger(value ? 1 : 0);
+        } catch (Exception e) {
+            MyLog.error("Failed To Push Boolean To Operand Stack");
+            e.printStackTrace();
+        }
+
     }
 
     /**

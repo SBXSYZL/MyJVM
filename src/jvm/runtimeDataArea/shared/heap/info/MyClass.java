@@ -1,6 +1,6 @@
 package jvm.runtimeDataArea.shared.heap.info;
 
-import jvm.BeanCenter.Bean;
+import jvm.BeanCenter.MyBean;
 import jvm.classLoadSystem.analyzer.ClassFile;
 import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.AttributeInfoSourceFile;
 import jvm.classLoadSystem.classLoaderImpl.MyClassLoader;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 /**
  * @author 22454
  */
-@Bean
+@MyBean
 public class MyClass {
     public static final String ANCESTOR_OBJECT_NAME = "java/lang/Object";
     private int accessFlag;

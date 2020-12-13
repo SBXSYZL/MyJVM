@@ -1,6 +1,6 @@
 package jvm.runtimeDataArea.shared.myNative.myNativeClass;
 
-import jvm.BeanCenter.NativeObject;
+import jvm.BeanCenter.MyNativeObject;
 import jvm.classLoadSystem.classLoaderImpl.MyClassLoader;
 import jvm.runtimeDataArea.shared.heap.info.MyClass;
 import jvm.runtimeDataArea.shared.heap.info.MyObject;
@@ -10,14 +10,13 @@ import jvm.runtimeDataArea.threadDependent.OperandStack;
 import jvm.runtimeDataArea.threadDependent.StackFrame;
 import log.MyLog;
 
-import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author 22454
  */
-@NativeObject
+@MyNativeObject
 public class ClassNative implements NativeClass {
     private static final String CLASS_NAME = "java/lang/Class";
     private static final ConcurrentHashMap<String, String> NATIVE_METHOD_DESCRIPTOR_MAP = new ConcurrentHashMap<String, String>() {
@@ -47,7 +46,7 @@ public class ClassNative implements NativeClass {
             MyClass clazz = (MyClass) thisObject.getExtra();
 
             String javaName = clazz.getJavaName();
-            MyObject string = StringCache.string(clazz.getClassLoader(), javaName);
+            MyObject string = StringCache.putString(clazz.getClassLoader(), javaName);
             frame.getOperandStack().pushRef(string);
         } catch (Exception e) {
             MyLog.error("Failed To Get Name");

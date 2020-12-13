@@ -1,8 +1,8 @@
 package jvm.classLoadSystem.classLoaderImpl.myClassLoaderImpl;
 
 
-import jvm.BeanCenter.AutoWired;
-import jvm.BeanCenter.Bean;
+import jvm.BeanCenter.MyAutoWired;
+import jvm.BeanCenter.MyBean;
 import jvm.classLoadSystem.analyzer.ClassFile;
 import jvm.classLoadSystem.analyzer.ClassFileReader;
 import jvm.classLoadSystem.classLoaderImpl.MyClassLoader;
@@ -18,11 +18,11 @@ import java.util.Objects;
 /**
  * @author 22454
  */
-@Bean
+@MyBean
 public class MyApplicationClassLoader implements MyClassLoader {
-    @AutoWired
+    @MyAutoWired
     private MyExtensionClassLoader parent;
-    @AutoWired
+    @MyAutoWired
     private MyClassBuilder classBuilder;
 
 

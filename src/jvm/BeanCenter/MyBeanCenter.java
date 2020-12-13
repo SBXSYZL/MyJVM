@@ -9,7 +9,6 @@ import log.MyLog;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Arrays;
@@ -91,11 +90,11 @@ public class MyBeanCenter {
                         String className = splicingClassName(classPathSegment);
                         //根据拼接好的类名获取到类型
                         Class<?> cls = Class.forName(className);
-                        if (cls.isAnnotationPresent(Bean.class)) {
+                        if (cls.isAnnotationPresent(MyBean.class)) {
                             registerBean(cls);
                         }
                         //如果是本地方法存储对象
-                        else if (cls.isAnnotationPresent(NativeObject.class)) {
+                        else if (cls.isAnnotationPresent(MyNativeObject.class)) {
                             Class<?>[] interfaces = cls.getInterfaces();
                             for (Class<?> anInterface : interfaces) {
                                 if (anInterface.equals(NativeClass.class)) {
@@ -173,7 +172,7 @@ public class MyBeanCenter {
     private static void dealFieldAnnotation(Field[] declaredFields, Object target) {
         try {
             for (Field declaredField : declaredFields) {
-                if (declaredField.isAnnotationPresent(AutoWired.class)) {
+                if (declaredField.isAnnotationPresent(MyAutoWired.class)) {
                     Class<?> type = declaredField.getType();
                     Object bean1 = getBean(type);
                     declaredField.setAccessible(true);
@@ -191,7 +190,7 @@ public class MyBeanCenter {
     private static void dealMethodAnnotation(Method[] declaredMethods, Object target) {
         try {
             for (Method declaredMethod : declaredMethods) {
-                if (declaredMethod.isAnnotationPresent(Task.class)) {
+                if (declaredMethod.isAnnotationPresent(MyTask.class)) {
                     declaredMethod.invoke(target);
                 }
             }

@@ -1,6 +1,6 @@
 package jvm.runtimeDataArea.shared.myNative.myNativeClass;
 
-import jvm.BeanCenter.NativeObject;
+import jvm.BeanCenter.MyNativeObject;
 import jvm.runtimeDataArea.MyThread;
 import jvm.runtimeDataArea.shared.heap.info.MyClass;
 import jvm.runtimeDataArea.shared.heap.info.MyMethod;
@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author 22454
  */
-@NativeObject
+@MyNativeObject
 public class ThrowableNative implements NativeClass {
     private static final String CLASS_NAME = "java/lang/Throwable";
     private StackTraceElement stackTraceElement;

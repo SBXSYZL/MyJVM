@@ -48,7 +48,7 @@ public class MyObject {
         this.extra = extra;
     }
 
-    public char[] getChars() {
+    public char[] getCharArray() {
         return (char[]) this.data;
     }
 
@@ -98,5 +98,33 @@ public class MyObject {
         }
 
         throw new RuntimeException("Not array");
+    }
+
+    public int[] getIntegerArray() {
+        return (int[]) this.data;
+    }
+
+    public float[] getFloatArray() {
+        return (float[]) this.data;
+    }
+
+    public double[] getDoubleArray() {
+        return (double[]) this.data;
+    }
+
+    public MyObject[] getMyObjectArray() {
+        return (MyObject[]) this.data;
+    }
+
+    public long[] getLongArray() {
+        return (long[]) this.data;
+    }
+
+    public byte[] getByteArray() {
+        return (byte[]) this.data;
+    }
+
+    public short[] getShortArray() {
+        return (short[]) this.data;
     }
 }

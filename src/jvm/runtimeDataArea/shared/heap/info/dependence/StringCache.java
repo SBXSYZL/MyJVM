@@ -15,7 +15,7 @@ public class StringCache {
     private static final ConcurrentHashMap<String, MyObject> CACHE = new ConcurrentHashMap<>();
     private static final Lock LOCK = new ReentrantLock();
 
-    public static MyObject string(MyClassLoader classLoader, String str) {
+    public static MyObject putString(MyClassLoader classLoader, String str) {
         MyObject target = CACHE.get(str);
         if (null != target) {
             return target;
@@ -39,7 +39,7 @@ public class StringCache {
 
     public static String getString(MyObject object) {
         MyObject charArray = object.getRefVariable("value", "[C");
-        return new String(charArray.getChars());
+        return new String(charArray.getCharArray());
     }
 
     public static MyObject intern(MyObject obj) {

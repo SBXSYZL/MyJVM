@@ -31,27 +31,32 @@ public interface VariableSlot {
      *
      * @param value 值
      * @return 变量槽
-     * @throws Exception ex
      */
-    static VariableSlot createVariableSlot(Object value) throws Exception {
-        VariableSlot variableSlot = null;
-        //如果是数值型
-        if (value instanceof Number) {
-            variableSlot = new VariableSlotNumber();
+    static VariableSlot createVariableSlot(Object value) {
+        try {
+            VariableSlot variableSlot = null;
+            //如果是数值型
+            if (value instanceof Number) {
+                variableSlot = new VariableSlotNumber();
+            }
+            //如果是对象型
+            else {
+                variableSlot = new VariableSlotObject();
+            }
+            variableSlot.setValue(value);
+            return variableSlot;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed To Create Variable Slot");
         }
-        //如果是对象型
-        else {
-            variableSlot = new VariableSlotObject();
-        }
-        variableSlot.setValue(value);
-        return variableSlot;
+
     }
 
     class LongVariableSplitEntity {
         private VariableSlot highVariableSlot;
         private VariableSlot lowVariableSlot;
 
-        public LongVariableSplitEntity(long value) throws Exception {
+        public LongVariableSplitEntity(long value) {
             Map<String, Integer> map = LongUtil.splitLongIntoTwoIntegers(value);
             int low = map.get(LongUtil.LOW_32_BIT_INTEGER);
             int high = map.get(LongUtil.HIGH_32_BIT_INTEGER);

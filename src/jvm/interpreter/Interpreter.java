@@ -1,7 +1,7 @@
 package jvm.interpreter;
 
+import jvm.BeanCenter.MyBeanCenter;
 import jvm.classLoadSystem.classLoaderImpl.MyClassLoader;
-import jvm.interpreter.assembly.InstructionManagerCenter;
 import jvm.runtimeDataArea.MyThread;
 import jvm.runtimeDataArea.shared.heap.info.MyClass;
 import jvm.runtimeDataArea.shared.heap.info.MyMethod;
@@ -16,6 +16,10 @@ import log.MyLog;
  * @author 22454
  */
 public class Interpreter {
+
+    private InstructionManagerCenter instructionManagerCenter = (InstructionManagerCenter) MyBeanCenter.getBean(InstructionManagerCenter.class);
+
+
     public Interpreter(MyMethod method, String args) {
         try {
             //创建守护线程
@@ -30,7 +34,8 @@ public class Interpreter {
             }
             //守护线程放入第一个栈帧
             thread.pushStackFrame(startFrame);
-
+            //开始解释
+            this.run(thread);
 
         } catch (Exception e) {
             MyLog.error("Failed To Create Interpreter.");
@@ -49,7 +54,7 @@ public class Interpreter {
                     .createArray(args.length);
             MyObject[] refs = array.getRefs();
             for (int i = 0; i < refs.length; i++) {
-                refs[i] = StringCache.string(classLoader, args[i]);
+                refs[i] = StringCache.putString(classLoader, args[i]);
             }
             return array;
         } catch (Exception e) {
@@ -76,12 +81,19 @@ public class Interpreter {
     private void run(MyThread thread) {
         CodeReader codeReader = new CodeReader();
         do {
+            //获取栈顶帧
             StackFrame stackTopFrame = thread.getStackTopFrame();
+            //获取下一个 PC
             int nextPc = stackTopFrame.getNextPc();
+            //给线程设置新的 PC
             thread.setNextPc(nextPc);
+            //取出当前栈帧的 code，交给 Code Reader 处理
             codeReader.reset(stackTopFrame.getMethod().getCode(), nextPc);
-            byte operatorCode = codeReader.readByte();
-            InstructionManagerCenter.invokeInstruction(operatorCode, codeReader, stackTopFrame);
+            //获取操作指令代码
+            int operatorCode = codeReader.readByte();
+            //执行指令
+            instructionManagerCenter.invokeInstruction(operatorCode, codeReader, stackTopFrame);
+            //
             stackTopFrame.setNextPc(codeReader.getPc());
         } while (!thread.stackEmpty());
 

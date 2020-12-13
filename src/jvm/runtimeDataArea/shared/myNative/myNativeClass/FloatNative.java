@@ -1,6 +1,6 @@
 package jvm.runtimeDataArea.shared.myNative.myNativeClass;
 
-import jvm.BeanCenter.NativeObject;
+import jvm.BeanCenter.MyNativeObject;
 import jvm.runtimeDataArea.threadDependent.StackFrame;
 import log.MyLog;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author 22454
  */
-@NativeObject
+@MyNativeObject
 public class FloatNative implements NativeClass {
     private static final String CLASS_NAME = "java/lang/Float";
     private static final ConcurrentHashMap<String, String> NATIVE_METHOD_DESCRIPTOR_MAP = new ConcurrentHashMap<String, String>() {

@@ -19,23 +19,23 @@ public class RuntimeStack {
         stack = new LinkedList<>();
     }
 
-    public void push(StackFrame frame) throws Exception {
+    public void push(StackFrame frame) {
         if (maxSize == stack.size()) {
-            throw new Exception("Stack Overflow Error");
+            throw new RuntimeException("Stack Overflow Error");
         }
         stack.addFirst(frame);
     }
 
-    public StackFrame pop() throws Exception {
+    public StackFrame pop() {
         if (stack.size() == 0) {
-            throw new Exception("Stack Depth is 0");
+            throw new RuntimeException("Stack Depth is 0");
         }
         return stack.removeFirst();
     }
 
-    public StackFrame top() throws Exception {
+    public StackFrame top() {
         if (stack.size() == 0) {
-            throw new Exception("Stack Depth is 0");
+            throw new RuntimeException("Stack Depth is 0");
         }
         return stack.getFirst();
     }

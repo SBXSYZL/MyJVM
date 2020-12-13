@@ -1,12 +1,11 @@
 package jvm.runtimeDataArea.shared.heap.builder;
 
-import jvm.BeanCenter.AutoWired;
-import jvm.BeanCenter.Bean;
+import jvm.BeanCenter.MyAutoWired;
+import jvm.BeanCenter.MyBean;
 import jvm.classLoadSystem.analyzer.ClassFile;
 import jvm.classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.FieldInfo;
 import jvm.classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.MethodInfo;
 import jvm.classLoadSystem.classLoaderImpl.MyClassLoader;
-import jvm.classLoadSystem.classLoaderImpl.myClassLoaderImpl.MyBootstrapClassLoader;
 import jvm.runtimeDataArea.common.AccessPermission;
 import jvm.runtimeDataArea.common.FieldDescriptorEnum;
 import jvm.runtimeDataArea.shared.heap.RuntimeConstantPool;
@@ -15,14 +14,13 @@ import jvm.runtimeDataArea.shared.heap.info.dependence.StringCache;
 import log.MyLog;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author 22454
  */
-@Bean
+@MyBean
 public class MyClassBuilder {
-    @AutoWired
+    @MyAutoWired
     private MyMethodBuilder methodBuilder;
 
 
@@ -152,7 +150,7 @@ public class MyClassBuilder {
                             break;
                         case "Ljava/lang/String;":
                             String str = (String) runtimeConstantPool.getConstants(index);
-                            MyObject string = StringCache.string(clazz.getClassLoader(), str);
+                            MyObject string = StringCache.putString(clazz.getClassLoader(), str);
                             staticVariables.setObjectRef(slotId, string);
                             break;
                         default:

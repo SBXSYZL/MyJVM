@@ -1,16 +1,16 @@
 package jvm.classLoadSystem.classLoaderImpl.myClassLoaderImpl;
 
-import jvm.BeanCenter.AutoWired;
-import jvm.BeanCenter.Bean;
+import jvm.BeanCenter.MyAutoWired;
+import jvm.BeanCenter.MyBean;
 import jvm.classLoadSystem.classLoaderImpl.MyClassLoader;
 import jvm.runtimeDataArea.shared.heap.info.MyClass;
 
 /**
  * @author 22454
  */
-@Bean
+@MyBean
 public class MyExtensionClassLoader implements MyClassLoader {
-    @AutoWired
+    @MyAutoWired
     private MyBootstrapClassLoader parent;
 
 

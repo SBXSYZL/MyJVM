@@ -1,8 +1,8 @@
 package jvm.classLoadSystem.classLoaderImpl.myClassLoaderImpl;
 
-import jvm.BeanCenter.AutoWired;
-import jvm.BeanCenter.Bean;
-import jvm.BeanCenter.Task;
+import jvm.BeanCenter.MyAutoWired;
+import jvm.BeanCenter.MyBean;
+import jvm.BeanCenter.MyTask;
 import jvm.classLoadSystem.analyzer.ClassFile;
 import jvm.classLoadSystem.analyzer.ClassFileReader;
 import jvm.classLoadSystem.classLoaderImpl.MyClassLoader;
@@ -16,12 +16,12 @@ import log.MyLog;
 /**
  * @author 22454
  */
-@Bean
+@MyBean
 public class MyBootstrapClassLoader implements MyClassLoader {
-    @AutoWired
+    @MyAutoWired
     private MyClassBuilder classBuilder;
 
-    @Task
+    @MyTask
     public void loadPrimitiveType() {
         try {
             MyClass basicClazz = loadClass("java/lang/Class");

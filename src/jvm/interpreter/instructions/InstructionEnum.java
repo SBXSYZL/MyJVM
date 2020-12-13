@@ -1,4 +1,4 @@
-package jvm.interpreter.assembly;
+package jvm.interpreter.instructions;
 
 import log.MyLog;
 
@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class InstructionEnum {
     public static final byte NOP = 0x00;
     public static final int A_CONST_NULL = 0x01;
-    public static final int I_CONST_ML = 0x02;
+    public static final int I_CONST_M_1 = 0x02;
     public static final int I_CONST_0 = 0x03;
     public static final int I_CONST_1 = 0x04;
     public static final int I_CONST_2 = 0x05;
@@ -130,12 +130,12 @@ public final class InstructionEnum {
     public static final int L_NEG = 0x75;
     public static final int F_NEG = 0x76;
     public static final int D_NEG = 0x77;
-    public static final int I_SHL = 0x78;
-    public static final int L_SHL = 0x79;
-    public static final int I_SHR = 0x7a;
-    public static final int L_SHR = 0x7b;
-    public static final int I_U_SHR = 0x7c;
-    public static final int L_U_SHR = 0x7d;
+    public static final int I_SH_L = 0x78;
+    public static final int L_SH_L = 0x79;
+    public static final int I_SH_R = 0x7a;
+    public static final int L_SH_R = 0x7b;
+    public static final int I_U_SH_R = 0x7c;
+    public static final int L_U_SH_R = 0x7d;
     public static final int I_AND = 0x7e;
     public static final int L_AND = 0x7f;
     public static final int I_OR = 0x80;

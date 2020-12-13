@@ -1,6 +1,6 @@
 package jvm.runtimeDataArea.shared.myNative.myNativeClass;
 
-import jvm.BeanCenter.NativeObject;
+import jvm.BeanCenter.MyNativeObject;
 import jvm.runtimeDataArea.shared.heap.info.MyObject;
 import jvm.runtimeDataArea.shared.heap.info.dependence.StringCache;
 import jvm.runtimeDataArea.threadDependent.StackFrame;
@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author 22454
  */
-@NativeObject
+@MyNativeObject
 public class StringNative implements NativeClass {
     private static final String CLASS_NAME = "java/lang/String";
     private static final ConcurrentHashMap<String, String> NATIVE_METHOD_DESCRIPTOR_MAP = new ConcurrentHashMap<String, String>() {

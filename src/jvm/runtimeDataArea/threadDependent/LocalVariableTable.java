@@ -8,7 +8,7 @@ import jvm.runtimeDataArea.shared.heap.info.MyObject;
 public class LocalVariableTable {
     private VariableSlot[] table;
 
-    public LocalVariableTable(int maxLocals) throws Exception {
+    public LocalVariableTable(int maxLocals) {
         table = new VariableSlot[maxLocals];
     }
 
@@ -18,7 +18,7 @@ public class LocalVariableTable {
      * @param index 索引
      * @param value 值
      */
-    public void putInteger(int index, Integer value) throws Exception {
+    public void putInteger(int index, Integer value) {
         table[index] = VariableSlot.createVariableSlot(value);
     }
 
@@ -28,7 +28,7 @@ public class LocalVariableTable {
      * @param index 索引
      * @param value 值
      */
-    public void putFloat(int index, Float value) throws Exception {
+    public void putFloat(int index, Float value) {
         table[index] = VariableSlot.createVariableSlot(value.intValue());
     }
 
@@ -38,7 +38,7 @@ public class LocalVariableTable {
      * @param index 索引
      * @param value 值
      */
-    public void putLong(int index, Long value) throws Exception {
+    public void putLong(int index, Long value) {
         VariableSlot.LongVariableSplitEntity longVariableSplitEntity = new VariableSlot.LongVariableSplitEntity(value);
         VariableSlot highSlot = longVariableSplitEntity.getHighVariableSlot();
         VariableSlot lowSlot = longVariableSplitEntity.getLowVariableSlot();
@@ -52,10 +52,8 @@ public class LocalVariableTable {
      * @param index 索引
      * @param value 值
      */
-    public void putDouble(int index, Double value) throws Exception {
+    public void putDouble(int index, Double value) {
         long longBits = Double.doubleToLongBits(value);
-//        table[index] = VariableSlot.createVariableSlot((int) longBits);
-//        table[index + 1] = VariableSlot.createVariableSlot((int) (longBits >> 32));
         putLong(index, longBits);
     }
 
@@ -65,7 +63,7 @@ public class LocalVariableTable {
      * @param index 索引
      * @param ref   对象索引
      */
-    public void putRef(int index, Object ref) throws Exception {
+    public void putRef(int index, Object ref) {
         table[index] = VariableSlot.createVariableSlot(ref);
     }
 
@@ -75,7 +73,7 @@ public class LocalVariableTable {
      * @param index 索引
      * @param slot  值
      */
-    public void putSlot(int index, VariableSlot slot) throws Exception {
+    public void putSlot(int index, VariableSlot slot) {
         table[index] = VariableSlot.createVariableSlot(slot);
     }
 
