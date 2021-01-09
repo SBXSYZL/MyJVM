@@ -1,19 +1,18 @@
 package jvm.classLoadSystem.classLoaderImpl.myClassLoaderImpl;
 
 
+import exception.EmClassLoadErr;
 import jvm.BeanCenter.MyAutoWired;
 import jvm.BeanCenter.MyBean;
-import jvm.classLoadSystem.analyzer.ClassFile;
-import jvm.classLoadSystem.analyzer.ClassFileReader;
-import jvm.classLoadSystem.classLoaderImpl.MyClassLoader;
-import exception.EmClassLoadErr;
-import exception.JvmException;
 import jvm.runtimeDataArea.common.AccessPermission;
 import jvm.runtimeDataArea.shared.heap.builder.MyClassBuilder;
 import jvm.runtimeDataArea.shared.heap.info.MyClass;
+import jvm.classLoadSystem.analyzer.ClassFile;
+import jvm.classLoadSystem.analyzer.ClassFileReader;
+import jvm.classLoadSystem.classLoaderImpl.MyClassLoader;
+import exception.JvmException;
 import log.MyLog;
 
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -95,14 +94,18 @@ public class MyApplicationClassLoader implements MyClassLoader {
         byte[] byteCode = ClassFileReader.readClass(absClassName, path);
 
         if (byteCode == null) {
-            MyLog.error("Failed To Load Class: [ " + absClassName + " ].");
-            throw new JvmException(EmClassLoadErr.FAILED_TO_LOAD_CLASS, "Failed To Load Class: [ " + absClassName + " ].");
-        } else {
-            ClassFile classFile = new ClassFile(new ClassEntry(this, byteCode));
-            MyClass myClass = classBuilder.build(classFile);
-            CACHE.put(absClassName, myClass);
-            return myClass;
+            byteCode = ClassFileReader.readClass(absClassName);
+            if (byteCode == null) {
+                MyLog.error("Failed To Load Class: [ " + absClassName + " ].");
+                throw new JvmException(EmClassLoadErr.FAILED_TO_LOAD_CLASS, "Failed To Load Class: [ " + absClassName + " ].");
+            }
+
         }
+        ClassFile classFile = new ClassFile(new ClassEntry(this, byteCode));
+        MyClass myClass = classBuilder.build(classFile);
+        CACHE.put(absClassName, myClass);
+        return myClass;
+
     }
 
     @Override

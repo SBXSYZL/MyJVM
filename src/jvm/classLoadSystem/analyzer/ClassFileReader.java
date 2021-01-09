@@ -130,4 +130,14 @@ public final class ClassFileReader {
             throw e;
         }
     }
+
+    public static synchronized byte[] readClass(String absPath) throws JvmException {
+        try {
+            String absClassPath = absPath + ".class";
+            return getByteCodeFromFile(absClassPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new JvmException(EmClassLoadErr.CLASS_NOT_FOUND);
+        }
+    }
 }

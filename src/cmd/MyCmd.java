@@ -11,7 +11,7 @@ import static java.lang.Thread.sleep;
  */
 public class MyCmd {
     private Parser cmdParser;
-    private static CmdPanel cmdPanel;
+    //    private static CmdPanel cmdPanel;
     private static final String MY_JVM =
             "\n\n" +
                     "   **************************************************************************************************\n" +
@@ -36,11 +36,11 @@ public class MyCmd {
         }
         System.out.println();
         MyLog.info("Loading Cmd Panel...");
-        cmdPanel = new CmdPanel();
+//        cmdPanel = new CmdPanel();
         MyLog.success("Cmd Panel Load Successfully.");
         MyLog.info("Loading Cmd Parser...");
         cmdParser = new CmdParser();
-        cmdPanel.setParser(this::parse);
+//        cmdPanel.setParser(this::parse);
         MyLog.success("Cmd Parser Load Successfully.");
         MyLog.success("My Java Virtual Machine Start Successfully.");
 
@@ -50,24 +50,24 @@ public class MyCmd {
     public String toString() {
         return new StringJoiner(", ", MyCmd.class.getSimpleName() + "[", "]")
                 .add("cmdParser=" + cmdParser)
-                .add("cmdPanel=" + cmdPanel)
+//                .add("cmdPanel=" + cmdPanel)
                 .toString();
     }
 
     public static void print(String str) {
-        if (cmdPanel != null) {
-            cmdPanel.print(str);
-        } else {
-            System.out.println(str);
-        }
+//        if (cmdPanel != null) {
+//            cmdPanel.print(str);
+//        } else {
+//            System.out.println(str);
+//        }
     }
 
     public static void printAndAdjust(String str) {
-        if (cmdPanel != null) {
-            cmdPanel.printAndAdjust(str);
-        } else {
-            System.out.println(str);
-        }
+//        if (cmdPanel != null) {
+//            cmdPanel.printAndAdjust(str);
+//        } else {
+//            System.out.println(str);
+//        }
     }
 
     private boolean parse(String str) throws Exception {
@@ -75,10 +75,10 @@ public class MyCmd {
     }
 
     public static void history() {
-        printAndAdjust(cmdPanel.historyString());
+//        printAndAdjust(cmdPanel.historyString());
     }
 
     public static void clear() {
-        cmdPanel.clear();
+//        cmdPanel.clear();
     }
 }

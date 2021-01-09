@@ -1,6 +1,5 @@
 package jvm.runtimeDataArea.shared.heap.info;
 
-import cmd.Parser;
 import jvm.runtimeDataArea.threadDependent.VariableSlot;
 
 /**
@@ -23,7 +22,22 @@ public class MyArray {
     }
 
     public int getInteger(int index) {
-        return (Integer) this.array[index].getValue();
+        Object value = this.array[index].getValue();
+        if (value instanceof Number) {
+            if (value instanceof Integer) {
+                return (int) value;
+            } else if (value instanceof Long) {
+                return ((Long) value).intValue();
+            } else {
+                if (value instanceof Float) {
+                    return ((Float) value).intValue();
+                } else if (value instanceof Double) {
+                    return ((Double) value).intValue();
+                }
+            }
+        }
+        throw new RuntimeException("Value is Not Integer: [ " + value + " ]");
+
     }
 
     public void setFloat(int index, float value) {

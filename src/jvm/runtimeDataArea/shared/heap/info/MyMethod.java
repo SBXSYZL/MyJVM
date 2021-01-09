@@ -1,20 +1,14 @@
 package jvm.runtimeDataArea.shared.heap.info;
 
-import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.AttributeInfoCode;
 import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.AttributeInfoLineNumberTable;
-import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.ExceptionInfo;
 import jvm.classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.MethodInfo;
-import jvm.runtimeDataArea.common.AccessPermission;
-import jvm.runtimeDataArea.common.FieldDescriptorEnum;
-import jvm.runtimeDataArea.shared.heap.RuntimeConstantPool;
 import jvm.runtimeDataArea.shared.heap.info.dependence.ExceptionHandler;
 import jvm.runtimeDataArea.shared.heap.info.dependence.ExceptionTable;
 import jvm.runtimeDataArea.shared.heap.info.dependence.MethodDescriptor;
 import jvm.runtimeDataArea.shared.heap.info.dependence.MethodDescriptorParser;
+import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.AttributeInfoCode;
+import jvm.runtimeDataArea.common.AccessPermission;
 import log.MyLog;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author 22454
@@ -213,12 +207,18 @@ public class MyMethod {
         }
         MyClass c = this.clazz;
         if (isProtected()) {
-            return d == c || c.getPackageName().equals(d.getPackageName());
+            String cPackageName = c.getPackageName();
+            String dPackageName = d.getPackageName();
+            return d == c || cPackageName.equals(dPackageName) || d.isSubClassOf(c);
         }
         if (isPrivate()) {
-            return c.getPackageName().equals(d.getPackageName());
+            String cPackageName = c.getPackageName();
+            String dPackageName = d.getPackageName();
+            return cPackageName.equals(dPackageName);
         }
-        return d == c;
+        String cPackageName = c.getPackageName();
+        String dPackageName = d.getPackageName();
+        return d == c || cPackageName.equals(dPackageName);
     }
 
     public boolean isPrivate() {
