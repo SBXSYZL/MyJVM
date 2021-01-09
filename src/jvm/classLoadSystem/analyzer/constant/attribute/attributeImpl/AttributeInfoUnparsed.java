@@ -9,16 +9,21 @@ import jvm.classLoadSystem.analyzer.constant.attribute.AttributeInfo;
  *
  * @author 22454
  */
-public class AttributeInfoUnparsed implements AttributeInfo {
+public class AttributeInfoUnparsed extends AttributeInfo {
     private String name;
     private int length;
     private byte[] info;
     private ConstantPool constantPool;
 
-    public AttributeInfoUnparsed(String name, int length) {
-        this.name = name;
-        this.length = length;
+    public AttributeInfoUnparsed(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
     }
+
+//    public AttributeInfoUnparsed(String name, int length) {
+//        this.name = name;
+//        this.length = length;
+//    }
+
 
     public String getName() {
         return name;
@@ -37,7 +42,7 @@ public class AttributeInfoUnparsed implements AttributeInfo {
     }
 
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.info = byteCodeFile.getByteByCnt(this.length);
     }

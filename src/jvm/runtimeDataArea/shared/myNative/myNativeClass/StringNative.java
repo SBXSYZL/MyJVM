@@ -18,12 +18,18 @@ public class StringNative implements NativeClass {
     private static final ConcurrentHashMap<String, String> NATIVE_METHOD_DESCRIPTOR_MAP = new ConcurrentHashMap<String, String>() {
         {
             put("intern", "()Ljava/lang/String;");
-            put("hashCode", "()I");
-            put("clone", "()Ljava/lang/Object;");
+            put("registerNatives", "()V");
         }
     };
 
+    @Override
+    public void registerNatives(StackFrame frame) {
+        MyLog.nativeLog("registerNatives");
+        //do nothing
+    }
+
     public void intern(StackFrame frame) {
+        MyLog.nativeLog("intern");
         try {
             MyObject thisObject = frame.getLocalVariableTable().getThis();
             MyObject intern = StringCache.intern(thisObject);

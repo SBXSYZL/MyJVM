@@ -7,9 +7,11 @@ import jvm.classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.MethodInf
 import jvm.runtimeDataArea.common.AccessPermission;
 import jvm.runtimeDataArea.common.FieldDescriptorEnum;
 import jvm.runtimeDataArea.shared.heap.RuntimeConstantPool;
+import jvm.runtimeDataArea.shared.heap.info.dependence.ExceptionHandler;
 import jvm.runtimeDataArea.shared.heap.info.dependence.ExceptionTable;
 import jvm.runtimeDataArea.shared.heap.info.dependence.MethodDescriptor;
 import jvm.runtimeDataArea.shared.heap.info.dependence.MethodDescriptorParser;
+import log.MyLog;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,9 +29,51 @@ public class MyMethod {
     private byte[] code;
     private ExceptionTable exceptionTable;
     private AttributeInfoLineNumberTable lineNumberTable;
+    private int argsCount;
+
+    public static MyMethod createMethod(MyClass clazz, MethodInfo methodInfo) {
+        try {
+            MyMethod method = new MyMethod();
+            method.setAccessFlag(methodInfo.getAccessFlag());
+            method.setName(methodInfo.getName());
+            method.setDescriptor(methodInfo.getDescriptor());
+            method.setClazz(clazz);
+            AttributeInfoCode codeAttribute = methodInfo.getCodeAttribute();
+            if (codeAttribute != null) {
+                method.setMaxStack(codeAttribute.getMaxStack());
+                method.setMaxLocals(codeAttribute.getMaxLocals());
+                method.setCode(codeAttribute.getCode());
+                method.setExceptionTable(new ExceptionTable(codeAttribute.getExceptionTable(), clazz.getRuntimeConstantPool()));
+                method.setLineNumberTable(codeAttribute.getLineNumberTableAttribute());
+            }
+            MethodDescriptor methodDescriptor = MethodDescriptorParser.parseMethodDescriptorParser(method.getDescriptor());
+            int cnt = 0;
+            for (String parameterType : methodDescriptor.getParameterTypes()) {
+                cnt++;
+                if ("J".equals(parameterType) || "D".equals(parameterType)) {
+                    cnt++;
+                }
+            }
+            if (!method.isStatic()) {
+                cnt++;
+            }
+            method.argsCount = cnt;
+            if (method.isNative()) {
+                method.injectCodeAttribute(methodDescriptor.getReturnType());
+            }
+            return method;
+
+        } catch (Exception e) {
+            MyLog.error("Failed To Create Method");
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
     private void injectCodeAttribute(String returnType) {
+        this.maxStack = 4;
+        this.maxLocals = this.argsCount;
         switch (returnType.getBytes()[0]) {
             case 'V':
                 this.code = new byte[]{(byte) 0xfe, (byte) 0xb1};
@@ -128,16 +172,25 @@ public class MyMethod {
 
     @Override
     public String toString() {
-        return "MyMethod{\n" +
+        StringBuilder str = new StringBuilder("MyMethod{\n" +
                 "accessFlag=" + accessFlag +
                 ", name='" + name + '\'' +
                 ", descriptor='" + descriptor + '\'' +
                 ", maxStack=" + maxStack +
                 ", maxLocals=" + maxLocals +
-                ", code=" + Arrays.toString(code) +
-                ", exceptionTable=" + exceptionTable +
-                ", lineNumberTable=" + lineNumberTable +
-                '}';
+                ", code=[");
+        if (code != null) {
+            for (int c : code) {
+                str.append(Integer.toHexString(c & 0xff)).append(" , ");
+            }
+        }
+
+        str.append("], exceptionTable=")
+                .append(exceptionTable)
+                .append(", lineNumberTable=")
+                .append(lineNumberTable).append('}');
+
+        return str.toString();
     }
 
     public int getLineNumber(int pc) {
@@ -150,7 +203,54 @@ public class MyMethod {
         return this.lineNumberTable.getLineNumber(pc);
     }
 
-    private boolean isNative() {
+    public boolean isNative() {
         return AccessPermission.isNative(accessFlag);
+    }
+
+    public boolean isAccessibleFor(MyClass d) {
+        if (this.isPublic()) {
+            return true;
+        }
+        MyClass c = this.clazz;
+        if (isProtected()) {
+            return d == c || c.getPackageName().equals(d.getPackageName());
+        }
+        if (isPrivate()) {
+            return c.getPackageName().equals(d.getPackageName());
+        }
+        return d == c;
+    }
+
+    public boolean isPrivate() {
+        return AccessPermission.isPrivate(accessFlag);
+    }
+
+    public boolean isProtected() {
+        return AccessPermission.isProtected(accessFlag);
+    }
+
+
+    public boolean isPublic() {
+        return AccessPermission.isPublic(accessFlag);
+    }
+
+    public boolean isStatic() {
+        return AccessPermission.isStatic(accessFlag);
+    }
+
+    public int getArgsCount() {
+        return argsCount;
+    }
+
+    public boolean isAbstract() {
+        return AccessPermission.isAbstract(accessFlag);
+    }
+
+    public int findExceptionHandler(MyClass exClazz, int pc) {
+        ExceptionHandler handler = this.exceptionTable.findExceptionHandler(exClazz, pc);
+        if (handler != null) {
+            return handler.getHandlePc();
+        }
+        return -1;
     }
 }

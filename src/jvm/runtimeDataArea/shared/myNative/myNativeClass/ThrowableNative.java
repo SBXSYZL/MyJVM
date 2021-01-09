@@ -21,8 +21,15 @@ public class ThrowableNative implements NativeClass {
     private static final ConcurrentHashMap<String, String> NATIVE_METHOD_DESCRIPTOR_MAP = new ConcurrentHashMap<String, String>() {
         {
             put("fillInStackTrace", "(I)Ljava/lang/Throwable;");
+            put("registerNatives", "()V");
         }
     };
+
+    @Override
+    public void registerNatives(StackFrame frame) {
+        MyLog.nativeLog("registerNatives");
+        //do nothing
+    }
 
     public String getString() {
         return String.format("%s.%s(%s:%d)",

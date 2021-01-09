@@ -26,6 +26,10 @@ public interface VariableSlot {
      */
     void setValue(Object value) throws Exception;
 
+    static VariableSlot createDefaultSlot() {
+        return new VariableSlotObject();
+    }
+
     /**
      * 创建一个变量槽
      *

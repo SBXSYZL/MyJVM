@@ -13,6 +13,7 @@ import jvm.runtimeDataArea.shared.heap.builder.MyClassBuilder;
 import jvm.runtimeDataArea.shared.heap.info.MyClass;
 import log.MyLog;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -44,7 +45,7 @@ public class MyApplicationClassLoader implements MyClassLoader {
 
     @Override
     public MyClass loadClass(String absClassName) throws Exception {
-        MyClass myClass = null;
+        MyClass myClass;
         myClass = CACHE.get(absClassName);
         if (myClass != null) {
             return myClass;
@@ -56,11 +57,12 @@ public class MyApplicationClassLoader implements MyClassLoader {
             if (absClassName.getBytes()[0] == '[') {
                 myClass = loadArrayClass(absClassName);
             } else {
-                System.out.println(CACHE);
                 myClass = loadNonArrayClass(absClassName);
             }
         }
-
+        if (myClass != null) {
+            CACHE.put(absClassName, myClass);
+        }
         return myClass;
     }
 
@@ -82,7 +84,7 @@ public class MyApplicationClassLoader implements MyClassLoader {
             return clazz;
         } catch (Exception e) {
             e.printStackTrace();
-            MyLog.error("Failed To Create Array.");
+            MyLog.error("Failed To Create Array In Application Class Loader.");
         }
         return null;
     }
@@ -91,11 +93,13 @@ public class MyApplicationClassLoader implements MyClassLoader {
     public MyClass loadNonArrayClass(String absClassName) throws Exception {
         String path = Objects.requireNonNull(Thread.currentThread().getContextClassLoader().getResource("")).getPath();
         byte[] byteCode = ClassFileReader.readClass(absClassName, path);
+
         if (byteCode == null) {
             MyLog.error("Failed To Load Class: [ " + absClassName + " ].");
             throw new JvmException(EmClassLoadErr.FAILED_TO_LOAD_CLASS, "Failed To Load Class: [ " + absClassName + " ].");
         } else {
-            MyClass myClass = classBuilder.build(new ClassFile(new ClassEntry(this, byteCode)));
+            ClassFile classFile = new ClassFile(new ClassEntry(this, byteCode));
+            MyClass myClass = classBuilder.build(classFile);
             CACHE.put(absClassName, myClass);
             return myClass;
         }

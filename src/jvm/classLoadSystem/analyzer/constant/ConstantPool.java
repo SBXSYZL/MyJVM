@@ -164,4 +164,8 @@ public class ConstantPool {
     public ConstantInfo[] getAllConstantInfo() {
         return pool;
     }
+
+    public String getClassName() {
+        return className;
+    }
 }

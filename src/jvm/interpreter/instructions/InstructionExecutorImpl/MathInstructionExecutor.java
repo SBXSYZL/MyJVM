@@ -7,6 +7,7 @@ import jvm.interpreter.instructions.InstructionExecutor;
 import jvm.runtimeDataArea.threadDependent.LocalVariableTable;
 import jvm.runtimeDataArea.threadDependent.OperandStack;
 import jvm.runtimeDataArea.threadDependent.StackFrame;
+import log.MyLog;
 
 /**
  * 运算指令
@@ -145,6 +146,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iAdd(StackFrame frame) {
+        MyLog.command("iadd");
         OperandStack operandStack = frame.getOperandStack();
         Integer integer1 = operandStack.popInteger();
         Integer integer2 = operandStack.popInteger();
@@ -158,6 +160,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lAdd(StackFrame frame) {
+        MyLog.command("ladd");
         OperandStack operandStack = frame.getOperandStack();
         Long longVal1 = operandStack.popLong();
         Long longVal2 = operandStack.popLong();
@@ -171,6 +174,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fAdd(StackFrame frame) {
+        MyLog.command("fadd");
         OperandStack operandStack = frame.getOperandStack();
         Float floatVal1 = operandStack.popFloat();
         Float floatVal2 = operandStack.popFloat();
@@ -184,6 +188,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dAdd(StackFrame frame) {
+        MyLog.command("dadd");
         OperandStack operandStack = frame.getOperandStack();
         Double doubleVal1 = operandStack.popDouble();
         Double doubleVal2 = operandStack.popDouble();
@@ -197,6 +202,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iSub(StackFrame frame) {
+        MyLog.command("isub");
         OperandStack operandStack = frame.getOperandStack();
         Integer integer1 = operandStack.popInteger();
         Integer integer2 = operandStack.popInteger();
@@ -210,6 +216,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lSub(StackFrame frame) {
+        MyLog.command("lsub");
         OperandStack operandStack = frame.getOperandStack();
         Long longVal1 = operandStack.popLong();
         Long longVal2 = operandStack.popLong();
@@ -223,6 +230,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fSub(StackFrame frame) {
+        MyLog.command("fsub");
         OperandStack operandStack = frame.getOperandStack();
         float floatVal1 = operandStack.popFloat();
         float floatVal2 = operandStack.popFloat();
@@ -236,6 +244,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dSub(StackFrame frame) {
+        MyLog.command("dsub");
         OperandStack operandStack = frame.getOperandStack();
         double doubleVal1 = operandStack.popDouble();
         double doubleVal2 = operandStack.popLong();
@@ -249,6 +258,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iMul(StackFrame frame) {
+        MyLog.command("imul");
         OperandStack operandStack = frame.getOperandStack();
         Integer integerVal1 = operandStack.popInteger();
         Integer integerVal2 = operandStack.popInteger();
@@ -262,6 +272,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lMul(StackFrame frame) {
+        MyLog.command("lmul");
         OperandStack operandStack = frame.getOperandStack();
         long val1 = operandStack.popLong();
         long val2 = operandStack.popLong();
@@ -275,6 +286,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fMul(StackFrame frame) {
+        MyLog.command("fmul");
         OperandStack operandStack = frame.getOperandStack();
         float val1 = operandStack.popFloat();
         float val2 = operandStack.popFloat();
@@ -288,6 +300,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dMul(StackFrame frame) {
+        MyLog.command("dmul");
         OperandStack operandStack = frame.getOperandStack();
         double val1 = operandStack.popDouble();
         double val2 = operandStack.popDouble();
@@ -301,6 +314,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iDiv(StackFrame frame) {
+        MyLog.command("idiv");
         OperandStack operandStack = frame.getOperandStack();
         int val1 = operandStack.popInteger();
         int val2 = operandStack.popInteger();
@@ -314,6 +328,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lDiv(StackFrame frame) {
+        MyLog.command("ldiv");
         OperandStack operandStack = frame.getOperandStack();
         long val1 = operandStack.popLong();
         long val2 = operandStack.popLong();
@@ -327,6 +342,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fDiv(StackFrame frame) {
+        MyLog.command("fdiv");
         OperandStack operandStack = frame.getOperandStack();
         float val1 = operandStack.popFloat();
         float val2 = operandStack.popFloat();
@@ -340,6 +356,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dDiv(StackFrame frame) {
+        MyLog.command("ddiv");
         OperandStack operandStack = frame.getOperandStack();
         double val1 = operandStack.popDouble();
         double val2 = operandStack.popDouble();
@@ -353,6 +370,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iRem(StackFrame frame) {
+        MyLog.command("irem");
         OperandStack operandStack = frame.getOperandStack();
         int val1 = operandStack.popInteger();
         int val2 = operandStack.popInteger();
@@ -366,6 +384,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lRem(StackFrame frame) {
+        MyLog.command("lrem");
         OperandStack operandStack = frame.getOperandStack();
         long val1 = operandStack.popLong();
         long val2 = operandStack.popLong();
@@ -379,6 +398,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fRem(StackFrame frame) {
+        MyLog.command("frem");
         OperandStack operandStack = frame.getOperandStack();
         float val1 = operandStack.popFloat();
         float val2 = operandStack.popFloat();
@@ -392,6 +412,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dRem(StackFrame frame) {
+        MyLog.command("drem");
         OperandStack operandStack = frame.getOperandStack();
         double val1 = operandStack.popDouble();
         double val2 = operandStack.popDouble();
@@ -405,6 +426,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iNeg(StackFrame frame) {
+        MyLog.command("ineg");
         OperandStack operandStack = frame.getOperandStack();
         Integer val = operandStack.popInteger();
         val = -val;
@@ -417,6 +439,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lNeg(StackFrame frame) {
+        MyLog.command("lneg");
         OperandStack operandStack = frame.getOperandStack();
         long val = operandStack.popLong();
         val = -val;
@@ -429,6 +452,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fNeg(StackFrame frame) {
+        MyLog.command("fneg");
         OperandStack operandStack = frame.getOperandStack();
         float val = operandStack.popFloat();
         val = -val;
@@ -441,6 +465,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dNeg(StackFrame frame) {
+        MyLog.command("dneg");
         OperandStack operandStack = frame.getOperandStack();
         double val = operandStack.popDouble();
         val = -val;
@@ -454,6 +479,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iShL(StackFrame frame) {
+        MyLog.command("ishl");
         OperandStack operandStack = frame.getOperandStack();
         int cnt = operandStack.popInteger();
         cnt &= 0x1f;
@@ -468,6 +494,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lShL(StackFrame frame) {
+        MyLog.command("lshl");
         OperandStack operandStack = frame.getOperandStack();
         int cnt = operandStack.popInteger();
         cnt &= 0x3f;
@@ -482,6 +509,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iShR(StackFrame frame) {
+        MyLog.command("ishr");
         OperandStack operandStack = frame.getOperandStack();
         int cnt = operandStack.popInteger();
         cnt &= 0x1f;
@@ -496,6 +524,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lShR(StackFrame frame) {
+        MyLog.command("lshr");
         OperandStack operandStack = frame.getOperandStack();
         int cnt = operandStack.popInteger();
         cnt &= 0x3f;
@@ -511,6 +540,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      */
     private void iuShR(StackFrame frame) {
         //TODO 可能有BUG
+        MyLog.command("iushr");
         OperandStack operandStack = frame.getOperandStack();
         int cnt = operandStack.popInteger();
         cnt &= 0x1f;
@@ -526,6 +556,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      */
     private void luShR(StackFrame frame) {
         //TODO 可能有BUG
+        MyLog.command("lushr");
         OperandStack operandStack = frame.getOperandStack();
         int cnt = operandStack.popInteger();
         cnt &= 0x3f;
@@ -540,6 +571,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iAnd(StackFrame frame) {
+        MyLog.command("iand");
         OperandStack operandStack = frame.getOperandStack();
         int value1 = operandStack.popInteger();
         int value2 = operandStack.popInteger();
@@ -553,6 +585,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lAnd(StackFrame frame) {
+        MyLog.command("land");
         OperandStack operandStack = frame.getOperandStack();
         long value1 = operandStack.popLong();
         long value2 = operandStack.popLong();
@@ -566,6 +599,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iOr(StackFrame frame) {
+        MyLog.command("ior");
         OperandStack operandStack = frame.getOperandStack();
         int value1 = operandStack.popInteger();
         int value2 = operandStack.popInteger();
@@ -579,6 +613,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lOr(StackFrame frame) {
+        MyLog.command("lor");
         OperandStack operandStack = frame.getOperandStack();
         long value1 = operandStack.popLong();
         long value2 = operandStack.popLong();
@@ -592,6 +627,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iXOr(StackFrame frame) {
+        MyLog.command("ixor");
         OperandStack operandStack = frame.getOperandStack();
         int value1 = operandStack.popInteger();
         int value2 = operandStack.popInteger();
@@ -605,6 +641,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lXOr(StackFrame frame) {
+        MyLog.command("lxor");
         OperandStack operandStack = frame.getOperandStack();
         long value1 = operandStack.popLong();
         long value2 = operandStack.popLong();
@@ -619,6 +656,7 @@ public class MathInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void iInc(StackFrame frame, CodeReader reader) {
+        MyLog.command("iinc");
         int index = reader.readByte();
         int constantValue = reader.readByte();
         LocalVariableTable localVariableTable = frame.getLocalVariableTable();

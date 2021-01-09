@@ -5,6 +5,7 @@ import jvm.interpreter.instructions.InstructionEnum;
 import jvm.interpreter.instructions.InstructionExecutor;
 import jvm.runtimeDataArea.threadDependent.OperandStack;
 import jvm.runtimeDataArea.threadDependent.StackFrame;
+import log.MyLog;
 
 /**
  * @author 22454
@@ -80,6 +81,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void lCmp(StackFrame frame) {
+        MyLog.command("l_cmp");
         OperandStack operandStack = frame.getOperandStack();
         long value1 = operandStack.popLong();
         long value2 = operandStack.popLong();
@@ -95,6 +97,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void fCmpL(StackFrame frame) {
+        MyLog.command("f_cmpL");
         OperandStack operandStack = frame.getOperandStack();
         double value1 = operandStack.popFloat();
         double value2 = operandStack.popFloat();
@@ -112,6 +115,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void fCmpG(StackFrame frame) {
+        MyLog.command("fcmpg");
         OperandStack operandStack = frame.getOperandStack();
         double value1 = operandStack.popFloat();
         double value2 = operandStack.popFloat();
@@ -130,6 +134,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void dCmpL(StackFrame frame) {
+        MyLog.command("dcmpl");
         OperandStack operandStack = frame.getOperandStack();
         double value1 = operandStack.popDouble();
         double value2 = operandStack.popDouble();
@@ -147,6 +152,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void dCmpG(StackFrame frame) {
+        MyLog.command("dcmpg");
         OperandStack operandStack = frame.getOperandStack();
         double value1 = operandStack.popDouble();
         double value2 = operandStack.popDouble();
@@ -165,6 +171,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifEq(StackFrame frame, CodeReader reader) {
+        MyLog.command("ifeq");
         Integer value = frame.getOperandStack().popInteger();
         int offset = reader.readShort();
         if (value == 0) {
@@ -175,6 +182,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifNe(StackFrame frame, CodeReader reader) {
+        MyLog.command("ifne");
         Integer value = frame.getOperandStack().popInteger();
         int offset = reader.readShort();
         if (value != 0) {
@@ -185,6 +193,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifLt(StackFrame frame, CodeReader reader) {
+        MyLog.command("iflt");
         Integer value = frame.getOperandStack().popInteger();
         int offset = reader.readShort();
         if (value < 0) {
@@ -195,6 +204,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifGE(StackFrame frame, CodeReader reader) {
+        MyLog.command("ifge");
         Integer value = frame.getOperandStack().popInteger();
         int offset = reader.readShort();
         if (value >= 0) {
@@ -205,6 +215,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifGt(StackFrame frame, CodeReader reader) {
+        MyLog.command("ifgt");
         Integer value = frame.getOperandStack().popInteger();
         int offset = reader.readShort();
         if (value > 0) {
@@ -215,6 +226,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifLE(StackFrame frame, CodeReader reader) {
+        MyLog.command("ifle");
         Integer value = frame.getOperandStack().popInteger();
         int offset = reader.readShort();
         if (value <= 0) {
@@ -225,6 +237,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifICmpEQ(StackFrame frame, CodeReader reader) {
+        MyLog.command("if_icmpeq");
         OperandStack operandStack = frame.getOperandStack();
         int offset = reader.readShort();
         int value1 = operandStack.popInteger();
@@ -237,6 +250,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifICmpNe(StackFrame frame, CodeReader reader) {
+        MyLog.command("if_icmpne");
         OperandStack operandStack = frame.getOperandStack();
         int offset = reader.readShort();
         int value1 = operandStack.popInteger();
@@ -249,6 +263,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifICmpLt(StackFrame frame, CodeReader reader) {
+        MyLog.command("if_icmplt");
         OperandStack operandStack = frame.getOperandStack();
         int offset = reader.readShort();
         int value1 = operandStack.popInteger();
@@ -261,6 +276,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifICmpGe(StackFrame frame, CodeReader reader) {
+        MyLog.command("if_icmpge");
         OperandStack operandStack = frame.getOperandStack();
         int offset = reader.readShort();
         int value1 = operandStack.popInteger();
@@ -273,6 +289,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifICmpGt(StackFrame frame, CodeReader reader) {
+        MyLog.command("if_icmpgt");
         OperandStack operandStack = frame.getOperandStack();
         int offset = reader.readShort();
         int value1 = operandStack.popInteger();
@@ -285,6 +302,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifICmpLe(StackFrame frame, CodeReader reader) {
+        MyLog.command("if_icmple");
         OperandStack operandStack = frame.getOperandStack();
         int offset = reader.readShort();
         int value1 = operandStack.popInteger();
@@ -297,6 +315,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifACmpEq(StackFrame frame, CodeReader reader) {
+        MyLog.command("if_acmpeq");
         OperandStack operandStack = frame.getOperandStack();
         int offset = reader.readShort();
         Object ref1 = operandStack.popRef();
@@ -309,6 +328,7 @@ public class CompareInstructionExecutor implements InstructionExecutor {
     }
 
     private void ifACmpNe(StackFrame frame, CodeReader reader) {
+        MyLog.command("if_acmpne");
         OperandStack operandStack = frame.getOperandStack();
         int offset = reader.readShort();
         Object ref1 = operandStack.popRef();

@@ -8,18 +8,25 @@ import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDe
 /**
  * @author 22454
  */
-public class AttributeInfoMethodParameters implements AttributeInfo {
+public class AttributeInfoMethodParameters extends AttributeInfo {
     private int parametersCount;
     private Parameter[] parameters;
     private ConstantPool constantPool;
 
+    public AttributeInfoMethodParameters(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.parametersCount = byteCodeFile.readOneUint();
         this.parameters = new Parameter[this.parametersCount];
         for (int i = 0; i < this.parametersCount; i++) {
-            this.parameters[i] = new Parameter(byteCodeFile.readTwoUint(), byteCodeFile.readTwoUint());
+            this.parameters[i] = new Parameter(
+                    byteCodeFile.readTwoUint(),
+                    byteCodeFile.readTwoUint()
+            );
         }
     }
 

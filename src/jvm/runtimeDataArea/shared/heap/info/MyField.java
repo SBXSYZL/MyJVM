@@ -1,6 +1,7 @@
 package jvm.runtimeDataArea.shared.heap.info;
 
 import jvm.classLoadSystem.analyzer.constant.memberInfo.memberInfoImpl.FieldInfo;
+import jvm.runtimeDataArea.common.AccessPermission;
 import jvm.runtimeDataArea.common.FieldDescriptorEnum;
 
 /**
@@ -78,6 +79,7 @@ public class MyField {
                 FieldDescriptorEnum.DOUBLE_DESCRIPTOR.equals(this.descriptor);
     }
 
+
     @Override
     public String toString() {
         return "MyField{" +
@@ -87,5 +89,39 @@ public class MyField {
                 ", constValueIndex=" + constValueIndex +
                 ", slotIndex=" + slotIndex +
                 '}';
+    }
+
+    public boolean isAccessibleTo(MyClass d) {
+        if (this.isPublic()) {
+            return true;
+        }
+        MyClass c = this.myClass;
+        if (this.isProtected()) {
+            return d == c || c.getPackageName().equals(d.getPackageName());
+        }
+        if (!this.isPrivate()) {
+            return c.getPackageName().equals(d.getPackageName());
+        }
+        return d == c;
+    }
+
+    private boolean isPrivate() {
+        return AccessPermission.isPrivate(accessFlag);
+    }
+
+    private boolean isProtected() {
+        return AccessPermission.isProtected(accessFlag);
+    }
+
+    private boolean isPublic() {
+        return AccessPermission.isPublic(accessFlag);
+    }
+
+    public boolean isStatic() {
+        return AccessPermission.isStatic(accessFlag);
+    }
+
+    public boolean isFinal() {
+        return AccessPermission.isFinal(accessFlag);
     }
 }

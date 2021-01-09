@@ -45,14 +45,14 @@ public class MyBeanCenter {
 //        MyLog.print("----------------------------------IOC MAP END-----------------------------------\n");
 //        MyLog.success("Load Proxy Bean Successfully.");
 //
-        MyApplicationClassLoader bean = (MyApplicationClassLoader) MyBeanCenter.getBean(MyApplicationClassLoader.class);
-        try {
-            MyClass aClass = bean.findClass("java.lang.String");
-
-            MyLog.warn(aClass.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        MyApplicationClassLoader bean = (MyApplicationClassLoader) MyBeanCenter.getBean(MyApplicationClassLoader.class);
+//        try {
+//            MyClass aClass = bean.findClass("java.lang.String");
+//
+//            MyLog.warn(aClass.toString());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         /*
          *代理bean end

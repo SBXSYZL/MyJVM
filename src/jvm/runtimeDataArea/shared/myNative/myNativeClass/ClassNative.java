@@ -24,11 +24,18 @@ public class ClassNative implements NativeClass {
             put("getPrimitiveClass", "(Ljava/lang/String;)Ljava/lang/Class;");
             put("getName", "()Ljava/lang/String;");
             put("desiredAssertionStatus", "(Ljava/lang/Class;)Z");
+            put("registerNatives", "()V");
         }
     };
+    @Override
+    public void registerNatives(StackFrame frame) {
+        MyLog.nativeLog("registerNatives");
+        //do nothing
+    }
 
     public void getPrimitiveClass(StackFrame frame) {
         try {
+            MyLog.nativeLog("getPrimitiveClass");
             MyObject ref = frame.getLocalVariableTable().getRef(0);
             String className = StringCache.getString(ref);
             MyClassLoader loader = frame.getMethod().getClazz().getClassLoader();
@@ -41,6 +48,7 @@ public class ClassNative implements NativeClass {
     }
 
     public void getName(StackFrame frame) {
+        MyLog.nativeLog("getName");
         try {
             MyObject thisObject = (MyObject) frame.getLocalVariableTable().getThis();
             MyClass clazz = (MyClass) thisObject.getExtra();
@@ -56,6 +64,7 @@ public class ClassNative implements NativeClass {
     }
 
     public void desiredAssertionStatus(StackFrame frame) {
+        MyLog.nativeLog("desiredAssertionStatus");
         try {
             frame.getOperandStack().pushBoolean(false);
         } catch (Exception e) {
@@ -66,6 +75,7 @@ public class ClassNative implements NativeClass {
     }
 
     public void isInterface(StackFrame frame) {
+        MyLog.nativeLog("isInterface");
         try {
             LocalVariableTable localVariableTable = frame.getLocalVariableTable();
             MyObject thisObject = localVariableTable.getThis();
@@ -80,6 +90,7 @@ public class ClassNative implements NativeClass {
     }
 
     public void isPrimitive(StackFrame frame) {
+        MyLog.nativeLog("isPrimitive");
         try {
             LocalVariableTable localVariableTable = frame.getLocalVariableTable();
             MyObject thisObject = localVariableTable.getThis();

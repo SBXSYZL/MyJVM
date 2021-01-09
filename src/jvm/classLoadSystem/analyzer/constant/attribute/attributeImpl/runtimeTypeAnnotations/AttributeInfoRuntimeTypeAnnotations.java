@@ -8,15 +8,19 @@ import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDe
 /**
  * @author 22454
  */
-public abstract class AttributeInfoRuntimeTypeAnnotations implements AttributeInfo {
+public abstract class AttributeInfoRuntimeTypeAnnotations extends AttributeInfo {
     /**
      * U2
      */
     private int numAnnotations;
     private TypeAnnotation[] annotations;
 
+    public AttributeInfoRuntimeTypeAnnotations(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.numAnnotations = byteCodeFile.readTwoUint();
         annotations = new TypeAnnotation[numAnnotations];
         for (int i = 0; i < numAnnotations; i++) {

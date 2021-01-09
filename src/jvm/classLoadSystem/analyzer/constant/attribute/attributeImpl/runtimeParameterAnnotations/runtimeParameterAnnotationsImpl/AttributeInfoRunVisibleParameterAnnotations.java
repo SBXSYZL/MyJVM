@@ -7,4 +7,7 @@ import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimePara
  */
 public class AttributeInfoRunVisibleParameterAnnotations extends AttributeInfoParameterAnnotations {
 
+    public AttributeInfoRunVisibleParameterAnnotations(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
 }

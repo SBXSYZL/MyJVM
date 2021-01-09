@@ -7,13 +7,17 @@ import jvm.classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoInnerClasses implements AttributeInfo {
+public class AttributeInfoInnerClasses extends AttributeInfo {
     private int numberOfClasses;
     private InnerClassesInfo[] innerClasses;
     private ConstantPool constantPool;
 
+    public AttributeInfoInnerClasses(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.numberOfClasses = byteCodeFile.readTwoUint();
         this.innerClasses = new InnerClassesInfo[this.numberOfClasses];

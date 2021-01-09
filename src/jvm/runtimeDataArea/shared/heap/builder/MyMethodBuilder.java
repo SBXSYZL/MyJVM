@@ -23,19 +23,21 @@ public class MyMethodBuilder {
 
     public MyMethod build(MyClass clazz, MethodInfo methodInfo) {
         try {
-            MyMethod method = null;
-            if (clazz != null) {
-                this.clazz = clazz;
-            } else {
-                throw new Exception("MyClass is Null");
-            }
-            method = new MyMethod();
-            method.setAccessFlag(methodInfo.getAccessFlag());
-            method.setName(methodInfo.getName());
-            method.setDescriptor(methodInfo.getDescriptor());
-            method.setClazz(this.clazz);
-            setMethodCodeAttribute(method, methodInfo.getCodeAttribute());
-            return method;
+//            MyMethod method = null;
+//            if (clazz != null) {
+//                this.clazz = clazz;
+//            } else {
+//                throw new Exception("MyClass is Null");
+//            }
+//            method = new MyMethod();
+//            method.setAccessFlag(methodInfo.getAccessFlag());
+//            method.setName(methodInfo.getName());
+//            method.setDescriptor(methodInfo.getDescriptor());
+//            method.setClazz(this.clazz);
+//            setMethodCodeAttribute(method, methodInfo.getCodeAttribute());
+//
+//            return method;
+            return MyMethod.createMethod(clazz, methodInfo);
         } catch (Exception e) {
             e.printStackTrace();
             MyLog.error("Failed To Build Method");

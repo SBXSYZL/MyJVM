@@ -83,17 +83,30 @@ public class Interpreter {
         do {
             //获取栈顶帧
             StackFrame stackTopFrame = thread.getStackTopFrame();
+            String className = stackTopFrame.getMethod().getClazz().getClassName();
+            String currentMethodName = stackTopFrame.getMethod().getName();
+            MyLog.debug(className + " invoke " + currentMethodName);
             //获取下一个 PC
             int nextPc = stackTopFrame.getNextPc();
             //给线程设置新的 PC
             thread.setNextPc(nextPc);
             //取出当前栈帧的 code，交给 Code Reader 处理
             codeReader.reset(stackTopFrame.getMethod().getCode(), nextPc);
+            if (codeReader.emptyByteCode()) {
+                MyLog.error(stackTopFrame.toString());
+                MyLog.error(codeReader.toString());
+            }
             //获取操作指令代码
-            int operatorCode = codeReader.readByte();
+            int operatorCode = Byte.toUnsignedInt(codeReader.readByte());
+            String operatorCodeHex = Integer.toHexString(operatorCode & 0xff);
+            if (operatorCodeHex.length() == 1) {
+                operatorCodeHex = "0" + operatorCodeHex;
+            }
+            operatorCodeHex = "0x" + operatorCodeHex;
+            MyLog.command(operatorCodeHex);
             //执行指令
             instructionManagerCenter.invokeInstruction(operatorCode, codeReader, stackTopFrame);
-            //
+            //设置下一个的pc
             stackTopFrame.setNextPc(codeReader.getPc());
         } while (!thread.stackEmpty());
 

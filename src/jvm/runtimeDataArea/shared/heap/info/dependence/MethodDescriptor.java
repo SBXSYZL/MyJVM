@@ -26,7 +26,11 @@ public class MethodDescriptor {
         return returnType;
     }
 
-//    public static MethodDescriptor parse(String descriptor) {
+    public void setReturnType(String returnType) {
+        this.returnType = returnType;
+    }
+
+    //    public static MethodDescriptor parse(String descriptor) {
 //        MethodDescriptor methodDescriptor = new MethodDescriptor();
 //        MethodDescriptorParser methodDescriptorParser = new MethodDescriptorParser(descriptor, methodDescriptor);
 //

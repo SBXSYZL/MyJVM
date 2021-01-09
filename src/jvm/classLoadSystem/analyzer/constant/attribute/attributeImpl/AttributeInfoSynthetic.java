@@ -7,11 +7,15 @@ import jvm.classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoSynthetic implements AttributeInfo {
+public class AttributeInfoSynthetic extends AttributeInfo {
     private ConstantPool constantPool;
 
+    public AttributeInfoSynthetic(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
     }
 

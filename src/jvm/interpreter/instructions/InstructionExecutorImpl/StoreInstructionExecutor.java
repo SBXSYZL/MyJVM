@@ -8,6 +8,7 @@ import jvm.interpreter.instructions.InstructionExecutor;
 import jvm.runtimeDataArea.shared.heap.info.MyObject;
 import jvm.runtimeDataArea.threadDependent.OperandStack;
 import jvm.runtimeDataArea.threadDependent.StackFrame;
+import log.MyLog;
 import utils.CheckUtil;
 
 /**
@@ -133,6 +134,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void iStore(StackFrame frame, CodeReader reader) {
+        MyLog.command("istore");
         byte index = reader.readByte();
         Integer integer = frame.getOperandStack().popInteger();
         frame.getLocalVariableTable().putInteger(index, integer);
@@ -145,6 +147,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void lStore(StackFrame frame, CodeReader reader) {
+        MyLog.command("lstore");
         byte index = reader.readByte();
         Long longVal = frame.getOperandStack().popLong();
         frame.getLocalVariableTable().putLong(index, longVal);
@@ -157,6 +160,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void fStore(StackFrame frame, CodeReader reader) {
+        MyLog.command("fstore");
         byte index = reader.readByte();
         Float floatVal = frame.getOperandStack().popFloat();
         frame.getLocalVariableTable().putFloat(index, floatVal);
@@ -169,6 +173,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void dStore(StackFrame frame, CodeReader reader) {
+        MyLog.command("dstore");
         byte index = reader.readByte();
         Double doubleVal = frame.getOperandStack().popDouble();
         frame.getLocalVariableTable().putDouble(index, doubleVal);
@@ -181,6 +186,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void aStore(StackFrame frame, CodeReader reader) {
+        MyLog.command("astore");
         byte index = reader.readByte();
         MyObject myObject = frame.getOperandStack().popRef();
         frame.getLocalVariableTable().putRef(index, myObject);
@@ -192,6 +198,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iStore0(StackFrame frame) {
+        MyLog.command("istore_0");
         Integer integer = frame.getOperandStack().popInteger();
         frame.getLocalVariableTable().putInteger(0, integer);
     }
@@ -202,6 +209,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iStore1(StackFrame frame) {
+        MyLog.command("istore_1");
         Integer integer = frame.getOperandStack().popInteger();
         frame.getLocalVariableTable().putInteger(1, integer);
     }
@@ -212,6 +220,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iStore2(StackFrame frame) {
+        MyLog.command("istore_2");
         Integer integer = frame.getOperandStack().popInteger();
         frame.getLocalVariableTable().putInteger(2, integer);
     }
@@ -222,6 +231,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iStore3(StackFrame frame) {
+        MyLog.command("istore_3");
         Integer integer = frame.getOperandStack().popInteger();
         frame.getLocalVariableTable().putInteger(3, integer);
     }
@@ -232,6 +242,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lStore0(StackFrame frame) {
+        MyLog.command("lstore_0");
         Long longVal = frame.getOperandStack().popLong();
         frame.getLocalVariableTable().putLong(0, longVal);
     }
@@ -242,6 +253,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lStore1(StackFrame frame) {
+        MyLog.command("lstore_1");
         Long longVal = frame.getOperandStack().popLong();
         frame.getLocalVariableTable().putLong(1, longVal);
     }
@@ -252,6 +264,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lStore2(StackFrame frame) {
+        MyLog.command("lstore_2");
         Long longVal = frame.getOperandStack().popLong();
         frame.getLocalVariableTable().putLong(2, longVal);
     }
@@ -262,6 +275,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lStore3(StackFrame frame) {
+        MyLog.command("lstore_3");
         Long longVal = frame.getOperandStack().popLong();
         frame.getLocalVariableTable().putLong(3, longVal);
     }
@@ -272,6 +286,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fStore0(StackFrame frame) {
+        MyLog.command("fstore_0");
         Float floatVal = frame.getOperandStack().popFloat();
         frame.getLocalVariableTable().putFloat(0, floatVal);
     }
@@ -282,6 +297,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fStore1(StackFrame frame) {
+        MyLog.command("fstore_1");
         Float floatVal = frame.getOperandStack().popFloat();
         frame.getLocalVariableTable().putFloat(1, floatVal);
     }
@@ -292,6 +308,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fStore2(StackFrame frame) {
+        MyLog.command("fstore_2");
         Float floatVal = frame.getOperandStack().popFloat();
         frame.getLocalVariableTable().putFloat(2, floatVal);
     }
@@ -302,6 +319,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fStore3(StackFrame frame) {
+        MyLog.command("fstore_3");
         Float floatVal = frame.getOperandStack().popFloat();
         frame.getLocalVariableTable().putFloat(3, floatVal);
     }
@@ -312,6 +330,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dStore0(StackFrame frame) {
+        MyLog.command("dstore_0");
         Double doubleVal = frame.getOperandStack().popDouble();
         frame.getLocalVariableTable().putDouble(0, doubleVal);
     }
@@ -322,6 +341,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dStore1(StackFrame frame) {
+        MyLog.command("dstore_1");
         Double doubleVal = frame.getOperandStack().popDouble();
         frame.getLocalVariableTable().putDouble(1, doubleVal);
     }
@@ -332,6 +352,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dStore2(StackFrame frame) {
+        MyLog.command("dstore_2");
         Double doubleVal = frame.getOperandStack().popDouble();
         frame.getLocalVariableTable().putDouble(2, doubleVal);
     }
@@ -342,6 +363,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dStore3(StackFrame frame) {
+        MyLog.command("dstore_3");
         Double doubleVal = frame.getOperandStack().popDouble();
         frame.getLocalVariableTable().putDouble(3, doubleVal);
     }
@@ -352,6 +374,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aStore0(StackFrame frame) {
+        MyLog.command("astore_0");
         MyObject myObject = frame.getOperandStack().popRef();
         frame.getLocalVariableTable().putRef(0, myObject);
     }
@@ -362,6 +385,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aStore1(StackFrame frame) {
+        MyLog.command("astore_1");
         MyObject myObject = frame.getOperandStack().popRef();
         frame.getLocalVariableTable().putRef(1, myObject);
     }
@@ -372,6 +396,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aStore2(StackFrame frame) {
+        MyLog.command("astore_2");
         MyObject myObject = frame.getOperandStack().popRef();
         frame.getLocalVariableTable().putRef(2, myObject);
     }
@@ -382,6 +407,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aStore3(StackFrame frame) {
+        MyLog.command("astore_3");
         MyObject myObject = frame.getOperandStack().popRef();
         frame.getLocalVariableTable().putRef(3, myObject);
     }
@@ -392,6 +418,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iaStore(StackFrame frame) {
+        MyLog.command("iastore");
         OperandStack operandStack = frame.getOperandStack();
         Integer value = operandStack.popInteger();
         Integer index = operandStack.popInteger();
@@ -411,6 +438,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void laStore(StackFrame frame) {
+        MyLog.command("lastore");
         OperandStack operandStack = frame.getOperandStack();
         Long value = operandStack.popLong();
         Integer index = operandStack.popInteger();
@@ -430,6 +458,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void faStore(StackFrame frame) {
+        MyLog.command("fastore");
         OperandStack operandStack = frame.getOperandStack();
         Float value = operandStack.popFloat();
         Integer index = operandStack.popInteger();
@@ -448,6 +477,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void daStore(StackFrame frame) {
+        MyLog.command("dastore");
         OperandStack operandStack = frame.getOperandStack();
         Double value = operandStack.popDouble();
         Integer index = operandStack.popInteger();
@@ -466,6 +496,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aaStore(StackFrame frame) {
+        MyLog.command("aastore");
         OperandStack operandStack = frame.getOperandStack();
         MyObject value = operandStack.popRef();
         Integer index = operandStack.popInteger();
@@ -482,6 +513,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * 将栈顶 boolean / byte 类型数据存入指定数组的指定位置
      */
     private void baStore(StackFrame frame) {
+        MyLog.command("bastore");
         OperandStack operandStack = frame.getOperandStack();
         int value = operandStack.popInteger();
         Integer index = operandStack.popInteger();
@@ -498,6 +530,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * 将栈顶 char 类型数据存入指定数组的指定位置
      */
     private void caStore(StackFrame frame) {
+        MyLog.command("castore");
         OperandStack operandStack = frame.getOperandStack();
         int value = operandStack.popInteger();
         Integer index = operandStack.popInteger();
@@ -514,6 +547,7 @@ public class StoreInstructionExecutor implements InstructionExecutor {
      * 将栈顶 short 类型数据存入指定数组的指定位置
      */
     private void saStore(StackFrame frame) {
+        MyLog.command("sastore");
         OperandStack operandStack = frame.getOperandStack();
         int value = operandStack.popInteger();
         Integer index = operandStack.popInteger();

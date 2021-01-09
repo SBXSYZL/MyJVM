@@ -17,10 +17,18 @@ public class DoubleNative implements NativeClass {
         {
             put("doubleToRawLongBits", "(D)J");
             put("longBitsToDouble", "(J)D");
+            put("registerNatives", "()V");
         }
     };
 
+    @Override
+    public void registerNatives(StackFrame frame) {
+        MyLog.nativeLog("registerNatives");
+        //do nothing
+    }
+
     public void doubleToRawLongBits(StackFrame frame) {
+        MyLog.nativeLog("doubleToRawLongBits");
         try {
             double value = frame.getLocalVariableTable().getDouble(0);
             frame.getOperandStack().pushLong((long) value);
@@ -31,6 +39,7 @@ public class DoubleNative implements NativeClass {
     }
 
     public void longBitsToDouble(StackFrame frame) {
+        MyLog.nativeLog("longBitsToDouble");
         try {
             long value = frame.getLocalVariableTable().getLong(0);
             frame.getOperandStack().pushDouble((double) value);

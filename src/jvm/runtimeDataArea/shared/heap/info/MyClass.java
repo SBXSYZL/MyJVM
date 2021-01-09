@@ -258,7 +258,7 @@ public class MyClass {
         return false;
     }
 
-    private boolean isSubInterfaceOf(MyClass clazz) {
+    public boolean isSubInterfaceOf(MyClass clazz) {
         for (MyClass superInterface : this.interfaces) {
             if (superInterface == clazz || superInterface.isSubInterfaceOf(clazz)) {
                 return true;
@@ -270,5 +270,76 @@ public class MyClass {
     public MyClass componentClass() throws Exception {
         String componentClassName = MyClassLoader.getComponentClassName(this.getClassName());
         return this.getClassLoader().findClass(componentClassName);
+    }
+
+    public String getPackageName() {
+        int index = this.className.lastIndexOf("/");
+        if (index >= 0) {
+            return this.className.substring(0, index);
+        }
+        return "";
+    }
+
+    public MyMethod getClassInitMethod() {
+        return this.getStaticMethod("<clinit>", "()V", true);
+    }
+
+    public MyMethod getMainMethod() {
+        return this.getStaticMethod("main", "([Ljava/lang/String;)V", true);
+    }
+
+    public MyMethod getInstanceMethod(String methodName, String description) {
+        return this.getStaticMethod(methodName, description, false);
+    }
+
+    private MyMethod getStaticMethod(String methodName, String descriptor, boolean isStatic) {
+        for (MyClass c = this; c != null; c = c.getSuperClass()) {
+            if (null == c.getMethods()) {
+                continue;
+            }
+            for (MyMethod method : c.getMethods()) {
+                if (method.isStatic() == isStatic && method.getName().equals(methodName) && method.getDescriptor().equals(descriptor)) {
+                    return method;
+                }
+            }
+        }
+        throw new RuntimeException("Method Not Found：" + methodName + "  " + descriptor);
+    }
+
+    public boolean isSuper() {
+        return AccessPermission.isSuper(accessFlag);
+    }
+
+    public boolean isSubClassOf(MyClass other) {
+        for (MyClass c = this.superClass; c != null; c = c.superClass) {
+            if (c == other) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isAbstract() {
+        return AccessPermission.isAbstract(accessFlag);
+    }
+
+    public MyObject newObject() {
+        return new MyObject(this);
+    }
+
+    public MyClass getArrayClass() throws Exception {
+        String arrayClassName = MyClassLoader.getArrayClassName(className);
+        return classLoader.loadClass(arrayClassName);
+    }
+
+    public boolean isAssignableFrom(MyClass clazz) {
+        if (this == clazz) {
+            return true;
+        }
+        if (!clazz.isInterface()) {
+            return this.isSubClassOf(clazz);
+        } else {
+            return this.isImplements(clazz);
+        }
     }
 }

@@ -8,13 +8,17 @@ import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDe
 /**
  * @author 22454
  */
-public class AttributeInfoLocalVariableTable implements AttributeInfo {
+public class AttributeInfoLocalVariableTable extends AttributeInfo {
     private int localVariableTableLength;
     private LocalVariableInfo[] localVariableTable;
     private ConstantPool constantPool;
 
+    public AttributeInfoLocalVariableTable(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.localVariableTableLength = byteCodeFile.readTwoUint();
         this.localVariableTable = new LocalVariableInfo[this.localVariableTableLength];

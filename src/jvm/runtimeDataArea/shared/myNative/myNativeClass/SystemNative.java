@@ -20,8 +20,15 @@ public class SystemNative implements NativeClass {
     private static final ConcurrentHashMap<String, String> NATIVE_METHOD_DESCRIPTOR_MAP = new ConcurrentHashMap<String, String>() {
         {
             put("arrayCopy", "(Ljava/lang/Object;ILjava/lang/Object;II)V");
+            put("registerNatives", "()V");
         }
     };
+
+    @Override
+    public void registerNatives(StackFrame frame) {
+        MyLog.nativeLog("registerNatives");
+        //do nothing
+    }
 
     public void arrayCopy(StackFrame frame) {
         LocalVariableTable localVariableTable = frame.getLocalVariableTable();

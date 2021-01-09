@@ -7,4 +7,7 @@ import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeType
  */
 public class AttributeInfoRuntimeVisibleTypeAnnotations extends AttributeInfoRuntimeTypeAnnotations {
 
+    public AttributeInfoRuntimeVisibleTypeAnnotations(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
 }

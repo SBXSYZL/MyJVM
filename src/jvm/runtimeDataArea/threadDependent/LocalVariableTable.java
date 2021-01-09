@@ -2,6 +2,8 @@ package jvm.runtimeDataArea.threadDependent;
 
 import jvm.runtimeDataArea.shared.heap.info.MyObject;
 
+import java.util.Arrays;
+
 /**
  * @author 22454
  */
@@ -147,5 +149,12 @@ public class LocalVariableTable {
      */
     public VariableSlot[] getTable() {
         return table;
+    }
+
+    @Override
+    public String toString() {
+        return "LocalVariableTable{" +
+                "table=" + Arrays.toString(table) +
+                '}';
     }
 }

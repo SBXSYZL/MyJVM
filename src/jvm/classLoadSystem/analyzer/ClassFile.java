@@ -12,6 +12,8 @@ import jvm.classLoadSystem.classLoaderImpl.MyClassLoader;
 import log.MyLog;
 import utils.FileUtil;
 
+import java.util.Arrays;
+
 
 /**
  * @author 22454
@@ -51,9 +53,13 @@ public final class ClassFile {
         try {
 
             ByteCodeFile byteCodeFile = new ByteCodeFile(byteCode);
+            ByteCodeFile copy = new ByteCodeFile(Arrays.copyOf(byteCode, byteCode.length));
             //如果开头是MAGIC的变量，继续分析，否则抛出异常
             //如果是可编译版本
-            if (startWithMagic(byteCodeFile) && isCompilableVersion(byteCodeFile)) {
+            long magic = byteCodeFile.readFourUint();
+            this.minorVersion = byteCodeFile.readTwoUint();
+            this.majorVersion = byteCodeFile.readTwoUint();
+            if (startWithMagic(magic) && isCompilableVersion()) {
                 //读取 constant pool count
                 this.constantPoolCount = byteCodeFile.readTwoUint();
                 //创建常量池
@@ -139,23 +145,19 @@ public final class ClassFile {
     /**
      * 判断字节码开头是否是 CAFEBABE      this function check result is OK!!!
      *
-     * @param byteCodeFile 字节码文件
      * @return 是否符合预期
      */
-    private boolean startWithMagic(ByteCodeFile byteCodeFile) {
-        long magic = byteCodeFile.readFourUint();
+    private boolean startWithMagic(long magic) {
+
         return magic == (MAGIC & 0x0FFFFFFFFL);
     }
 
     /**
      * 判断当前字节码文件版本是否可编译         this function check result is OK!!!
      *
-     * @param byteCodeFile 字节码文件
      * @return 是否可编译
      */
-    private boolean isCompilableVersion(ByteCodeFile byteCodeFile) {
-        this.minorVersion = byteCodeFile.readTwoUint();
-        this.majorVersion = byteCodeFile.readTwoUint();
+    private boolean isCompilableVersion() {
         switch (majorVersion) {
             case 45:
             case 47:

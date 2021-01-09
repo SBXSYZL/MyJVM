@@ -8,13 +8,17 @@ import log.MyLog;
 /**
  * @author 22454
  */
-public class AttributeInfoExceptions implements AttributeInfo {
+public class AttributeInfoExceptions extends AttributeInfo {
     private int numberOfExceptions;
     private int[] exceptionIndexTable;
     private ConstantPool constantPool;
 
+    public AttributeInfoExceptions(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.numberOfExceptions = byteCodeFile.readTwoUint();
         this.exceptionIndexTable = new int[this.numberOfExceptions];
@@ -42,7 +46,7 @@ public class AttributeInfoExceptions implements AttributeInfo {
                 .append("\tExceptions:\n");
         for (int index : exceptionIndexTable) {
             try {
-                MyLog.debug("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" + index);
+                MyLog.debug("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx " + index);
                 builder.append("\t").append(index).append("   --->   < ").append(constantPool.getClassName(index)).append(" >");
             } catch (Exception e) {
                 e.printStackTrace();

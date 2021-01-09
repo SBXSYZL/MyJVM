@@ -37,6 +37,7 @@ public class InstructionManagerCenter {
      * 运行指令
      */
     public void invokeInstruction(int operatorCode, CodeReader codeReader, StackFrame stackTopFrame) {
+
         //找到对应指令，如果必要，获取操作数
         if (constantInstructionExecutor.isConstantInstruction(operatorCode)) {
             constantInstructionExecutor.execute(operatorCode, stackTopFrame, codeReader);
@@ -52,6 +53,16 @@ public class InstructionManagerCenter {
             conversionInstructionExecutor.execute(operatorCode, stackTopFrame, codeReader);
         } else if (compareInstructionExecutor.isCompareInstruction(operatorCode)) {
             compareInstructionExecutor.execute(operatorCode, stackTopFrame, codeReader);
+        } else if (controlInstructionExecutor.isControlInstruction(operatorCode)) {
+            controlInstructionExecutor.execute(operatorCode, stackTopFrame, codeReader);
+        } else if (quoteInstructionExecutor.isQuoteInstruction(operatorCode)) {
+            quoteInstructionExecutor.execute(operatorCode, stackTopFrame, codeReader);
+        } else if (extensionInstructionExecutor.isExtensionInstruction(operatorCode)) {
+            extensionInstructionExecutor.execute(operatorCode, stackTopFrame, codeReader);
+        } else if (reservedInstructionExecutor.isReservedInstruction(operatorCode)) {
+            reservedInstructionExecutor.execute(operatorCode, stackTopFrame, codeReader);
+        } else {
+            throw new RuntimeException("Error Instruction....");
         }
 
     }

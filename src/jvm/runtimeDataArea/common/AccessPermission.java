@@ -12,6 +12,7 @@ public final class AccessPermission {
     public static final int ACC_SYNTHETIC = 0x1000;
     public static final int ACC_VOLATILE = 0x0040;
     public static final int ACC_TRANSIENT = 0x0080;
+
     public static final int ACC_ENUM = 0x4000;
     public static final int ACC_SYNCHRONIZED = 0x0020;
     public static final int ACC_BRIDGE = 0x00040;

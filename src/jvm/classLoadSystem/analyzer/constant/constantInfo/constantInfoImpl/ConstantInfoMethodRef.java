@@ -4,6 +4,8 @@ import jvm.classLoadSystem.analyzer.ByteCodeFile;
 import jvm.classLoadSystem.analyzer.constant.ConstantPool;
 import jvm.classLoadSystem.analyzer.constant.constantInfo.ConstantInfo;
 
+import java.util.Map;
+
 /**
  * @author 22454
  */
@@ -28,6 +30,14 @@ public class ConstantInfoMethodRef implements ConstantInfo {
     @Override
     public int getTag() {
         return TAG;
+    }
+
+    public String getClassName() throws Exception {
+        return this.constantPool.getClassName(constantInfoClassIndex);
+    }
+
+    public Map<String, String> getNameAndDescriptor() throws Exception {
+        return constantPool.getNameAndType(this.constantInfoNameAndTypeIndex);
     }
 
     @Override

@@ -9,13 +9,17 @@ import log.MyLog;
 /**
  * @author 22454
  */
-public class AttributeInfoStackMapTable implements AttributeInfo {
+public class AttributeInfoStackMapTable extends AttributeInfo {
     private int numberOfEntries;
     private StackMapFrame[] stackMapFrameEntries;
     private ConstantPool constantPool;
 
+    public AttributeInfoStackMapTable(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.numberOfEntries = byteCodeFile.readTwoUint();
 //        MyLog.debug("number of entries : " + numberOfEntries);

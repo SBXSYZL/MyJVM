@@ -102,7 +102,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * 啥也不做
      */
     private void nop() {
-
+        MyLog.command("nop");
     }
 
     /**
@@ -111,6 +111,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aConstNull(StackFrame frame) {
+        MyLog.command("aconst_null");
         frame.getOperandStack().pushRef(null);
     }
 
@@ -120,6 +121,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iConstM1(StackFrame frame) {
+        MyLog.command("iconst_m1");
         frame.getOperandStack().pushInteger(-1);
     }
 
@@ -129,6 +131,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iConst0(StackFrame frame) {
+        MyLog.command("iconst_0");
         frame.getOperandStack().pushInteger(0);
     }
 
@@ -138,6 +141,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iConst1(StackFrame frame) {
+        MyLog.command("iconst_1");
         frame.getOperandStack().pushInteger(1);
     }
 
@@ -147,6 +151,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iConst2(StackFrame frame) {
+        MyLog.command("iconst_2");
         frame.getOperandStack().pushInteger(2);
     }
 
@@ -156,6 +161,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iConst3(StackFrame frame) {
+        MyLog.command("iconst_3");
         frame.getOperandStack().pushInteger(3);
     }
 
@@ -165,6 +171,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iConst4(StackFrame frame) {
+        MyLog.command("iconst_4");
         frame.getOperandStack().pushInteger(4);
     }
 
@@ -174,6 +181,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iConst5(StackFrame frame) {
+        MyLog.command("iconst_5");
         frame.getOperandStack().pushInteger(5);
     }
 
@@ -183,6 +191,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lConst0(StackFrame frame) {
+        MyLog.command("lconst_0");
         frame.getOperandStack().pushLong(0L);
     }
 
@@ -192,6 +201,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lConst1(StackFrame frame) {
+        MyLog.command("lconst_1");
         frame.getOperandStack().pushLong(1L);
     }
 
@@ -201,6 +211,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fConst0(StackFrame frame) {
+        MyLog.command("fconst_0");
         frame.getOperandStack().pushFloat(0.0f);
     }
 
@@ -210,6 +221,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fConst1(StackFrame frame) {
+        MyLog.command("fconst_1");
         frame.getOperandStack().pushFloat(1.0f);
     }
 
@@ -219,6 +231,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fConst2(StackFrame frame) {
+        MyLog.command("fconst_2");
         frame.getOperandStack().pushFloat(2.0f);
     }
 
@@ -228,6 +241,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dConst0(StackFrame frame) {
+        MyLog.command("dconst_0");
         frame.getOperandStack().pushDouble(0.0d);
     }
 
@@ -237,6 +251,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dConst1(StackFrame frame) {
+        MyLog.command("dconst_1");
         frame.getOperandStack().pushDouble(1.0d);
     }
 
@@ -247,6 +262,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void biPush(StackFrame frame, CodeReader reader) {
+        MyLog.command("bipush");
         int val = reader.readByte();
         frame.getOperandStack().pushInteger(val);
     }
@@ -258,6 +274,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void siPush(StackFrame frame, CodeReader reader) {
+        MyLog.command("sipush");
         int val = reader.readShort();
         frame.getOperandStack().pushInteger(val);
     }
@@ -269,6 +286,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void ldc(StackFrame frame, CodeReader reader) {
+        MyLog.command("ldc");
         int runtimeConstantIndex = reader.readByte();
         OperandStack operandStack = frame.getOperandStack();
         MyClass clazz = frame.getMethod().getClazz();
@@ -313,6 +331,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void ldcW(StackFrame frame, CodeReader reader) {
+        MyLog.command("ldcw");
         int runtimeConstantIndex = reader.readShort();
         OperandStack operandStack = frame.getOperandStack();
         MyClass clazz = frame.getMethod().getClazz();
@@ -339,6 +358,7 @@ public class ConstantInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void ldc2W(StackFrame frame, CodeReader reader) {
+        MyLog.command("ldc2w");
         int runtimeConstantIndex = reader.readShort();
         OperandStack operandStack = frame.getOperandStack();
         MyClass clazz = frame.getMethod().getClazz();

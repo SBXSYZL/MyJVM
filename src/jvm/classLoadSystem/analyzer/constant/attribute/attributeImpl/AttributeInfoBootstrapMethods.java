@@ -8,13 +8,17 @@ import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDe
 /**
  * @author 22454
  */
-public class AttributeInfoBootstrapMethods implements AttributeInfo {
+public class AttributeInfoBootstrapMethods extends AttributeInfo {
     private int numBootstrapMethods;
     private BootstrapMethod[] bootstrapMethods;
     private ConstantPool constantPool;
 
+    public AttributeInfoBootstrapMethods(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.numBootstrapMethods = byteCodeFile.readTwoUint();
         this.bootstrapMethods = new BootstrapMethod[this.numBootstrapMethods];

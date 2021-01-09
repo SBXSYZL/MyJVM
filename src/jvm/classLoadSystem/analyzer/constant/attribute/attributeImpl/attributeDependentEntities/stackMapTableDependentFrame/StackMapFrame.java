@@ -17,9 +17,9 @@ public class StackMapFrame {
         }
     }
 
-    public static StackMapFrame[] readStackMapFrames(ByteCodeFile byteCodeFile, int frameCount) {
-        StackMapFrame[] stackMapFrames = new StackMapFrame[frameCount];
-        for (int i = 0; i < frameCount; i++) {
+    public static StackMapFrame[] readStackMapFrames(ByteCodeFile byteCodeFile, int numberOfEntries) {
+        StackMapFrame[] stackMapFrames = new StackMapFrame[numberOfEntries];
+        for (int i = 0; i < numberOfEntries; i++) {
             stackMapFrames[i] = new StackMapFrame(byteCodeFile);
         }
         return stackMapFrames;

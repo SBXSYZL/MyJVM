@@ -31,13 +31,17 @@ public class MethodDescriptorParser {
     }
 
     private void parseReturnType() {
-        while (true) {
-            String type = this.parseFieldType();
-            if ("".equals(type)) {
-                break;
-            }
-            this.parsed.addParameterType(type);
+        if (readUint8() == 'V') {
+            parsed.setReturnType("V");
+            return;
         }
+        unReadUint8();
+        String type = parseFieldType();
+        if (!"".equals(type)) {
+            parsed.setReturnType(type);
+            return;
+        }
+        causePanic();
     }
 
     private void endParameters() {
@@ -121,7 +125,8 @@ public class MethodDescriptorParser {
 
     private byte readUint8() {
         byte[] bytes = this.raw.getBytes();
-        byte b = bytes[this.offset++];
+        byte b = bytes[this.offset];
+        this.offset++;
         return b;
     }
 }

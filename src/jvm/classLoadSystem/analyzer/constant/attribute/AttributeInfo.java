@@ -16,7 +16,14 @@ import exception.JvmException;
 /**
  * @author 22454
  */
-public interface AttributeInfo {
+public abstract class AttributeInfo {
+    protected int attributeNameIndex;
+    protected int attributeLength;
+
+    public AttributeInfo(int attributeNameIndex, int attributeLength) {
+        this.attributeNameIndex = attributeNameIndex;
+        this.attributeLength = attributeLength;
+    }
 
     /**
      * 根据信息创建出属性对象
@@ -31,54 +38,55 @@ public interface AttributeInfo {
         String attributeName = constantPool.getUtf8(attributeNameIndex);
         switch (attributeName) {
             case AttributeTypeEnum.CODE:
-                return new AttributeInfoCode();
+                return new AttributeInfoCode(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.CONSTANT_VALUE:
-                return new AttributeInfoConstantValue();
+                return new AttributeInfoConstantValue(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.DEPRECATED:
-                return new AttributeInfoDeprecated();
+                return new AttributeInfoDeprecated(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.EXCEPTIONS:
-                return new AttributeInfoExceptions();
+                return new AttributeInfoExceptions(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.ENCLOSING_METHOD:
-                return new AttributeInfoEnclosingMethod();
+                return new AttributeInfoEnclosingMethod(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.INNER_CLASSES:
-                return new AttributeInfoInnerClasses();
+                return new AttributeInfoInnerClasses(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.LINE_NUMBER_TABLE:
-                return new AttributeInfoLineNumberTable();
+                return new AttributeInfoLineNumberTable(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.LOCAL_VARIABLE_TABLE:
-                return new AttributeInfoLocalVariableTable();
+                return new AttributeInfoLocalVariableTable(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.STACK_MAP_TABLE:
-                return new AttributeInfoStackMapTable();
+                return new AttributeInfoStackMapTable(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.SIGNATURE:
-                return new AttributeInfoSignature();
+                return new AttributeInfoSignature(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.SOURCE_FILE:
-                return new AttributeInfoSourceFile();
+                return new AttributeInfoSourceFile(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.SOURCE_DEBUG_EXTENSION:
-                return new AttributeInfoSourceDebugExtension();
+                return new AttributeInfoSourceDebugExtension(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.SYNTHETIC:
-                return new AttributeInfoSynthetic();
+                return new AttributeInfoSynthetic(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.LOCAL_VARIABLE_TYPE_TABLE:
-                return new AttributeInfoLocalVariableTypeTable();
+                return new AttributeInfoLocalVariableTypeTable(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.RUNTIME_VISIBLE_ANNOTATIONS:
-                return new AttributeInfoRuntimeVisibleAnnotations();
+                return new AttributeInfoRuntimeVisibleAnnotations(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.RUNTIME_INVISIBLE_ANNOTATIONS:
-                return new AttributeInfoRuntimeInvisibleAnnotations();
+                return new AttributeInfoRuntimeInvisibleAnnotations(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.RUNTIME_VISIBLE_PARAMETER_ANNOTATIONS:
-                return new AttributeInfoRunVisibleParameterAnnotations();
+                return new AttributeInfoRunVisibleParameterAnnotations(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.RUNTIME_INVISIBLE_PARAMETER_ANNOTATIONS:
-                return new AttributeInfoRuntimeInvisibleParameterAnnotations();
+                return new AttributeInfoRuntimeInvisibleParameterAnnotations(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.ANNOTATION_DEFAULT:
-                return new AttributeInfoAnnotationDefault();
+                return new AttributeInfoAnnotationDefault(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.BOOTSTRAP_METHODS:
-                return new AttributeInfoBootstrapMethods();
+                return new AttributeInfoBootstrapMethods(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.RUNTIME_VISIBLE_TYPE_ANNOTATIONS:
-                return new AttributeInfoRuntimeVisibleTypeAnnotations();
+                return new AttributeInfoRuntimeVisibleTypeAnnotations(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.RUNTIME_INVISIBLE_TYPE_ANNOTATIONS:
-                return new AttributeInfoRuntimeInvisibleTypeAnnotations();
+                return new AttributeInfoRuntimeInvisibleTypeAnnotations(attributeNameIndex, attributeLength);
             case AttributeTypeEnum.METHOD_PARAMETERS:
-                return new AttributeInfoMethodParameters();
+                return new AttributeInfoMethodParameters(attributeNameIndex, attributeLength);
             //TODO 未写完所有 case,jdk9 & jdk11 不做实现
             default:
-                throw new JvmException(EmClassLoadErr.JVM_VERSION_ERROR, "UnKnown Attribute Info");
+//                throw new JvmException(EmClassLoadErr.JVM_VERSION_ERROR, "UnKnown Attribute Info");
+                return new AttributeInfoUnparsed(attributeNameIndex, attributeLength);
         }
     }
 
@@ -110,7 +118,7 @@ public interface AttributeInfo {
             int attributeNameIndex = byteCodeFile.readTwoUint();
             int attributeLength = byteCodeFile.readInteger();
             AttributeInfo attributeInfo = createAttribute(attributeNameIndex, attributeLength, constantPool);
-            attributeInfo.readInfo(byteCodeFile, constantPool);
+            attributeInfo.readInfo(byteCodeFile, attributeLength, constantPool);
             return attributeInfo;
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,5 +133,5 @@ public interface AttributeInfo {
      * @param constantPool 常量池
      * @throws Exception ex
      */
-    void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception;
+    protected abstract void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception;
 }

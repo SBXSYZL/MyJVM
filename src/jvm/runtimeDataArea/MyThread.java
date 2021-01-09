@@ -1,5 +1,6 @@
 package jvm.runtimeDataArea;
 
+import jvm.runtimeDataArea.shared.heap.info.MyMethod;
 import jvm.runtimeDataArea.threadDependent.RuntimeStack;
 import jvm.runtimeDataArea.threadDependent.StackFrame;
 import log.MyLog;
@@ -62,5 +63,17 @@ public class MyThread {
 
     public int getPc() {
         return pc;
+    }
+
+    public StackFrame createNewStackFrame(MyMethod method) {
+        return new StackFrame(this, method);
+    }
+
+    @Override
+    public String toString() {
+        return "MyThread{" +
+                "pc=" + pc +
+                ", stack=" + stack +
+                '}';
     }
 }

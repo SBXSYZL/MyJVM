@@ -12,12 +12,11 @@ public class MyClassRef {
     private String className;
     private MyClass clazz;
 
-    public static MyClassRef newClassRef(RuntimeConstantPool runtimeConstantPool, ConstantInfoClass constantInfoClass) throws Exception {
+    public static MyClassRef createClassRef(RuntimeConstantPool runtimeConstantPool, ConstantInfoClass constantInfoClass) throws Exception {
         MyClassRef classRef = new MyClassRef();
         classRef.setRuntimeConstantPool(runtimeConstantPool);
         classRef.setClassName(constantInfoClass.getClassName());
         return classRef;
-
     }
 
     public MyClass resolvedClass() throws Exception {

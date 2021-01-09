@@ -17,10 +17,18 @@ public class FloatNative implements NativeClass {
         {
             put("floatToRawIntBits", "(F)I");
             put("intBitsToFloat", "(I)F");
+            put("registerNatives", "()V");
         }
     };
 
+    @Override
+    public void registerNatives(StackFrame frame) {
+        MyLog.nativeLog("registerNatives");
+        //do nothing
+    }
+
     public void floatToRawIntegerBits(StackFrame frame) {
+        MyLog.nativeLog("floatToRawIntegerBits");
         try {
             float value = frame.getLocalVariableTable().getFloat(0);
             frame.getOperandStack().pushInteger((int) value);
@@ -31,6 +39,7 @@ public class FloatNative implements NativeClass {
     }
 
     public void integerBitsToFloat(StackFrame frame) {
+        MyLog.nativeLog("integerBitsToFloat");
         try {
             int value = frame.getLocalVariableTable().getInteger(0);
             frame.getOperandStack().pushInteger(value);

@@ -7,12 +7,17 @@ import jvm.classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoConstantValue implements AttributeInfo {
+public class AttributeInfoConstantValue extends AttributeInfo {
     private int constantValueIndex;
     private ConstantPool constantPool;
 
+    public AttributeInfoConstantValue(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.constantValueIndex = byteCodeFile.readTwoUint();
     }
@@ -27,6 +32,6 @@ public class AttributeInfoConstantValue implements AttributeInfo {
 
     @Override
     public String toString() {
-        return "" + constantValueIndex+"\n";
+        return "" + constantValueIndex + "\n";
     }
 }

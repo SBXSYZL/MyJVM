@@ -28,6 +28,11 @@ public class ByteCodeFile {
         byte[] bytes = new byte[cnt];
         System.arraycopy(bytecode, 0, bytes, 0, cnt);
         System.arraycopy(bytecode, cnt, bytecode, 0, bytecode.length - cnt);
+
+//        System.arraycopy(bytecode, 0, bytes, 0, cnt);
+//        byte[] cpy = new byte[bytecode.length - cnt];
+//        System.arraycopy(bytecode, cnt, cpy, 0, bytecode.length - cnt);
+//        bytecode = cpy;
         return bytes;
     }
 
@@ -108,5 +113,21 @@ public class ByteCodeFile {
     private long byteArrayToLong(byte[] value) {
         String valStr = new BigInteger(1, value).toString(16);
         return Long.parseLong(valStr, 16);
+    }
+
+    public void show() {
+        int cnt = 0;
+        for (byte b : bytecode) {
+            if ((cnt++) == 16) {
+                System.out.println();
+                cnt = 1;
+            }
+            String bStr = Integer.toHexString(((int) b) & 0xff);
+            if (bStr.length() == 1) {
+                bStr = "0" + bStr;
+            }
+            System.out.print(bStr + " ");
+        }
+        System.out.println();
     }
 }

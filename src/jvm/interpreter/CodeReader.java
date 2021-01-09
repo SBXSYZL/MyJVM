@@ -1,5 +1,7 @@
 package jvm.interpreter;
 
+import java.util.Arrays;
+
 /**
  * @author 22454
  */
@@ -48,4 +50,31 @@ public class CodeReader {
         }
     }
 
+    public boolean emptyByteCode() {
+        return code == null || code.length == 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder("[ ");
+        String c;
+        if (code != null) {
+            for (int i = 0; i < code.length; i++) {
+                c = Integer.toHexString(((int) code[i]) & 0xff);
+                if (c.length() == 1) {
+                    c = "0" + c;
+                }
+                builder.append(c);
+                if (i != code.length - 1) {
+                    builder.append(",");
+                }
+            }
+        }
+
+        builder.append(" ]");
+        return "CodeReader{" +
+                "code=" + builder +
+                ", pc=" + pc +
+                '}';
+    }
 }

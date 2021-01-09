@@ -8,24 +8,23 @@ import jvm.classLoadSystem.analyzer.constant.ConstantPool;
  * @author 22454
  */
 
-public class AttributeInfoSourceDebugExtension implements AttributeInfo {
-    private int debugExtensionLength;
+public class AttributeInfoSourceDebugExtension extends AttributeInfo {
     private int[] debugExtension;
     private ConstantPool constantPool;
 
+    public AttributeInfoSourceDebugExtension(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
-        debugExtensionLength = byteCodeFile.readOneUint();
-        debugExtension = new int[this.debugExtensionLength];
-        for (int i = 0; i < this.debugExtensionLength; i++) {
+        debugExtension = new int[attributeLength];
+        for (int i = 0; i < attributeLength; i++) {
             debugExtension[i] = byteCodeFile.readOneUint();
         }
     }
 
-    public int getDebugExtensionLength() {
-        return debugExtensionLength;
-    }
 
     public int[] getDebugExtension() {
         return debugExtension;

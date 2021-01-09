@@ -2,6 +2,7 @@ package jvm.runtimeDataArea.shared.heap.info.dependence;
 
 import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDependentEntities.ExceptionInfo;
 import jvm.runtimeDataArea.shared.heap.RuntimeConstantPool;
+import jvm.runtimeDataArea.shared.heap.info.MyClass;
 import jvm.runtimeDataArea.shared.heap.info.ref.MyClassRef;
 
 /**
@@ -25,5 +26,24 @@ public class ExceptionTable {
             );
             exceptionTable[i] = exceptionHandler;
         }
+    }
+
+    public ExceptionHandler findExceptionHandler(MyClass exClazz, int pc) {
+        for (ExceptionHandler handler : exceptionTable) {
+            if (pc >= handler.getStartPc() && pc < handler.getEndPc()) {
+                if (null == handler.getCatchType()) {
+                    return handler;
+                }
+                try {
+                    MyClass catchType = handler.getCatchType().resolvedClass();
+                    if (catchType == exClazz || catchType.isSubClassOf(exClazz)) {
+                        return handler;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
     }
 }

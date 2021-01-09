@@ -12,10 +12,13 @@ public class MyArray {
     public MyArray(int arrayLength) {
         if (arrayLength > 0) {
             array = new VariableSlot[arrayLength];
+            for (int i = 0; i < array.length; i++) {
+                array[i] = VariableSlot.createDefaultSlot();
+            }
         }
     }
 
-    public void setInteger(int index, int value) throws Exception {
+    public void setInteger(int index, int value) {
         this.array[index] = VariableSlot.createVariableSlot(value);
     }
 
@@ -23,7 +26,7 @@ public class MyArray {
         return (Integer) this.array[index].getValue();
     }
 
-    public void setFloat(int index, float value) throws Exception {
+    public void setFloat(int index, float value) {
         this.array[index] = VariableSlot.createVariableSlot(value);
     }
 
@@ -31,7 +34,7 @@ public class MyArray {
         return (Float) this.array[index].getValue();
     }
 
-    public void setLong(int index, long value) throws Exception {
+    public void setLong(int index, long value) {
         this.array[index] = VariableSlot.createVariableSlot(value);
     }
 
@@ -39,7 +42,7 @@ public class MyArray {
         return (Long) this.array[index].getValue();
     }
 
-    public void setDouble(int index, double value) throws Exception {
+    public void setDouble(int index, double value) {
         this.array[index] = VariableSlot.createVariableSlot(value);
     }
 
@@ -47,7 +50,7 @@ public class MyArray {
         return (Double) this.array[index].getValue();
     }
 
-    public void setObjectRef(int index, MyObject objectRef) throws Exception {
+    public void setObjectRef(int index, MyObject objectRef) {
         this.array[index] = VariableSlot.createVariableSlot(objectRef);
     }
 

@@ -2,6 +2,8 @@ package log;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * @author 22454
@@ -15,6 +17,7 @@ public final class MyLog {
     private static boolean useSuccess = false;
     private static boolean useCommand = false;
     private static boolean usePrint = false;
+    private static boolean useNative = false;
     private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss  ");
     private static final String INFO_LABEL = "\033[32m INFO \033[m";
     private static final String DEBUG_LABEL = "\033[36m DEBUG \033[m";
@@ -22,8 +25,10 @@ public final class MyLog {
     private static final String ERROR_LABEL = "\033[31m ERROR \033[m";
     private static final String SUCCESS_LABEL = "\033[32m SUCCESS \033[m";
     private static final String COMMAND_LABEL = "\033[29m COMMAND \033[m";
+    private static final String NATIVE_LABEL = "\033[29m NATIVE \033[m";
     private static final int MAX_LABEL_LENGTH = 20;
     private static final int MAX_THREAD_NAME_LENGTH = 10;
+
 
     public static void info(final String msg) {
         if (useLog && useInfo) {
@@ -64,6 +69,13 @@ public final class MyLog {
     public static void command(final String msg) {
         if (useLog && useCommand) {
             String realMsg = formatMsg(msg, COMMAND_LABEL);
+            System.out.println(realMsg);
+        }
+    }
+
+    public static void nativeLog(final String msg) {
+        if (useLog && useNative) {
+            String realMsg = formatMsg(msg, NATIVE_LABEL);
             System.out.println(realMsg);
         }
     }
@@ -184,6 +196,14 @@ public final class MyLog {
         usePrint = false;
     }
 
+    public static void openNativeLog() {
+        useNative = true;
+    }
+
+    public static void closeNativeLog() {
+        useNative = false;
+    }
+
     public static void openAllLog() {
         openLog();
         openInfoLog();
@@ -193,6 +213,7 @@ public final class MyLog {
         openSuccess();
         openCommand();
         openPrintLog();
+        openNativeLog();
     }
 
     public static void closeAllLog() {
@@ -203,6 +224,7 @@ public final class MyLog {
         closeSuccess();
         closeCommand();
         closePrintLog();
+        closeLog();
         closeLog();
     }
 

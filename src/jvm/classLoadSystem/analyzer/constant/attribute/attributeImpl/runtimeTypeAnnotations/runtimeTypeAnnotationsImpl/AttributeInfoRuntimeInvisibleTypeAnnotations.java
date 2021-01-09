@@ -6,4 +6,7 @@ import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.runtimeType
  * @author 22454
  */
 public class AttributeInfoRuntimeInvisibleTypeAnnotations extends AttributeInfoRuntimeTypeAnnotations {
+    public AttributeInfoRuntimeInvisibleTypeAnnotations(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
 }

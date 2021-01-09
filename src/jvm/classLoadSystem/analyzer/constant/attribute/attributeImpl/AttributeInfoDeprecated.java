@@ -7,11 +7,18 @@ import jvm.classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoDeprecated implements AttributeInfo {
+public class AttributeInfoDeprecated extends AttributeInfo {
+    private int attributeNameIndex;
+    private int attributeLength;
     private ConstantPool constantPool;
 
+    public AttributeInfoDeprecated(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
     }
 

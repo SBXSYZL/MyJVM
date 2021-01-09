@@ -8,7 +8,8 @@ import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDe
 /**
  * @author 22454
  */
-public class AttributeInfoCode implements AttributeInfo {
+public class AttributeInfoCode extends AttributeInfo {
+
     private int maxStack;
     private int maxLocals;
     private int codeLength;
@@ -19,13 +20,17 @@ public class AttributeInfoCode implements AttributeInfo {
     private AttributeInfo[] attributes;
     private ConstantPool constantPool;
 
+    public AttributeInfoCode(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
 
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         maxStack = byteCodeFile.readTwoUint();
         maxLocals = byteCodeFile.readTwoUint();
-        codeLength = byteCodeFile.readInteger();
+        codeLength = (int) byteCodeFile.readFourUint();
         code = byteCodeFile.getByteByCnt(codeLength);
         exceptionTableLength = byteCodeFile.readTwoUint();
         exceptionTable = new ExceptionInfo[exceptionTableLength];

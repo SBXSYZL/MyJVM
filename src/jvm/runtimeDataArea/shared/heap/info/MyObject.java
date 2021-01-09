@@ -127,4 +127,12 @@ public class MyObject {
     public short[] getShortArray() {
         return (short[]) this.data;
     }
+
+    public MyArray getFields() {
+        return (MyArray) this.data;
+    }
+
+    public boolean isInstanceOf(MyClass myClass) {
+        return myClass.isAssignableFrom(clazz);
+    }
 }

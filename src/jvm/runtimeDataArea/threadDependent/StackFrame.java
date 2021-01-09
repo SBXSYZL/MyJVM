@@ -84,4 +84,19 @@ public class StackFrame {
     public void setNextPc(int nextPc) {
         this.nextPc = nextPc;
     }
+
+    public void revertNextPc() {
+        this.nextPc = this.thread.getPc();
+    }
+
+    @Override
+    public String toString() {
+        return "\nStackFrame{" +
+                "localVariableTable=" + localVariableTable +
+                ", operandStack=" + operandStack +
+                ", thread=" + thread +
+                ", method=" + method +
+                ", nextPc=" + nextPc +
+                '}';
+    }
 }

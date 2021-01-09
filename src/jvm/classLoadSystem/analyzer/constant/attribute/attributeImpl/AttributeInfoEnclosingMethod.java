@@ -7,13 +7,17 @@ import jvm.classLoadSystem.analyzer.constant.attribute.AttributeInfo;
 /**
  * @author 22454
  */
-public class AttributeInfoEnclosingMethod implements AttributeInfo {
+public class AttributeInfoEnclosingMethod extends AttributeInfo {
     private int classIndex;
     private int methodIndex;
     private ConstantPool constantPool;
 
+    public AttributeInfoEnclosingMethod(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.classIndex = byteCodeFile.readTwoUint();
         this.methodIndex = byteCodeFile.readTwoUint();
         this.constantPool = constantPool;

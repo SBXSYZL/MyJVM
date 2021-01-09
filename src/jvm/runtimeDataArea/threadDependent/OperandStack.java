@@ -40,7 +40,10 @@ public class OperandStack {
      * @return 值
      */
     public Integer popInteger() {
-        return (int) stack.removeFirst().getValue();
+        if (stack.size() > 0) {
+            return (int) stack.removeFirst().getValue();
+        }
+        return null;
     }
 
     /**
@@ -64,7 +67,10 @@ public class OperandStack {
      * @return 值
      */
     public Float popFloat() {
-        return (Float) stack.removeFirst().getValue();
+        if (stack.size() > 0) {
+            return (Float) stack.removeFirst().getValue();
+        }
+        return null;
     }
 
     /**
@@ -90,10 +96,14 @@ public class OperandStack {
      * @return 值
      */
     public Long popLong() {
-        VariableSlot lowSlot = stack.removeFirst();
-        VariableSlot highSlot = stack.removeFirst();
-        VariableSlot.LongVariableSplitEntity longVariableSplitEntity = new VariableSlot.LongVariableSplitEntity(highSlot, lowSlot);
-        return longVariableSplitEntity.resumeToLong();
+        if (stack.size() > 1) {
+            VariableSlot lowSlot = stack.removeFirst();
+            VariableSlot highSlot = stack.removeFirst();
+            VariableSlot.LongVariableSplitEntity longVariableSplitEntity = new VariableSlot.LongVariableSplitEntity(highSlot, lowSlot);
+            return longVariableSplitEntity.resumeToLong();
+        }
+        return null;
+
     }
 
     /**
@@ -113,8 +123,11 @@ public class OperandStack {
      */
     public Double popDouble() {
 
-        long l = popLong();
-        return Double.longBitsToDouble(l);
+        Long l = popLong();
+        if (l != null) {
+            return Double.longBitsToDouble(l);
+        }
+        return null;
     }
 
     /**
@@ -138,7 +151,11 @@ public class OperandStack {
      * @return 对象引用
      */
     public MyObject popRef() {
-        return (MyObject) stack.removeFirst().getValue();
+        if (stack.size() > 0) {
+            return (MyObject) stack.removeFirst().getValue();
+        }
+        return null;
+
     }
 
     public void pushVariableSlot(VariableSlot slot) {
@@ -152,16 +169,19 @@ public class OperandStack {
     }
 
     public VariableSlot popVariableSlot() {
-        return stack.removeFirst();
+        if (stack.size() > 0) {
+            return stack.removeFirst();
+        }
+        return null;
     }
 
     public void clear() {
         stack.clear();
     }
 
-    public Object getRefFromTop(int n) throws Exception {
+    public Object getRefFromTop(int n) {
         if (n >= stack.size()) {
-            throw new Exception("Get Ref From Top Fail");
+            return null;
         }
         for (int i = 0; i < stack.size(); i++) {
             if (i == n) {
@@ -197,5 +217,13 @@ public class OperandStack {
 
     public LinkedList<VariableSlot> getStack() {
         return stack;
+    }
+
+    @Override
+    public String toString() {
+        return "OperandStack{" +
+                "stack=" + stack +
+                ", maxStack=" + maxStack +
+                '}';
     }
 }

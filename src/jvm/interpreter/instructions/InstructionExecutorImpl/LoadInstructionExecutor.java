@@ -6,6 +6,7 @@ import jvm.interpreter.instructions.InstructionExecutor;
 import jvm.runtimeDataArea.shared.heap.info.MyObject;
 import jvm.runtimeDataArea.threadDependent.OperandStack;
 import jvm.runtimeDataArea.threadDependent.StackFrame;
+import log.MyLog;
 import utils.CheckUtil;
 
 /**
@@ -130,6 +131,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void iLoad(StackFrame frame, CodeReader reader) {
+        MyLog.command("iload");
         int localVariableIndex = reader.readByte();
         Integer integer = frame.getLocalVariableTable().getInteger(localVariableIndex);
         frame.getOperandStack().pushInteger(integer);
@@ -142,6 +144,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void lLoad(StackFrame frame, CodeReader reader) {
+        MyLog.command("lload");
         int localVariableIndex = reader.readByte();
         Long longValue = frame.getLocalVariableTable().getLong(localVariableIndex);
         frame.getOperandStack().pushLong(longValue);
@@ -154,6 +157,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void fLoad(StackFrame frame, CodeReader reader) {
+        MyLog.command("fload");
         int localVariableIndex = reader.readByte();
         Float aFloat = frame.getLocalVariableTable().getFloat(localVariableIndex);
         frame.getOperandStack().pushFloat(aFloat);
@@ -166,6 +170,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void dLoad(StackFrame frame, CodeReader reader) {
+        MyLog.command("dload");
         byte localVariableIndex = reader.readByte();
         Double val = frame.getLocalVariableTable().getDouble(localVariableIndex);
         frame.getOperandStack().pushDouble(val);
@@ -178,6 +183,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param reader 方法 Code 属性读取器
      */
     private void aLoad(StackFrame frame, CodeReader reader) {
+        MyLog.command("aload");
         byte localVariableIndex = reader.readByte();
         MyObject ref = frame.getLocalVariableTable().getRef(localVariableIndex);
         frame.getOperandStack().pushRef(ref);
@@ -189,6 +195,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iLoad0(StackFrame frame) {
+        MyLog.command("iload_0");
         Integer integer = frame.getLocalVariableTable().getInteger(0);
         frame.getOperandStack().pushInteger(integer);
     }
@@ -199,6 +206,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iLoad1(StackFrame frame) {
+        MyLog.command("iload_1");
         Integer integer = frame.getLocalVariableTable().getInteger(1);
         frame.getOperandStack().pushInteger(integer);
     }
@@ -209,6 +217,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iLoad2(StackFrame frame) {
+        MyLog.command("iload_2");
         Integer integer = frame.getLocalVariableTable().getInteger(2);
         frame.getOperandStack().pushInteger(integer);
     }
@@ -219,6 +228,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iLoad3(StackFrame frame) {
+        MyLog.command("iload_3");
         Integer integer = frame.getLocalVariableTable().getInteger(3);
         frame.getOperandStack().pushInteger(integer);
     }
@@ -229,6 +239,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lLoad0(StackFrame frame) {
+        MyLog.command("lload_0");
         Long longVal = frame.getLocalVariableTable().getLong(0);
         frame.getOperandStack().pushLong(longVal);
     }
@@ -239,6 +250,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lLoad1(StackFrame frame) {
+        MyLog.command("lload_1");
         Long longVal = frame.getLocalVariableTable().getLong(1);
         frame.getOperandStack().pushLong(longVal);
     }
@@ -249,6 +261,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lLoad2(StackFrame frame) {
+        MyLog.command("lload_2");
         Long longVal = frame.getLocalVariableTable().getLong(2);
         frame.getOperandStack().pushLong(longVal);
     }
@@ -259,6 +272,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void lLoad3(StackFrame frame) {
+        MyLog.command("lload_3");
         Long longVal = frame.getLocalVariableTable().getLong(3);
         frame.getOperandStack().pushLong(longVal);
     }
@@ -269,6 +283,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fLoad0(StackFrame frame) {
+        MyLog.command("fload_0");
         Float floatVal = frame.getLocalVariableTable().getFloat(0);
         frame.getOperandStack().pushFloat(floatVal);
     }
@@ -279,6 +294,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fLoad1(StackFrame frame) {
+        MyLog.command("fload_1");
         Float floatVal = frame.getLocalVariableTable().getFloat(1);
         frame.getOperandStack().pushFloat(floatVal);
     }
@@ -289,6 +305,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fLoad2(StackFrame frame) {
+        MyLog.command("fload_2");
         Float floatVal = frame.getLocalVariableTable().getFloat(2);
         frame.getOperandStack().pushFloat(floatVal);
     }
@@ -299,6 +316,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void fLoad3(StackFrame frame) {
+        MyLog.command("fload_3");
         Float floatVal = frame.getLocalVariableTable().getFloat(3);
         frame.getOperandStack().pushFloat(floatVal);
     }
@@ -309,6 +327,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dLoad0(StackFrame frame) {
+        MyLog.command("dload_0");
         Double doubleVal = frame.getLocalVariableTable().getDouble(0);
         frame.getOperandStack().pushDouble(doubleVal);
     }
@@ -319,6 +338,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dLoad1(StackFrame frame) {
+        MyLog.command("dload_1");
         Double doubleVal = frame.getLocalVariableTable().getDouble(1);
         frame.getOperandStack().pushDouble(doubleVal);
     }
@@ -329,6 +349,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dLoad2(StackFrame frame) {
+        MyLog.command("dload_2");
         Double doubleVal = frame.getLocalVariableTable().getDouble(2);
         frame.getOperandStack().pushDouble(doubleVal);
     }
@@ -339,6 +360,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dLoad3(StackFrame frame) {
+        MyLog.command("dload_3");
         Double doubleVal = frame.getLocalVariableTable().getDouble(3);
         frame.getOperandStack().pushDouble(doubleVal);
     }
@@ -349,6 +371,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aLoad0(StackFrame frame) {
+        MyLog.command("aload_0");
         MyObject ref = frame.getLocalVariableTable().getRef(0);
         frame.getOperandStack().pushRef(ref);
     }
@@ -359,6 +382,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aLoad1(StackFrame frame) {
+        MyLog.command("aload_1");
         MyObject ref = frame.getLocalVariableTable().getRef(1);
         frame.getOperandStack().pushRef(ref);
     }
@@ -369,6 +393,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aLoad2(StackFrame frame) {
+        MyLog.command("aload_2");
         MyObject ref = frame.getLocalVariableTable().getRef(2);
         frame.getOperandStack().pushRef(ref);
     }
@@ -379,6 +404,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aLoad3(StackFrame frame) {
+        MyLog.command("aload_3");
         MyObject ref = frame.getLocalVariableTable().getRef(3);
         frame.getOperandStack().pushRef(ref);
     }
@@ -389,6 +415,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void iaLoad(StackFrame frame) {
+        MyLog.command("iaload");
         OperandStack operandStack = frame.getOperandStack();
         Integer index = operandStack.popInteger();
         MyObject ref = operandStack.popRef();
@@ -406,6 +433,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void laLoad(StackFrame frame) {
+        MyLog.command("laload");
         OperandStack operandStack = frame.getOperandStack();
         Integer index = operandStack.popInteger();
         MyObject ref = operandStack.popRef();
@@ -423,6 +451,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void faLoad(StackFrame frame) {
+        MyLog.command("faload");
         OperandStack operandStack = frame.getOperandStack();
         Integer index = operandStack.popInteger();
         MyObject ref = operandStack.popRef();
@@ -440,6 +469,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void daLoad(StackFrame frame) {
+        MyLog.command("daload");
         OperandStack operandStack = frame.getOperandStack();
         Integer index = operandStack.popInteger();
         MyObject ref = operandStack.popRef();
@@ -457,6 +487,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void aaLoad(StackFrame frame) {
+        MyLog.command("aaload");
         OperandStack operandStack = frame.getOperandStack();
         Integer index = operandStack.popInteger();
         MyObject ref = operandStack.popRef();
@@ -474,6 +505,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void baLoad(StackFrame frame) {
+        MyLog.command("baload");
         OperandStack operandStack = frame.getOperandStack();
         Integer index = operandStack.popInteger();
         MyObject ref = operandStack.popRef();
@@ -491,6 +523,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void caLoad(StackFrame frame) {
+        MyLog.command("caload");
         OperandStack operandStack = frame.getOperandStack();
         Integer index = operandStack.popInteger();
         MyObject ref = operandStack.popRef();
@@ -508,6 +541,7 @@ public class LoadInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void saLoad(StackFrame frame) {
+        MyLog.command("saload");
         OperandStack operandStack = frame.getOperandStack();
         Integer index = operandStack.popInteger();
         MyObject ref = operandStack.popRef();

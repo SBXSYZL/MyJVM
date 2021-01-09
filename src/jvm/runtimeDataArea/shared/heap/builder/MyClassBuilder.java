@@ -28,6 +28,7 @@ public class MyClassBuilder {
         MyClass clazz;
         try {
             clazz = new MyClass();
+            clazz.setClassLoader(classFile.getClassLoader());
             clazz.setAccessFlag(classFile.getAccessFlag());
             clazz.setClassName(classFile.getThisClassName());
             clazz.setSuperName(classFile.getSuperClassName());
@@ -37,7 +38,6 @@ public class MyClassBuilder {
             clazz.setFields(getFields(clazz, classFile));
             clazz.setMethods(getMethods(clazz, classFile));
             clazz.setSourceFile(classFile.getSourceFile().getSourceFileName());
-            clazz.setClassLoader(classFile.getClassLoader());
             if (!MyClass.ANCESTOR_OBJECT_NAME.equals(clazz.getClassName())) {
                 clazz.setSuperClass(clazz.getClassLoader().loadClass(classFile.getSuperClassName()));
             }

@@ -5,6 +5,7 @@ import jvm.interpreter.instructions.InstructionEnum;
 import jvm.interpreter.instructions.InstructionExecutor;
 import jvm.runtimeDataArea.threadDependent.OperandStack;
 import jvm.runtimeDataArea.threadDependent.StackFrame;
+import log.MyLog;
 
 /**
  * @author 22454
@@ -68,24 +69,28 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void i2l(StackFrame frame) {
+        MyLog.command("i2l");
         OperandStack operandStack = frame.getOperandStack();
         long integer = operandStack.popInteger();
         operandStack.pushLong(integer);
     }
 
     private void i2f(StackFrame frame) {
+        MyLog.command("i2f");
         OperandStack operandStack = frame.getOperandStack();
         float integer = operandStack.popInteger();
         operandStack.pushFloat(integer);
     }
 
     private void i2d(StackFrame frame) {
+        MyLog.command("i2d");
         OperandStack operandStack = frame.getOperandStack();
         double integer = operandStack.popInteger();
         operandStack.pushDouble(integer);
     }
 
     private void l2i(StackFrame frame) {
+        MyLog.command("l2i");
         OperandStack operandStack = frame.getOperandStack();
         long value = operandStack.popLong();
         int result = (int) value;
@@ -93,6 +98,7 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void l2f(StackFrame frame) {
+        MyLog.command("l2f");
         OperandStack operandStack = frame.getOperandStack();
         long value = operandStack.popLong();
         float result = (float) value;
@@ -100,6 +106,7 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void l2d(StackFrame frame) {
+        MyLog.command("l2d");
         OperandStack operandStack = frame.getOperandStack();
         long value = operandStack.popLong();
         double result = (double) value;
@@ -107,6 +114,7 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void f2i(StackFrame frame) {
+        MyLog.command("f2i");
         OperandStack operandStack = frame.getOperandStack();
         float value = operandStack.popFloat();
         int result = (int) value;
@@ -114,6 +122,7 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void f2l(StackFrame frame) {
+        MyLog.command("f2l");
         OperandStack operandStack = frame.getOperandStack();
         float value = operandStack.popFloat();
         long result = (long) value;
@@ -121,12 +130,14 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void f2d(StackFrame frame) {
+        MyLog.command("f2d");
         OperandStack operandStack = frame.getOperandStack();
         float value = operandStack.popFloat();
         operandStack.pushDouble((double) value);
     }
 
     private void d2i(StackFrame frame) {
+        MyLog.command("d2i");
         OperandStack operandStack = frame.getOperandStack();
         double value = operandStack.popDouble();
         int result = (int) value;
@@ -134,6 +145,7 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void d2l(StackFrame frame) {
+        MyLog.command("d2l");
         OperandStack operandStack = frame.getOperandStack();
         double value = operandStack.popDouble();
         long result = (long) value;
@@ -141,6 +153,7 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void d2f(StackFrame frame) {
+        MyLog.command("d2f");
         OperandStack operandStack = frame.getOperandStack();
         double value = operandStack.popDouble();
         float result = (float) value;
@@ -148,6 +161,7 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void i2b(StackFrame frame) {
+        MyLog.command("i2b");
         OperandStack operandStack = frame.getOperandStack();
         int value = operandStack.popInteger();
         int result = (byte) value;
@@ -155,6 +169,7 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void i2c(StackFrame frame) {
+        MyLog.command("i2c");
         OperandStack operandStack = frame.getOperandStack();
         int value = operandStack.popInteger();
         int result = (char) value;
@@ -162,6 +177,7 @@ public class ConversionInstructionExecutor implements InstructionExecutor {
     }
 
     private void i2s(StackFrame frame) {
+        MyLog.command("i2s");
         OperandStack operandStack = frame.getOperandStack();
         int value = operandStack.popInteger();
         int result = (short) value;

@@ -8,12 +8,16 @@ import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDe
 /**
  * @author 22454
  */
-public abstract class AttributeInfoParameterAnnotations implements AttributeInfo {
+public abstract class AttributeInfoParameterAnnotations extends AttributeInfo {
     private int numParameters;
     private ParameterAnnotations[] parameterAnnotations;
 
+    public AttributeInfoParameterAnnotations(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.numParameters = byteCodeFile.readOneUint();
         this.parameterAnnotations = new ParameterAnnotations[numParameters];
         for (int i = 0; i < numParameters; i++) {

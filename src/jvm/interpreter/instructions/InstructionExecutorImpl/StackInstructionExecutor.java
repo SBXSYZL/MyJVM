@@ -6,6 +6,7 @@ import jvm.interpreter.instructions.InstructionExecutor;
 import jvm.runtimeDataArea.threadDependent.OperandStack;
 import jvm.runtimeDataArea.threadDependent.StackFrame;
 import jvm.runtimeDataArea.threadDependent.VariableSlot;
+import log.MyLog;
 
 /**
  * 栈指令
@@ -59,6 +60,7 @@ public class StackInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void pop(StackFrame frame) {
+        MyLog.command("pop");
         frame.getOperandStack().popVariableSlot();
     }
 
@@ -68,6 +70,7 @@ public class StackInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void pop2(StackFrame frame) {
+        MyLog.command("pop2");
         OperandStack operandStack = frame.getOperandStack();
         operandStack.popVariableSlot();
         operandStack.popVariableSlot();
@@ -79,6 +82,7 @@ public class StackInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dup(StackFrame frame) {
+        MyLog.command("dup");
         OperandStack operandStack = frame.getOperandStack();
         VariableSlot variableSlot = operandStack.popVariableSlot();
         operandStack.pushVariableSlot(variableSlot);
@@ -91,6 +95,7 @@ public class StackInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dupX1(StackFrame frame) {
+        MyLog.command("dup_x1");
         OperandStack operandStack = frame.getOperandStack();
         VariableSlot variableSlot1 = operandStack.popVariableSlot();
         VariableSlot variableSlot2 = operandStack.popVariableSlot();
@@ -105,6 +110,7 @@ public class StackInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dupX2(StackFrame frame) {
+        MyLog.command("dup_x2");
         OperandStack operandStack = frame.getOperandStack();
         VariableSlot variableSlot1 = operandStack.popVariableSlot();
         VariableSlot variableSlot2 = operandStack.popVariableSlot();
@@ -121,6 +127,7 @@ public class StackInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dup2(StackFrame frame) {
+        MyLog.command("dup2");
         OperandStack operandStack = frame.getOperandStack();
         VariableSlot variableSlot1 = operandStack.popVariableSlot();
         VariableSlot variableSlot2 = operandStack.popVariableSlot();
@@ -136,6 +143,7 @@ public class StackInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dup2X1(StackFrame frame) {
+        MyLog.command("dup2_x1");
         OperandStack operandStack = frame.getOperandStack();
         VariableSlot variableSlot1 = operandStack.popVariableSlot();
         VariableSlot variableSlot2 = operandStack.popVariableSlot();
@@ -153,6 +161,7 @@ public class StackInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void dup2X2(StackFrame frame) {
+        MyLog.command("dup2_x2");
         OperandStack operandStack = frame.getOperandStack();
         VariableSlot variableSlot1 = operandStack.popVariableSlot();
         VariableSlot variableSlot2 = operandStack.popVariableSlot();
@@ -172,6 +181,7 @@ public class StackInstructionExecutor implements InstructionExecutor {
      * @param frame 当前操作栈栈帧
      */
     private void swap(StackFrame frame) {
+        MyLog.command("swap");
         OperandStack operandStack = frame.getOperandStack();
         VariableSlot variableSlot1 = operandStack.popVariableSlot();
         VariableSlot variableSlot2 = operandStack.popVariableSlot();

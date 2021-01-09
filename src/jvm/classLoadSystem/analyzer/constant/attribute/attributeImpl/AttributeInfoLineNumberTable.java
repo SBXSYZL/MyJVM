@@ -8,18 +8,25 @@ import jvm.classLoadSystem.analyzer.constant.attribute.attributeImpl.attributeDe
 /**
  * @author 22454
  */
-public class AttributeInfoLineNumberTable implements AttributeInfo {
+public class AttributeInfoLineNumberTable extends AttributeInfo {
     private int lineNumberTableLength;
     private LineNumberInfo[] lineNumberTable;
     private ConstantPool constantPool;
 
+    public AttributeInfoLineNumberTable(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.lineNumberTableLength = byteCodeFile.readTwoUint();
         this.lineNumberTable = new LineNumberInfo[this.lineNumberTableLength];
         for (int i = 0; i < this.lineNumberTableLength; i++) {
-            lineNumberTable[i] = new LineNumberInfo(byteCodeFile.readTwoUint(), byteCodeFile.readTwoUint());
+            lineNumberTable[i] = new LineNumberInfo(
+                    byteCodeFile.readTwoUint(),
+                    byteCodeFile.readTwoUint()
+            );
         }
     }
 

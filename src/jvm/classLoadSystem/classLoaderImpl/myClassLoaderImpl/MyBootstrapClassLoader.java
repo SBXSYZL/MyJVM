@@ -73,17 +73,21 @@ public class MyBootstrapClassLoader implements MyClassLoader {
             return myClass;
         }
         if (absClassName.getBytes()[0] == '[') {
-            return loadArrayClass(absClassName);
+            myClass = loadArrayClass(absClassName);
         } else {
-            return loadNonArrayClass(absClassName);
+            myClass = loadNonArrayClass(absClassName);
+        }
+        if (myClass != null) {
+            CACHE.put(absClassName, myClass);
         }
 
+        return myClass;
     }
 
     @Override
     public MyClass loadArrayClass(String absClassName) {
         try {
-            MyClass clazz = classBuilder.buildArray(
+            return classBuilder.buildArray(
                     AccessPermission.ACC_PUBLIC,
                     absClassName,
                     this,
@@ -94,20 +98,24 @@ public class MyBootstrapClassLoader implements MyClassLoader {
                             findClass("java/io/Serializable")
                     }
             );
-            CACHE.put(absClassName, clazz);
-            return clazz;
         } catch (Exception e) {
             e.printStackTrace();
-            MyLog.error("Failed To Create Array.");
+            MyLog.error("Failed To Create Array In Bootstrap Class Loader.");
         }
         return null;
     }
 
     @Override
     public MyClass loadNonArrayClass(String absClassName) throws Exception {
-        String property = System.getProperty("java.home");
+
+        String bootstrapClassPath = System.getProperty("java.home");
+        bootstrapClassPath = bootstrapClassPath.concat("\\lib");
+        byte[] byteCode = ClassFileReader.readClass(absClassName, bootstrapClassPath);
+        if (byteCode == null) {
+            return null;
+        }
         ClassFile classFile = new ClassFile(
-                new ClassEntry(this, ClassFileReader.readClass(absClassName, property))
+                new ClassEntry(this, byteCode)
         );
         return classBuilder.build(classFile);
 

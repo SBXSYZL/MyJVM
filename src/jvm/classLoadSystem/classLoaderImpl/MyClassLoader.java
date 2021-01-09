@@ -96,6 +96,18 @@ public interface MyClassLoader {
         throw new RuntimeException("Invalid Descriptor: " + componentTypeDescriptor);
     }
 
+    static String getArrayClassName(String className) {
+        String result = "[";
+        if (className.getBytes()[0] == '[') {
+            result += className;
+        }
+        String d = PRIMITIVE_TYPE.get(className);
+        if (null != d) {
+            result += d;
+        }
+        return result += ("L" + className + ";");
+    }
+
     class ClassEntry {
         private MyClassLoader loader;
         private byte[] byteCode;
@@ -112,5 +124,11 @@ public interface MyClassLoader {
         public byte[] getByteCode() {
             return byteCode;
         }
+    }
+
+    static void showCache() {
+        CACHE.forEach((k, v) -> {
+            System.out.println(k + "\t\t\t" + v.getClassName());
+        });
     }
 }

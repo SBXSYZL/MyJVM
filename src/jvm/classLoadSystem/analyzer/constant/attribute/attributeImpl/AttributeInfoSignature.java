@@ -7,12 +7,16 @@ import jvm.classLoadSystem.analyzer.constant.ConstantPool;
 /**
  * @author 22454
  */
-public class AttributeInfoSignature implements AttributeInfo {
+public class AttributeInfoSignature extends AttributeInfo {
     private int signatureIndex;
     private ConstantPool constantPool;
 
+    public AttributeInfoSignature(int attributeNameIndex, int attributeLength) {
+        super(attributeNameIndex, attributeLength);
+    }
+
     @Override
-    public void readInfo(ByteCodeFile byteCodeFile, ConstantPool constantPool) throws Exception {
+    public void readInfo(ByteCodeFile byteCodeFile, int attributeLength, ConstantPool constantPool) throws Exception {
         this.constantPool = constantPool;
         this.signatureIndex = byteCodeFile.readTwoUint();
     }

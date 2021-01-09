@@ -17,13 +17,21 @@ public class ObjectNative implements NativeClass {
     private static final String CLASS_NAME = "java/lang/Object";
     private static final ConcurrentHashMap<String, String> NATIVE_METHOD_DESCRIPTOR_MAP = new ConcurrentHashMap<String, String>() {
         {
+            put("registerNatives", "()V");
             put("getClazz", "()Ljava/lang/Class;");
             put("hashCode", "()I");
             put("clone", "()Ljava/lang/Object;");
         }
     };
 
+    @Override
+    public void registerNatives(StackFrame frame) {
+        MyLog.nativeLog("registerNatives");
+        //do nothing
+    }
+
     public void getClazz(StackFrame frame) {
+        MyLog.nativeLog("getClass");
         try {
             MyObject thisObject = frame.getLocalVariableTable().getThis();
             MyObject reflectClass = thisObject.getClazz().getReflectClass();
@@ -35,6 +43,7 @@ public class ObjectNative implements NativeClass {
     }
 
     public void hashCode(StackFrame frame) {
+        MyLog.nativeLog("hashCode");
         try {
             MyObject thisObject = frame.getLocalVariableTable().getThis();
             frame.getOperandStack().pushInteger(thisObject.hashCode());
@@ -45,6 +54,7 @@ public class ObjectNative implements NativeClass {
     }
 
     public void clone(StackFrame frame) {
+        MyLog.nativeLog("clone");
         try {
             MyObject thisObject = frame.getLocalVariableTable().getThis();
             MyClass cloneable = thisObject.getClazz().getClassLoader().findClass("java/lang/Cloneable");
