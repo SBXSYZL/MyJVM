@@ -15,3 +15,11 @@ MyJVM运行效果演示图：
 ![image](https://github.com/SBXSYZL/MyJVM/blob/master/images/1.png)
 ![image](https://github.com/SBXSYZL/MyJVM/blob/master/images/2.png)
 ![image](https://github.com/SBXSYZL/MyJVM/blob/master/images/3.png)
+
+参考资料：
+
+    1. Oracle JDK 官方文档
+    2. 深入理解JVM字节码
+    3. 深入理解Java虚拟机
+    4. 自己动手实现java虚拟机
+    5. Java核心技术系列：Java虚拟机规范（JavaSE 8版） 
