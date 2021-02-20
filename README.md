@@ -14,6 +14,7 @@ MyJVM运行效果演示图：
 
 ![image](https://github.com/SBXSYZL/MyJVM/blob/master/images/1.png)
 ![image](https://github.com/SBXSYZL/MyJVM/blob/master/images/2.png)
+![image](https://github.com/SBXSYZL/MyJVM/blob/master/images/4.png)
 ![image](https://github.com/SBXSYZL/MyJVM/blob/master/images/3.png)
 
 参考资料：
