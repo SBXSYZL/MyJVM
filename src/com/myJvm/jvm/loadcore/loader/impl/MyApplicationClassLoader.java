@@ -39,6 +39,12 @@ public class MyApplicationClassLoader implements MyClassLoader {
         }
         myClass = this.loadClass(absClassName);
         if (myClass != null) {
+            CACHE.put(absClassName, myClass);
+            if (myClass.getReflectClass() == null) {
+                MyClass basicClazz = loadClass("java/lang/Class");
+                myClass.setReflectClass(basicClazz.toObject());
+                myClass.getReflectClass().setExtra(myClass);
+            }
             return myClass;
         }
         MyLog.error("Class: [ ".concat(absClassName).concat(" ] Load Fail."));
@@ -49,7 +55,7 @@ public class MyApplicationClassLoader implements MyClassLoader {
     @Override
     public MyClass loadArrayClass(String absClassName) {
         try {
-            MyClass clazz = classBuilder.buildArray(
+            return classBuilder.buildArray(
                     AccessPermission.ACC_PUBLIC,
                     absClassName,
                     this,
@@ -60,8 +66,6 @@ public class MyApplicationClassLoader implements MyClassLoader {
                             findClass("java/io/Serializable")
                     }
             );
-            CACHE.put(absClassName, clazz);
-            return clazz;
         } catch (Exception e) {
             e.printStackTrace();
             MyLog.error("Failed To Create Array In Application Class Loader.");
@@ -85,9 +89,7 @@ public class MyApplicationClassLoader implements MyClassLoader {
 
         }
         ClassFile classFile = new ClassFile(new ClassEntry(this, byteCode));
-        MyClass myClass = classBuilder.build(classFile);
-        CACHE.put(absClassName, myClass);
-        return myClass;
+        return classBuilder.build(classFile);
 
     }
 

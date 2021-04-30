@@ -27,7 +27,16 @@ public class MyExtensionClassLoader implements MyClassLoader {
         if (myClass != null) {
             return myClass;
         }
-        return this.loadClass(absClassName);
+        myClass = this.loadClass(absClassName);
+        if (myClass != null) {
+            if (myClass.getReflectClass() == null) {
+                MyClass basicClazz = loadClass("java/lang/Class");
+                myClass.setReflectClass(basicClazz.toObject());
+                myClass.getReflectClass().setExtra(myClass);
+            }
+            CACHE.put(absClassName, myClass);
+        }
+        return myClass;
     }
 
     @Override

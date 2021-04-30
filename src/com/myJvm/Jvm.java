@@ -5,6 +5,8 @@ import com.myJvm.jvm.interpreter.Interpreter;
 import com.myJvm.jvm.loadcore.loader.impl.MyApplicationClassLoader;
 import com.myJvm.jvm.runtime.shared.heap.info.MyClass;
 import com.myJvm.jvm.runtime.shared.heap.info.MyMethod;
+import com.myJvm.log.MyLog;
+import com.myJvm.utils.FileUtil;
 import com.myJvm.utils.observer.subjectImpl.OutputQueueSubject;
 
 import java.util.Arrays;
@@ -39,7 +41,7 @@ public class Jvm {
 
     private void init() {
         try {
-//            MyLog.openCommand();
+            MyLog.openCommand();
             MyBeanContext.run();
             MyApplicationClassLoader applicationClassLoader = (MyApplicationClassLoader) MyBeanContext.getBean(MyApplicationClassLoader.class);
             applicationClassLoader.setClassPath(classPath);
@@ -48,6 +50,7 @@ public class Jvm {
                 throw new RuntimeException("Main Class Not Found: [ " + mainClassName + " ]");
             }
             MyMethod mainMethod = mainClass.getMainMethod();
+            FileUtil.printAssembly(mainClass);
             if (null == mainMethod) {
                 throw new RuntimeException("Main Method Not Found In Class: [ " + mainClassName + " ]");
             }
@@ -84,7 +87,7 @@ public class Jvm {
             } catch (Exception ex) {
                 String exStr = Arrays.toString(ex.getStackTrace()).replace(",", "\n[ERROR] ").substring(1);
                 exStr = exStr.substring(0, exStr.length() - 1);
-                exStr = "[ERROR] Exception Throws: "+ex+"\n[ERROR] " + exStr;
+                exStr = "[ERROR] Exception Throws: " + ex + "\n[ERROR] " + exStr;
                 subject.output(exStr);
             }
         }

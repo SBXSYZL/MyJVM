@@ -119,7 +119,7 @@ public class FileUtil {
         }
     }
 
-    public static synchronized void printTree(MyClass myClass) {
+    public static synchronized void printAssembly(MyClass myClass) {
         Field[] enumInstruction = InstructionEnum.class.getFields();
         InstructionEnum instructionEnum = new InstructionEnum();
         HashMap<Byte, String> instructionMap = new HashMap<>();

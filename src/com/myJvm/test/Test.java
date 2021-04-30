@@ -4,42 +4,23 @@ package com.myJvm.test;
  * @author 22454
  */
 public class Test {
-    private static Test instance;
-    private String name;
-
-    private Test() {
-        System.out.println("构造函数");
-        name = "test";
+    public static void main(String[] args) throws InstantiationException, IllegalAccessException {
+        A a = new A(10);
+        A a2 = new A(20);
+        int i = a.getNum() + a2.getNum();
+        System.out.println(i);
     }
 
-    public static void main(String[] args) {
-        String[] strings = {"abc", "bcd", "efg", "fgh"};
+    public static class A {
+        private int num;
 
-        for (String string : strings) {
-            System.out.println(string);
+        public A(int num) {
+            this.num = num;
         }
-        System.out.println(getInstance().name);
-        System.out.println(getInstance().getResult());
-        System.out.println(""+" a");
-    }
 
-    public static Test getInstance() {
-        if (instance == null) {
-            System.out.println("new");
-            instance = new Test();
+        public int getNum() {
+            return num;
         }
-        return instance;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getResult() {
-        int result = 0;
-        for (int i = 0; i <= 100; i++) {
-            result += i;
-        }
-        return result;
-    }
 }

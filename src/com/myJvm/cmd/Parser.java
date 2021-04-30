@@ -3,6 +3,7 @@ package com.myJvm.cmd;
 /**
  * @author 22454
  */
+@Deprecated
 public interface Parser {
     /**
      * 解析

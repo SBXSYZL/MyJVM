@@ -11,7 +11,6 @@ import com.myJvm.log.MyLog;
 public class InvokeNative extends InstructionWithoutOperands {
     @Override
     public void exec() {
-
         MyMethod method = frame.getMethod();
         String className = method.getClazz().getClassName();
         String methodName = method.getName();

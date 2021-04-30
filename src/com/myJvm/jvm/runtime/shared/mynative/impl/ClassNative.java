@@ -23,7 +23,7 @@ public class ClassNative implements NativeClass {
     private static final ConcurrentHashMap<String, String> NATIVE_METHOD_DESCRIPTOR_MAP = new ConcurrentHashMap<String, String>() {
         {
             put("getPrimitiveClass", "(Ljava/lang/String;)Ljava/lang/Class;");
-            put("getName", "()Ljava/lang/String;");
+            put("getName0", "()Ljava/lang/String;");
             put("desiredAssertionStatus", "(Ljava/lang/Class;)Z");
             put("registerNatives", "()V");
         }
@@ -48,8 +48,8 @@ public class ClassNative implements NativeClass {
         }
     }
 
-    public void getName(StackFrame frame) {
-        MyLog.nativeLog("getName");
+    public void getName0(StackFrame frame) {
+        MyLog.nativeLog("getName0");
         try {
             MyObject thisObject = (MyObject) frame.getLocalVariableTable().getThis();
             MyClass clazz = (MyClass) thisObject.getExtra();

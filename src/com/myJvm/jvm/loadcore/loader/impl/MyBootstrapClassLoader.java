@@ -48,7 +48,7 @@ public class MyBootstrapClassLoader implements MyClassLoader {
     @Override
     public MyClass findClass(String absClassName) throws Exception {
         absClassName = MyClassLoader.checkClassName(absClassName);
-        MyClass myClass = null;
+        MyClass myClass;
         try {
             myClass = CACHE.get(absClassName);
             if (myClass != null) {
@@ -56,7 +56,12 @@ public class MyBootstrapClassLoader implements MyClassLoader {
             }
             myClass = loadClass(absClassName);
             if (myClass != null) {
-                MyClassLoader.CACHE.put(absClassName, myClass);
+                CACHE.put(absClassName, myClass);
+                if (myClass.getReflectClass() == null) {
+                    MyClass basicClazz = loadClass("java/lang/Class");
+                    myClass.setReflectClass(basicClazz.toObject());
+                    myClass.getReflectClass().setExtra(myClass);
+                }
                 return myClass;
             }
         } catch (Exception e) {

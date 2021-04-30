@@ -240,7 +240,7 @@ public class MyClass {
     }
 
     public String getJavaName() {
-        return this.getClassName().substring(0, 1) + this.getClassName().substring(1).replace("/", ".");
+        return this.getClassName().charAt(0) + this.getClassName().substring(1).replace("/", ".");
     }
 
     public boolean isInterface() {
