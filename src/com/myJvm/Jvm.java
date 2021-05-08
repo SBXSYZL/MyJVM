@@ -1,5 +1,6 @@
 package com.myJvm;
 
+import com.myJvm.cmd.CmdParser;
 import com.myJvm.jvm.beancenter.MyBeanContext;
 import com.myJvm.jvm.interpreter.Interpreter;
 import com.myJvm.jvm.loadcore.loader.impl.MyApplicationClassLoader;
@@ -15,6 +16,17 @@ import java.util.Arrays;
  * @author 22454
  */
 public class Jvm {
+    private static final String MY_JVM =
+            "\n\n" +
+                    "   **************************************************************************************************\n" +
+                    "   *         __      __       __     __    ________    __        __      __      __                 *\n" +
+                    "   *        / /\\    /\\ \\      \\ \\   / /   |___   __|   \\ \\      / /     / /\\    /\\ \\                *\n" +
+                    "   *       / /\\ \\  / /\\ \\      \\ \\ / /        | |       \\ \\    / /     / /\\ \\  / /\\ \\               *\n" +
+                    "   *      / /  \\ \\/ /  \\ \\      |   |         | |        \\ \\  / /     / /  \\ \\/ /  \\ \\              *\n" +
+                    "   *     / /    \\__/    \\ \\     |   |     ____| |         \\ \\/ /     / /    \\__/    \\ \\             *\n" +
+                    "   *    /_/              \\_\\    |___|    |______|          \\__/     /_/              \\_\\            *\n" +
+                    "   *       :: \033[32m My Jvm \033[m ::                                                 \033[32m (v1.0.0.RELEASE) \033[m        *\n" +
+                    "   **************************************************************************************************\n";
     private final String mainClassName;
     private final String args;
     private final String classPath;
@@ -41,7 +53,20 @@ public class Jvm {
 
     private void init() {
         try {
-            MyLog.openCommand();
+            MyLog.openAllLog();
+            MyLog.info("My Java Virtual Machine Start...");
+            for (int i = 0; i < MY_JVM.length(); i++) {
+                MyLog.print("" + MY_JVM.charAt(i));
+            }
+            System.out.println();
+            MyLog.info("Loading Cmd Panel...");
+
+            MyLog.success("Cmd Panel Load Successfully.");
+            MyLog.info("Loading Cmd Parser...");
+            MyLog.success("Cmd Parser Load Successfully.");
+            MyLog.success("My Java Virtual Machine Start Successfully.");
+
+//            MyLog.openCommand();
             MyBeanContext.run();
             MyApplicationClassLoader applicationClassLoader = (MyApplicationClassLoader) MyBeanContext.getBean(MyApplicationClassLoader.class);
             applicationClassLoader.setClassPath(classPath);
@@ -92,4 +117,5 @@ public class Jvm {
             }
         }
     }
+
 }
